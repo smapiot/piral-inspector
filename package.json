@@ -1,0 +1,47 @@
+{
+  "name": "piral-inspector",
+  "version": "0.1.0",
+  "description": "A DevTools extension for Piral instances and their pilets.",
+  "keywords": [
+    "piral",
+    "pilet",
+    "devtools",
+    "browser",
+    "chrome",
+    "firefox",
+    "extension"
+  ],
+  "author": "smapiot",
+  "homepage": "https://piral.io",
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smapiot/piral-inspector.git"
+  },
+  "bugs": {
+    "url": "https://github.com/smapiot/piral-inspector/issues"
+  },
+  "browserslist": [
+    "last 5 chrome version",
+    "last 5 firefox version"
+  ],
+  "scripts": {
+    "start": "npm run start:firefox",
+    "start:firefox": "npm run copy-static-files && concurrently --kill-others \"npm run parcel:watch\" \"npm run web-ext:firefox\"",
+    "copy-static-files": "cpx \"src/**/*.{json,png,svg}\" dist && cpx manifest.json dist",
+    "parcel:watch": "parcel watch --no-hmr src/**/*.html",
+    "web-ext:firefox": "web-ext run --source-dir dist",
+    "prettify": "prettier --config prettier.config.js --write \"src/**/*.{ts,tsx}\""
+  },
+  "devDependencies": {
+    "concurrently": "^5.0.2",
+    "cpx": "^1.5.0",
+    "prettier": "^1.19.1",
+    "typescript": "^3.7.5",
+    "web-ext": "^4.0.0"
+  },
+  "dependencies": {
+    "webextension-polyfill": "^0.6.0"
+  }
+}

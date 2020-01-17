@@ -1,0 +1,13 @@
+{
+  "manifest_version": 2,
+  "name": "Piral Inspector",
+  "version": "0.1.0",
+  "description": "The official Piral developer tools browser extension.",
+  "author": "smapiot",
+  "homepage_url": "https://piral.io",
+  "icons": {
+    "48": "./assets/logo.png",
+    "96": "./assets/logo.png"
+  },
+  "devtools_page": "./devtools.html"
+}

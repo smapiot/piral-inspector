@@ -1,11 +1,18 @@
 import create, { SetState } from 'zustand';
+import { triggerPiletUpdate } from './commands';
 
 export interface StoreState {
   connected: boolean;
+  name?: string;
+  version?: string;
+  kind?: string;
+  pilets?: Array<any>;
 }
 
 export interface StoreActions {
-  initialize(connected: boolean): void;
+  connect(name: string, version: string, kind: string): void;
+  disconnect(): void;
+  update(pilets: Array<any>): void;
 }
 
 export interface Store {
@@ -28,9 +35,24 @@ const [useStore] = create<Store>(set => ({
     connected: false,
   },
   actions: {
-    initialize(connected) {
+    connect(name, version, kind) {
       dispatch(set, () => ({
-        connected,
+        connected: true,
+        name,
+        version,
+        kind,
+        pilets: [],
+      }));
+      triggerPiletUpdate();
+    },
+    disconnect() {
+      dispatch(set, () => ({
+        connected: false,
+      }));
+    },
+    update(pilets) {
+      dispatch(set, () => ({
+        pilets,
       }));
     },
   },

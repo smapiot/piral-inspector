@@ -14,9 +14,11 @@ export const App: React.FC<AppProps> = () => {
 
       switch (message.type) {
         case 'available':
-          return actions.initialize(true);
+          return actions.connect(message.name, message.version, message.kind);
         case 'unavailable':
-          return actions.initialize(false);
+          return actions.disconnect();
+        case 'pilets':
+          return actions.update(message.pilets);
       }
     };
     window.addEventListener('pi-recv-response', handler);

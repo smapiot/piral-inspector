@@ -1,7 +1,8 @@
 import browser from 'webextension-polyfill';
+import { check, supervise, runQuery, runCommand, getPilets, removePilet } from './helpers';
 import { PiWorkerMessage, PiHostMessage } from '../types';
 
-let available = false;
+let available: any = undefined;
 
 const port = browser.runtime.connect({
   name: 'piral-inspector-worker',
@@ -16,45 +17,56 @@ function sendMessage(message: PiWorkerMessage) {
 
 function receiveMessage(message: PiHostMessage) {
   switch (message.type) {
-    case 'is-available':
+    case 'check-available':
       return checkAvailable();
+    case 'remove-pilet':
+      return removePilet(message.name);
+    case 'get-pilets':
+      return getPilets();
+    case 'run-command':
+      return runCommand(message.method, message.args);
+    case 'run-query':
+      return runQuery(message.id, message.value);
   }
 }
 
 port.onMessage.addListener(receiveMessage);
 
-function checkDebugMode() {
-  if ('dbg:piral' in window) {
-    const ev = new CustomEvent('piral-found');
-    window.dispatchEvent(ev);
-  }
-}
-
 function checkAvailable() {
   if (available) {
     sendMessage({
+      ...available,
       type: 'available',
     });
   }
 }
 
-function injectScript(content: () => void) {
-  const script = document.createElement('script');
-  script.textContent = `(${content.toString()})()`;
-  document.head.appendChild(script);
-  script.remove();
-}
+window.addEventListener('piral-result', (e: CustomEvent) => {
+  sendMessage({
+    ...e.detail,
+    type: 'result',
+  });
+});
 
-window.addEventListener('piral-found', () => {
-  available = true;
+window.addEventListener('piral-pilets', (e: CustomEvent) => {
+  sendMessage({
+    ...e.detail,
+    type: 'pilets',
+  });
+});
+
+window.addEventListener('piral-found', (e: CustomEvent) => {
+  available = e.detail;
   checkAvailable();
   console.info('Piral Inspector connected!');
 });
 
 window.addEventListener('unload', () => {
+  available = undefined;
   sendMessage({
     type: 'unavailable',
   });
 });
 
-injectScript(checkDebugMode);
+check();
+supervise();

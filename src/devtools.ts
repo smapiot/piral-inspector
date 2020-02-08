@@ -30,7 +30,7 @@ function connectPanel(panel: any) {
     });
 
     sendMessage({
-      type: 'is-available',
+      type: 'check-available',
     });
   });
 

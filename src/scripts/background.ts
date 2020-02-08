@@ -7,7 +7,7 @@ browser.runtime.onConnect.addListener((port: any) => {
   if (port.name === 'piral-inspector-worker') {
     const tabId = port.sender.tab.id;
 
-    const extensionListener = ({ message }: any) => {
+    const handler = ({ message }: any) => {
       if (host) {
         host.postMessage(message);
       }
@@ -15,14 +15,14 @@ browser.runtime.onConnect.addListener((port: any) => {
 
     tabs[tabId] = port;
 
-    port.onMessage.addListener(extensionListener);
+    port.onMessage.addListener(handler);
 
     port.onDisconnect.addListener(() => {
-      port.onMessage.removeListener(extensionListener);
+      port.onMessage.removeListener(handler);
       delete tabs[tabId];
     });
   } else if (port.name === 'piral-inspector-host') {
-    const extensionListener = ({ message, tabId }: any) => {
+    const handler = ({ message, tabId }: any) => {
       const p = tabs[tabId];
 
       if (p) {
@@ -32,10 +32,10 @@ browser.runtime.onConnect.addListener((port: any) => {
 
     host = port;
 
-    port.onMessage.addListener(extensionListener);
+    port.onMessage.addListener(handler);
 
     port.onDisconnect.addListener(() => {
-      port.onMessage.removeListener(extensionListener);
+      port.onMessage.removeListener(handler);
       host = undefined;
     });
   }

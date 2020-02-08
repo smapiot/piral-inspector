@@ -1,13 +1,12 @@
 import * as React from 'react';
-import { View, ViewProps } from './View';
+import { View } from './View';
+import { useStore } from './store';
 import { PiWorkerMessage } from '../types';
 
 export interface AppProps {}
 
 export const App: React.FC<AppProps> = () => {
-  const [state, setState] = React.useState<ViewProps>(() => ({
-    connected: false,
-  }));
+  const actions = useStore(m => m.actions);
 
   React.useEffect(() => {
     const handler = (e: CustomEvent<PiWorkerMessage>) => {
@@ -15,13 +14,9 @@ export const App: React.FC<AppProps> = () => {
 
       switch (message.type) {
         case 'available':
-          return setState({
-            connected: true,
-          });
+          return actions.initialize(true);
         case 'unavailable':
-          return setState({
-            connected: false,
-          });
+          return actions.initialize(false);
       }
     };
     window.addEventListener('pi-recv-response', handler);
@@ -31,5 +26,5 @@ export const App: React.FC<AppProps> = () => {
     };
   }, []);
 
-  return <View {...state} />;
+  return <View />;
 };

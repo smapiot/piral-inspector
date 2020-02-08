@@ -9,5 +9,14 @@
     "48": "./assets/logo.png",
     "96": "./assets/logo.png"
   },
+  "content_scripts": [
+    {
+      "matches": ["*://localhost/*"],
+      "js": ["./worker.js"]
+    }
+  ],
+  "background": {
+    "scripts": ["./background.js"]
+  },
   "devtools_page": "./devtools.html"
 }

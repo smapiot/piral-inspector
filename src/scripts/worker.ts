@@ -1,5 +1,5 @@
 import browser from 'webextension-polyfill';
-import { PiWorkerMessage, PiHostMessage } from './types';
+import { PiWorkerMessage, PiHostMessage } from '../types';
 
 let available = false;
 

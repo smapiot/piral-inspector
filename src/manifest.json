@@ -12,11 +12,11 @@
   "content_scripts": [
     {
       "matches": ["*://localhost/*"],
-      "js": ["./worker.js"]
+      "js": ["./scripts/worker.js"]
     }
   ],
   "background": {
-    "scripts": ["./background.js"]
+    "scripts": ["./scripts/background.js"]
   },
   "devtools_page": "./devtools.html"
 }

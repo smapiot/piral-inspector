@@ -27,20 +27,21 @@
     "last 5 firefox version"
   ],
   "scripts": {
-    "start": "npm run start:firefox",
-    "start:firefox": "npm run copy-static-files && concurrently --kill-others \"npm run parcel:watch\" \"npm run web-ext:firefox\"",
-    "copy-static-files": "cpx \"src/**/*.{json,png,svg}\" dist && cpx manifest.json dist",
-    "parcel:watch": "parcel watch --no-hmr src/devtools.html",
-    "parcel:build": "parcel build src/devtools.html",
-    "web-ext:firefox": "web-ext run --source-dir dist",
+    "start": "npm run watch:firefox",
+    "watch:firefox": "concurrently --kill-others \"npm run watch:parcel\" \"npm run watch:web-ext\"",
+    "build:firefox": "npm run build:parcel && npm run build:web-ext",
+    "watch:parcel": "parcel watch --no-hmr src/devtools.html",
+    "build:parcel": "parcel build src/devtools.html",
+    "watch:web-ext": "web-ext run --source-dir dist",
+    "build:web-ext": "web-ext build --source-dir dist",
     "prettify": "prettier --config prettier.config.js --write \"src/**/*.{ts,tsx}\""
   },
   "devDependencies": {
     "@types/react": "^16.9.19",
     "@types/react-dom": "^16.9.5",
     "concurrently": "^5.0.2",
-    "cpx": "^1.5.0",
     "parcel-bundler": "^1.12.4",
+    "parcel-plugin-json-url-loader": "^0.1.2",
     "prettier": "^1.19.1",
     "typescript": "^3.7.5",
     "web-ext": "^4.0.0"

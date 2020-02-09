@@ -28,17 +28,20 @@
   ],
   "scripts": {
     "start": "npm run watch:firefox",
-    "watch:firefox": "concurrently --kill-others \"npm run watch:parcel\" \"npm run watch:web-ext\"",
-    "build:firefox": "npm run build:parcel && npm run build:web-ext",
-    "watch:parcel": "parcel watch --no-hmr src/devtools.html",
-    "build:parcel": "parcel build src/devtools.html",
-    "watch:web-ext": "web-ext run --source-dir dist",
-    "build:web-ext": "web-ext build --source-dir dist",
+    "watch:firefox": "concurrently --kill-others \"npm run watch:parcel-ff\" \"npm run watch:web-ext\"",
+    "build:firefox": "npm run build:parcel-ff && npm run build:web-ext",
+    "deploy:firefox": "rm -rf dist/firefox && npm run build:firefox && shipit firefox dist/firefox",
+    "deploy:chrome": "rm -rf dist/chrome && npm run build:chrome && shipit chrome dist/chrome",
+    "watch:parcel-ff": "parcel watch --no-hmr src/devtools.html --out-dir dist/firefox",
+    "build:parcel-ff": "parcel build src/devtools.html --out-dir dist/firefox",
+    "watch:web-ext": "web-ext run --source-dir dist/firefox",
+    "build:web-ext": "web-ext build --source-dir dist/firefox",
     "prettify": "prettier --config prettier.config.js --write \"src/**/*.{ts,tsx}\""
   },
   "devDependencies": {
     "@types/react": "^16.9.19",
     "@types/react-dom": "^16.9.5",
+    "@wext/shipit": "^0.2.1",
     "concurrently": "^5.0.2",
     "parcel-bundler": "^1.12.4",
     "parcel-plugin-json-url-loader": "^0.1.2",
@@ -47,6 +50,7 @@
     "web-ext": "^4.0.0"
   },
   "dependencies": {
+    "@emotion/core": "^10.0.27",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "webextension-polyfill": "^0.6.0",

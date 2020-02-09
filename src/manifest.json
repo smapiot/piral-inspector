@@ -1,5 +1,6 @@
 {
   "manifest_version": 2,
+  "id": "{50f78a78-10d8-437f-acca-092642636873}",
   "name": "Piral Inspector",
   "version": "0.1.0",
   "description": "The official Piral developer tools browser extension.",

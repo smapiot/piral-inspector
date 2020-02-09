@@ -31,3 +31,9 @@ jobs:
         WEXT_SHIPIT_CHROME_CLIENT_ID: ${{ secrets.CHROME_CLIENTID }}
         WEXT_SHIPIT_CHROME_CLIENT_SECRET: ${{ secrets.CHROME_CLIENTSECRET }}
         WEXT_SHIPIT_CHROME_REFRESH_TOKEN: ${{ secrets.CHROME_REFRESHTOKEN }}
+    - run: npm run deploy:opera
+      if: false
+      env:
+        WEXT_SHIPIT_OPERA_EMAIL: ${{ secrets.OPERA_EMAIL }}
+        WEXT_SHIPIT_OPERA_EXTENSION_ID: ${{ secrets.OPERA_EXTENSIONID }}
+        WEXT_SHIPIT_OPERA_PASSWORD: ${{ secrets.OPERA_PASSWORD }}

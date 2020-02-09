@@ -2,13 +2,16 @@
   "manifest_version": 2,
   "id": "{6da540b7-58e7-4eee-b456-69f5a2d53c2d}",
   "name": "Piral Inspector",
-  "version": "0.1.0",
+  "short_name": "pi-inspect",
+  "version": "0.2.0",
   "description": "The official Piral developer tools browser extension.",
   "author": "smapiot",
   "homepage_url": "https://piral.io",
   "icons": {
     "48": "./assets/logo_48.png",
-    "96": "./assets/logo_96.png"
+    "64": "./assets/logo_64.png",
+    "96": "./assets/logo_96.png",
+    "128": "./assets/logo_128.png"
   },
   "content_scripts": [
     {

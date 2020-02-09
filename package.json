@@ -1,6 +1,6 @@
 {
   "name": "piral-inspector",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A DevTools extension for Piral instances and their pilets.",
   "keywords": [
     "piral",
@@ -28,14 +28,19 @@
   ],
   "scripts": {
     "start": "npm run watch:firefox",
-    "watch:firefox": "concurrently --kill-others \"npm run watch:parcel-ff\" \"npm run watch:web-ext\"",
-    "build:firefox": "npm run build:parcel-ff && npm run build:web-ext",
+    "watch:firefox": "concurrently --kill-others \"npm run watch:parcel -- --out-dir dist/firefox\" \"npm run watch:web-ext -- -s dist/firefox -t firefox-desktop\"",
+    "build:firefox": "npm run build:parcel -- --out-dir dist/firefox && npm run build:web-ext -- -s dist/firefox -a web-ext-artifacts/firefox",
     "deploy:firefox": "rm -rf dist/firefox && npm run build:firefox && shipit firefox dist/firefox",
+    "watch:chrome": "concurrently --kill-others \"npm run watch:parcel -- --out-dir dist/chrome\" \"npm run watch:web-ext -- -s dist/chrome -t chromium\"",
+    "build:chrome": "npm run build:parcel -- --out-dir dist/chrome && npm run build:web-ext -- -s dist/chrome -a web-ext-artifacts/chrome",
     "deploy:chrome": "rm -rf dist/chrome && npm run build:chrome && shipit chrome dist/chrome",
-    "watch:parcel-ff": "parcel watch --no-hmr src/devtools.html --out-dir dist/firefox",
-    "build:parcel-ff": "parcel build src/devtools.html --out-dir dist/firefox",
-    "watch:web-ext": "web-ext run --source-dir dist/firefox",
-    "build:web-ext": "web-ext build --source-dir dist/firefox",
+    "watch:opera": "concurrently --kill-others \"npm run watch:parcel -- --out-dir dist/opera\" \"npm run watch:web-ext -- -s dist/opera -t chromium\"",
+    "build:opera": "npm run build:parcel -- --out-dir dist/opera && npm run build:web-ext -- -s dist/opera -a web-ext-artifacts/opera",
+    "deploy:opera": "rm -rf dist/opera && npm run build:opera && shipit opera dist/opera",
+    "watch:parcel": "parcel watch --no-hmr src/devtools.html",
+    "build:parcel": "parcel build src/devtools.html",
+    "watch:web-ext": "web-ext run",
+    "build:web-ext": "web-ext build",
     "prettify": "prettier --config prettier.config.js --write \"src/**/*.{ts,tsx}\""
   },
   "devDependencies": {

@@ -7,8 +7,8 @@
   "author": "smapiot",
   "homepage_url": "https://piral.io",
   "icons": {
-    "48": "./assets/logo.png",
-    "96": "./assets/logo.png"
+    "48": "./assets/logo_48.png",
+    "96": "./assets/logo_96.png"
   },
   "content_scripts": [
     {

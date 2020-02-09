@@ -12,6 +12,7 @@
     "skipLibCheck": true,
     "target": "es5",
     "sourceMap": true,
+    "jsxFactory": "jsx",
     "lib": ["es6", "dom", "esnext"]
   },
   "exclude": [

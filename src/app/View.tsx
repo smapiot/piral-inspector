@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { jsx, css } from '@emotion/core';
 import { useStore } from './store';
 import { removePilet } from './commands';
 
@@ -9,7 +9,10 @@ export const View: React.FC<ViewProps> = () => {
 
   if (connected) {
     return (
-      <div>
+      <div
+        css={css`
+          color: blue;
+        `}>
         <b>
           Connected to {name} ({version})!
         </b>

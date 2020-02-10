@@ -1,32 +1,46 @@
-import { jsx, css } from '@emotion/core';
+import { FC } from 'react';
+import { jsx } from '@emotion/core';
+import { LinkPilets } from './LinkPilets';
+import { AvailablePilets } from './AvailablePilets';
+import { RegisteredRoutes } from './RegisteredRoutes';
 import { useStore } from './store';
-import { removePilet } from './commands';
+import { connectedView, notConnectedView } from './styles';
 
 export interface ViewProps {}
 
-export const View: React.FC<ViewProps> = () => {
-  const { connected, name, version, pilets } = useStore(m => m.state);
+export const View: FC<ViewProps> = () => {
+  const { connected, name, version } = useStore(m => m.state);
 
   if (connected) {
     return (
-      <div
-        css={css`
-          color: blue;
-        `}>
-        <b>
-          Connected to {name} ({version})!
-        </b>
-        <ul>
-          {pilets &&
-            pilets.map(pilet => (
-              <li key={pilet.name}>
-                {pilet.name} <button onClick={() => removePilet(pilet.name)}>x</button>
-              </li>
-            ))}
-        </ul>
+      <div css={connectedView}>
+        <h2>
+          {name} ({version})
+        </h2>
+        <div>
+          <h3>Available Pilets</h3>
+          <p>The following pilets are currently running in your Piral instance.</p>
+          <AvailablePilets />
+        </div>
+        <div>
+          <h3>Add Pilets</h3>
+          <p>You can add a feed address or an address referring to a pilet root module.</p>
+          <LinkPilets />
+        </div>
+        <div>
+          <h3>Registered Routes</h3>
+          <p>The following routes are currently registered</p>
+          <RegisteredRoutes />
+        </div>
       </div>
     );
   }
 
-  return <div>Not connected.</div>;
+  return (
+    <div css={notConnectedView}>
+      <h2>Not connected</h2>
+      <p>You are currently not running a Piral instance in debug mode.</p>
+      <p>Note that you need to run Piral v0.10 or later on localhost for Piral Inspector to work.</p>
+    </div>
+  );
 };

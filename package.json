@@ -31,7 +31,7 @@
     "watch:firefox": "concurrently --kill-others \"npm run watch:parcel -- --out-dir dist/firefox\" \"npm run watch:web-ext -- -s dist/firefox -t firefox-desktop\"",
     "build:firefox": "npm run build:parcel -- --out-dir dist/firefox && npm run build:web-ext -- -s dist/firefox -a web-ext-artifacts/firefox",
     "deploy:firefox": "rm -rf dist/firefox && npm run build:firefox && shipit firefox dist/firefox",
-    "watch:chrome": "concurrently --kill-others \"npm run watch:parcel -- --out-dir dist/chrome\" \"npm run watch:web-ext -- -s dist/chrome -t chromium\"",
+    "watch:chrome": "concurrently --kill-others \"npm run watch:parcel -- --out-dir dist/chrome\" \"npm run watch:web-ext -- -s dist/chrome -t chromium --chromium-profile \"$CHROME_PROFILE_PATH\"\"",
     "build:chrome": "npm run build:parcel -- --out-dir dist/chrome && npm run build:web-ext -- -s dist/chrome -a web-ext-artifacts/chrome",
     "deploy:chrome": "rm -rf dist/chrome && npm run build:chrome && shipit chrome dist/chrome",
     "watch:opera": "concurrently --kill-others \"npm run watch:parcel -- --out-dir dist/opera\" \"npm run watch:web-ext -- -s dist/opera -t chromium\"",
@@ -39,7 +39,7 @@
     "deploy:opera": "rm -rf dist/opera && npm run build:opera && shipit opera dist/opera",
     "watch:parcel": "parcel watch --no-hmr src/devtools.html",
     "build:parcel": "parcel build src/devtools.html",
-    "watch:web-ext": "web-ext run",
+    "watch:web-ext": "wait-on -d 6000 package.json && web-ext run",
     "build:web-ext": "web-ext build",
     "prettify": "prettier --config prettier.config.js --write \"src/**/*.{ts,tsx}\""
   },

@@ -1,3 +1,5 @@
+import { PiletMetadata } from '../types';
+
 function injectScript(content: string) {
   const script = document.createElement('script');
   script.textContent = content;
@@ -45,6 +47,67 @@ export function getPilets() {
   `);
 }
 
+export function gotoRoute(route: string) {
+  injectScript(`
+    (function() {
+      const dp = window['dbg:piral'];
+      const deps = dp.pilets.getDependencies();
+      const { useEffect } = deps['react'];
+      const { useHistory } = deps['react-router-dom'];
+      const ctx = dp.instance.context;
+      const GoToComponent = () => {
+        const history = useHistory();
+        useEffect(() => {
+          history.push(${JSON.stringify(route)});
+          return () => {};
+        }, []);
+        return null;
+      };
+      ctx.setComponent('Debug', GoToComponent);
+    })();
+  `);
+}
+
+export function getRoutes() {
+  injectScript(`
+    (function() {
+      const dp = window['dbg:piral'];
+      const ctx = dp.instance.context;
+      const registeredRoutes = ctx.readState(state => Object.keys(state.registry.pages));
+      const componentRoutes = ctx.readState(state => Object.keys(state.routes));
+      const ev = new CustomEvent('piral-routes', {
+        detail: { routes: [...componentRoutes, ...registeredRoutes] },
+      });
+      window.dispatchEvent(ev);
+    })();
+  `);
+}
+
+export function appendPilet(meta: PiletMetadata) {
+  injectScript(`
+    (function() {
+      const dp = window['dbg:piral'];
+      const ctx = dp.instance.context;
+      const { createApi, loadPilet, getDependencies } = dp.pilets;
+      const meta = ${JSON.stringify(meta)};
+      const fetcher = url =>
+        fetch(url, {
+          method: 'GET',
+          cache: 'reload',
+        }).then(m => m.text());
+      loadPilet(meta, getDependencies, fetcher).then(pilet => {
+        try {
+          const newApi = createApi(pilet);
+          ctx.injectPilet(pilet);
+          pilet.setup(newApi);
+        } catch (error) {
+          console.error(error);
+        }
+      });
+    })();
+  `);
+}
+
 export function removePilet(name: string) {
   injectScript(`
     (function() {
@@ -71,7 +134,16 @@ export function supervise() {
         if (current.modules !== previous.modules) {
           const ev = new CustomEvent('piral-pilets', {
             detail: {
-              pilets: current.modules,
+              pilets: JSON.parse(JSON.stringify(current.modules)),
+            },
+          });
+          window.dispatchEvent(ev);
+        }
+
+        if (current.registry.pages !== previous.registry.pages || current.routes !== previous.routes) {
+          const ev = new CustomEvent('piral-routes', {
+            detail: {
+              routes: [...Object.keys(current.registry.pages), ...Object.keys(current.routes)],
             },
           });
           window.dispatchEvent(ev);

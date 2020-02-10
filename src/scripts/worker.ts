@@ -1,5 +1,15 @@
 import browser from 'webextension-polyfill';
-import { check, supervise, runQuery, runCommand, getPilets, removePilet } from './helpers';
+import {
+  check,
+  supervise,
+  runQuery,
+  runCommand,
+  getPilets,
+  removePilet,
+  appendPilet,
+  getRoutes,
+  gotoRoute,
+} from './helpers';
 import { PiWorkerMessage, PiHostMessage } from '../types';
 
 let available: any = undefined;
@@ -19,6 +29,8 @@ function receiveMessage(message: PiHostMessage) {
   switch (message.type) {
     case 'check-available':
       return checkAvailable();
+    case 'append-pilet':
+      return appendPilet(message.meta);
     case 'remove-pilet':
       return removePilet(message.name);
     case 'get-pilets':
@@ -27,6 +39,10 @@ function receiveMessage(message: PiHostMessage) {
       return runCommand(message.method, message.args);
     case 'run-query':
       return runQuery(message.id, message.value);
+    case 'get-routes':
+      return getRoutes();
+    case 'goto-route':
+      return gotoRoute(message.route);
   }
 }
 
@@ -41,17 +57,12 @@ function checkAvailable() {
   }
 }
 
-window.addEventListener('piral-result', (e: CustomEvent) => {
-  sendMessage({
-    ...e.detail,
-    type: 'result',
-  });
-});
-
-window.addEventListener('piral-pilets', (e: CustomEvent) => {
-  sendMessage({
-    ...e.detail,
-    type: 'pilets',
+['result', 'pilets', 'routes'].forEach(type => {
+  window.addEventListener(`piral-${type}`, (e: CustomEvent) => {
+    sendMessage({
+      ...e.detail,
+      type,
+    });
   });
 });
 

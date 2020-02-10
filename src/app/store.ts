@@ -1,5 +1,5 @@
 import create, { SetState } from 'zustand';
-import { triggerPiletUpdate } from './commands';
+import { triggerPiletUpdate, triggerRouteUpdate } from './commands';
 
 export interface StoreState {
   connected: boolean;
@@ -7,12 +7,14 @@ export interface StoreState {
   version?: string;
   kind?: string;
   pilets?: Array<any>;
+  routes?: Array<any>;
 }
 
 export interface StoreActions {
   connect(name: string, version: string, kind: string): void;
   disconnect(): void;
-  update(pilets: Array<any>): void;
+  updatePilets(pilets: Array<any>): void;
+  updateRoutes(routes: Array<string>): void;
 }
 
 export interface Store {
@@ -42,17 +44,25 @@ const [useStore] = create<Store>(set => ({
         version,
         kind,
         pilets: [],
+        routes: [],
       }));
       triggerPiletUpdate();
+      triggerRouteUpdate();
     },
     disconnect() {
       dispatch(set, () => ({
         connected: false,
       }));
     },
-    update(pilets) {
+    updatePilets(pilets) {
       dispatch(set, () => ({
         pilets,
+      }));
+    },
+    updateRoutes(routes) {
+      routes.sort();
+      dispatch(set, () => ({
+        routes,
       }));
     },
   },

@@ -35,7 +35,7 @@ function connectPanel(panel: any) {
   });
 
   panel.onHidden.addListener(() => {
-    port.disconnect();
+    port?.disconnect();
     port = undefined;
   });
 }

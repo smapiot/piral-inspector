@@ -1,6 +1,11 @@
 {
   "manifest_version": 2,
-  "id": "{6da540b7-58e7-4eee-b456-69f5a2d53c2d}",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{6da540b7-58e7-4eee-b456-69f5a2d53c2d}",
+      "strict_min_version": "52.0"
+    }
+  },
   "name": "Piral Inspector",
   "short_name": "pi-inspect",
   "version": "0.2.0",

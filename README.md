@@ -1,16 +1,28 @@
-# piral-inspector
+[![Piral Logo](https://github.com/smapiot/piral/raw/master/docs/assets/logo.png)](https://piral.io)
+
+# [Piral Inspector](https://piral.io) &middot; [![GitHub License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/smapiot/piral-inspector/blob/master/LICENSE) [![GitHub Tag](https://img.shields.io/github/tag/smapiot/piral-inspector.svg)](https://github.com/smapiot/piral-inspector/releases) [![GitHub Issues](https://img.shields.io/github/issues/smapiot/piral-inspector.svg)](https://github.com/smapiot/piral-inspector/issues) [![Gitter Chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/piral-io/community) [![CLA Assistant](https://cla-assistant.io/readme/badge/smapiot/piral)](https://cla-assistant.io/smapiot/piral)
 
 A DevTools extension for Piral instances and their pilets.
 
 ## Download Links
 
-- [Firefox Add-Ons](https://addons.mozilla.org)
+- [Firefox Add-Ons](https://addons.mozilla.org/en-US/firefox/addon/piral-inspector/)
 - [Chrome Marketplace](https://chrome.google.com/webstore/detail/piral-inspector/ikbpelpjfgmplidagknaaegjhfigcbfl)
 - [Opera Addons](https://addons.opera.com/en/extensions/details/piral-inspector/)
 
 ## Description
 
 This simple devtools extension lets you inspect and manipulate your Piral instance for debugging purposes. It only works when either debugging a Piral instance or running a pilet in an emulator version of a Piral instance.
+
+## Functionality
+
+Right now the Piral Inspector comes with the following set of functionality:
+
+- Detection of the running Piral instance (name, version)
+- See and call the registered routes
+- See and unload the loaded pilets
+- Load new pilets from their root module URL
+- Load new pilets from a given feed URL
 
 ## How to Build
 

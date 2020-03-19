@@ -1,4 +1,4 @@
-import { FC, useState, createElement } from 'react';
+import { FC, useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, Input } from 'reactstrap';
 import { jsx } from '@emotion/core';
 import { goToRoute } from './commands';
@@ -11,7 +11,7 @@ export interface ConfigureRouteModalProps {
 }
 
 export const ConfigureRouteModal: FC<ConfigureRouteModalProps> = ({ parameters, isOpen, toggle, route }) => {
-  const [values, setValues] = useState(['/foo/bar']);
+  const [values, setValues] = useState(parameters);
   const setValue = (n: string, i: number) => setValues(values.map((o, j) => (i !== j ? o : n)));
   const send = () => {
     let url = route;

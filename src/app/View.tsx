@@ -4,7 +4,7 @@ import { LinkPilets } from './LinkPilets';
 import { AvailablePilets } from './AvailablePilets';
 import { RegisteredRoutes } from './RegisteredRoutes';
 import { useStore } from './store';
-import { connectedView, notConnectedView } from './styles';
+import { connectedView, notConnectedView, appSectionView } from './styles';
 
 export interface ViewProps {}
 
@@ -17,19 +17,19 @@ export const View: FC<ViewProps> = () => {
         <h2>
           {name} ({version})
         </h2>
-        <div>
+        <div css={appSectionView}>
           <h3>Available Pilets</h3>
           <p>The following pilets are currently running in your Piral instance.</p>
           <AvailablePilets />
         </div>
-        <div>
+        <div css={appSectionView}>
           <h3>Add Pilets</h3>
           <p>You can add a feed address or an address referring to a pilet root module.</p>
           <LinkPilets />
         </div>
-        <div>
+        <div css={appSectionView}>
           <h3>Registered Routes</h3>
-          <p>The following routes are currently registered</p>
+          <p>The following routes are currently registered.</p>
           <RegisteredRoutes />
         </div>
       </div>

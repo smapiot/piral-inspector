@@ -20,3 +20,7 @@ export const notConnectedView = css`
     margin: 0.5em 0;
   }
 `;
+
+export const appSectionView = css`
+  margin-top: 1.5em;
+`;

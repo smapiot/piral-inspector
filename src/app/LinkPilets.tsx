@@ -1,5 +1,5 @@
 import { FC, useState, SyntheticEvent } from 'react';
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Button, Form, Input, InputGroup, InputGroupAddon } from 'reactstrap';
 import { jsx } from '@emotion/core';
 import { appendPilet } from './commands';
 
@@ -38,8 +38,14 @@ export const LinkPilets: FC<LinkPiletsProps> = () => {
 
   return (
     <Form onSubmit={submit}>
-      <Input type="text" value={url} onChange={e => setUrl(e.currentTarget.value)} />
-      <Button color="primary" disabled={url === ''}>Add</Button>
+      <InputGroup>
+        <Input type="text" value={url} onChange={e => setUrl(e.currentTarget.value)} />
+        <InputGroupAddon addonType="append">
+          <Button color="primary" disabled={url === ''}>
+            Add
+          </Button>
+        </InputGroupAddon>
+      </InputGroup>
     </Form>
   );
 };

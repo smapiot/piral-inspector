@@ -8,5 +8,10 @@ export interface RegisteredRoutesProps {}
 
 export const RegisteredRoutes: FC<RegisteredRoutesProps> = () => {
   const { routes } = useStore(m => m.state);
-  return <ListGroup>{routes && routes.map(route => <ShowRoute key={route} route={route} />)}</ListGroup>;
+  return (
+    <ListGroup>
+      {routes && routes.map(route => <ShowRoute key={route} route={route} />)}
+      <ShowRoute route="/:custom" />
+    </ListGroup>
+  );
 };

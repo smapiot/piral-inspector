@@ -1,6 +1,6 @@
 {
   "name": "piral-inspector",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A DevTools extension for Piral instances and their pilets.",
   "keywords": [
     "piral",
@@ -44,21 +44,24 @@
     "prettify": "prettier --config prettier.config.js --write \"src/**/*.{ts,tsx}\""
   },
   "devDependencies": {
-    "@types/react": "^16.9.19",
+    "@types/react": "^16.9.23",
     "@types/react-dom": "^16.9.5",
+    "@types/reactstrap": "^8.4.2",
     "@wext/shipit": "^0.2.1",
     "concurrently": "^5.0.2",
     "parcel-bundler": "^1.12.4",
     "parcel-plugin-json-url-loader": "^0.1.2",
     "prettier": "^1.19.1",
-    "typescript": "^3.7.5",
-    "web-ext": "^4.0.0"
+    "typescript": "^3.8.3",
+    "web-ext": "^4.1.0"
   },
   "dependencies": {
-    "@emotion/core": "^10.0.27",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
+    "@emotion/core": "^10.0.28",
+    "bootstrap": "^4.4.1",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
+    "reactstrap": "^8.4.1",
     "webextension-polyfill": "^0.6.0",
-    "zustand": "^2.2.2"
+    "zustand": "^2.2.3"
   }
 }

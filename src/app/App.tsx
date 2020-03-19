@@ -26,9 +26,7 @@ export const App: FC<AppProps> = () => {
     };
     window.addEventListener('pi-recv-response', handler);
 
-    return () => {
-      window.removeEventListener('pi-recv-response', handler);
-    };
+    return () => window.removeEventListener('pi-recv-response', handler);
   }, []);
 
   return <View />;

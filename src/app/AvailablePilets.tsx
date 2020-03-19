@@ -1,21 +1,22 @@
 import { FC } from 'react';
+import { ListGroup, ListGroupItem, Button } from 'reactstrap';
 import { jsx } from '@emotion/core';
 import { removePilet } from './commands';
 import { useStore } from './store';
-import { piletListView } from './styles';
 
 export interface AvailablePiletsProps {}
 
 export const AvailablePilets: FC<AvailablePiletsProps> = () => {
   const { pilets } = useStore(m => m.state);
   return (
-    <ul css={piletListView}>
+    <ListGroup>
       {pilets &&
         pilets.map(pilet => (
-          <li key={pilet.name}>
-            <button onClick={() => removePilet(pilet.name)}>x</button> {pilet.name}
-          </li>
+          <ListGroupItem key={pilet.name}>
+            <Button onClick={() => removePilet(pilet.name)} close />
+            {pilet.name}
+          </ListGroupItem>
         ))}
-    </ul>
+    </ListGroup>
   );
 };

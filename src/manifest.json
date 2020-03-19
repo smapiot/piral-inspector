@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "browser_specific_settings": {
     "gecko": {
-      "id": "{6da540b7-58e7-4eee-b456-69f5a2d53c2d}",
+      "id": "{9d4683ff-8d9c-40ad-adb4-9fa895a3a0d7}",
       "strict_min_version": "52.0"
     }
   },

@@ -14,6 +14,12 @@ A DevTools extension for Piral instances and their pilets.
 
 This simple devtools extension lets you inspect and manipulate your Piral instance for debugging purposes. It only works when either debugging a Piral instance or running a pilet in an emulator version of a Piral instance.
 
+## Introductory Video
+
+We placed a quick introduction video on YouTube.
+
+[![Piral Inspector](http://img.youtube.com/vi/8CE7_X01NmM/0.jpg)](http://www.youtube.com/watch?v=8CE7_X01NmM "Piral Inspector")
+
 ## Functionality
 
 Right now the Piral Inspector comes with the following set of functionality:
@@ -21,8 +27,10 @@ Right now the Piral Inspector comes with the following set of functionality:
 - Detection of the running Piral instance (name, version)
 - See and call the registered routes
 - See and unload the loaded pilets
+- Toggle global settings such as state container logging
 - Load new pilets from their root module URL
 - Load new pilets from a given feed URL
+- Load new pilets from a tarball
 
 ## How to Build
 

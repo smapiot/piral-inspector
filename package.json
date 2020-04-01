@@ -1,6 +1,6 @@
 {
   "name": "piral-inspector",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "A DevTools extension for Piral instances and their pilets.",
   "keywords": [
     "piral",
@@ -62,7 +62,7 @@
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "reactstrap": "^8.4.1",
-    "webextension-polyfill": "^0.6.0",
+    "webextension-polyfill-ts": "0.14.0",
     "zustand": "^2.2.3"
   }
 }

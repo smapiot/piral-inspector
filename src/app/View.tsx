@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { jsx } from '@emotion/core';
 import { LinkPilets } from './LinkPilets';
+import { BasicInfo } from './BasicInfo';
 import { AvailablePilets } from './AvailablePilets';
 import { RegisteredRoutes } from './RegisteredRoutes';
 import { useStore } from './store';
@@ -9,14 +10,12 @@ import { connectedView, notConnectedView, appSectionView } from './styles';
 export interface ViewProps {}
 
 export const View: FC<ViewProps> = () => {
-  const { connected, name, version } = useStore(m => m.state);
+  const { connected } = useStore(m => m.state);
 
   if (connected) {
     return (
       <div css={connectedView}>
-        <h2>
-          {name} ({version})
-        </h2>
+        <BasicInfo />
         <div css={appSectionView}>
           <h3>Available Pilets</h3>
           <p>The following pilets are currently running in your Piral instance.</p>

@@ -1,7 +1,8 @@
-import { useEffect, FC } from 'react';
-import { jsx } from '@emotion/core';
+import { useEffect, FC, Fragment } from 'react';
+import { jsx, Global } from '@emotion/core';
 import { View } from './View';
 import { useStore } from './store';
+import { globalView } from './styles';
 import { PiWorkerMessage } from '../types';
 
 export interface AppProps {}
@@ -22,6 +23,8 @@ export const App: FC<AppProps> = () => {
           return actions.updatePilets(message.pilets);
         case 'routes':
           return actions.updateRoutes(message.routes);
+        case 'settings':
+          return actions.updateSettings(message.settings);
       }
     };
     window.addEventListener('pi-recv-response', handler);
@@ -29,5 +32,10 @@ export const App: FC<AppProps> = () => {
     return () => window.removeEventListener('pi-recv-response', handler);
   }, []);
 
-  return <View />;
+  return (
+    <Fragment>
+      <Global styles={globalView} />
+      <View />
+    </Fragment>
+  );
 };

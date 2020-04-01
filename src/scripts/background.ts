@@ -1,4 +1,4 @@
-import browser from 'webextension-polyfill';
+import {browser} from 'webextension-polyfill-ts';
 
 const tabs: Record<string, any> = {};
 let host = undefined;

@@ -3,7 +3,8 @@ export type PiWorkerMessage =
   | PiWorkerUnavailable
   | PiWorkerResult
   | PiWorkerPilets
-  | PiWorkerRoutes;
+  | PiWorkerRoutes
+  | PiWorkerSettings;
 
 export interface PiWorkerAvailable {
   type: 'available';
@@ -32,6 +33,16 @@ export interface PiWorkerRoutes {
   routes: Array<string>;
 }
 
+export interface PiWorkerSettings {
+  type: 'settings';
+  settings: PiralDebugSettings;
+}
+
+export interface PiralDebugSettings {
+  viewState: boolean;
+  loadPilets: boolean;
+}
+
 export interface PiletMetadata {
   name: string;
   version: string;
@@ -47,9 +58,16 @@ export type PiHostMessage =
   | PiHostGetRoutes
   | PiHostGotoRoute
   | PiHostGetPilets
+  | PiHostGetSettings
   | PiHostRemovePilet
   | PiHostAppendPilet
-  | PiHostRunCommand;
+  | PiHostRunCommand
+  | PiHostUpdateSettings;
+
+export interface PiHostUpdateSettings {
+  type: 'update-settings';
+  settings: PiralDebugSettings;
+}
 
 export interface PiHostRemovePilet {
   type: 'remove-pilet';
@@ -72,6 +90,10 @@ export interface PiHostGotoRoute {
 
 export interface PiHostGetPilets {
   type: 'get-pilets';
+}
+
+export interface PiHostGetSettings {
+  type: 'get-settings';
 }
 
 export interface PiHostGetRoutes {

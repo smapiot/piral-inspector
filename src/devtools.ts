@@ -1,4 +1,4 @@
-import browser from 'webextension-polyfill';
+import { browser } from 'webextension-polyfill-ts';
 import { PiWorkerMessage, PiHostMessage } from './types';
 
 function initPanel() {
@@ -17,7 +17,7 @@ function connectPanel(panel: any) {
   };
 
   panel.onShown.addListener((panelWindow: Window) => {
-    port = browser.runtime.connect({ name: 'piral-inspector-host' });
+    port = browser.runtime.connect(undefined, { name: 'piral-inspector-host' });
     port.onMessage.addListener((message: PiWorkerMessage) => {
       const e = new CustomEvent<PiWorkerMessage>('pi-recv-response', {
         detail: message,

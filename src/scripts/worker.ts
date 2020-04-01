@@ -1,4 +1,4 @@
-import browser from 'webextension-polyfill';
+import { browser } from 'webextension-polyfill-ts';
 import {
   check,
   supervise,
@@ -9,12 +9,14 @@ import {
   appendPilet,
   getRoutes,
   gotoRoute,
+  getSettings,
+  setSettings,
 } from './helpers';
 import { PiWorkerMessage, PiHostMessage } from '../types';
 
 let available: any = undefined;
 
-const port = browser.runtime.connect({
+const port = browser.runtime.connect(undefined, {
   name: 'piral-inspector-worker',
 });
 
@@ -43,6 +45,10 @@ function receiveMessage(message: PiHostMessage) {
       return getRoutes();
     case 'goto-route':
       return gotoRoute(message.route);
+    case 'get-settings':
+      return getSettings();
+    case 'update-settings':
+      return setSettings(message.settings);
   }
 }
 
@@ -57,7 +63,7 @@ function checkAvailable() {
   }
 }
 
-['result', 'pilets', 'routes'].forEach(type => {
+['result', 'pilets', 'routes', 'settings'].forEach(type => {
   window.addEventListener(`piral-${type}`, (e: CustomEvent) => {
     sendMessage({
       ...e.detail,

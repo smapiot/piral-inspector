@@ -1,10 +1,16 @@
-import { PiHostMessage, PiletMetadata } from '../types';
+import { PiHostMessage, PiletMetadata, PiralDebugSettings } from '../types';
 
 function emit(detail: PiHostMessage) {
   const ev = new CustomEvent('pi-send-request', {
     detail,
   });
   window.dispatchEvent(ev);
+}
+
+export function triggerSettingsUpdate() {
+  emit({
+    type: 'get-settings',
+  });
 }
 
 export function triggerPiletUpdate() {
@@ -37,5 +43,12 @@ export function appendPilet(meta: PiletMetadata) {
   emit({
     type: 'append-pilet',
     meta,
+  });
+}
+
+export function updateSettings(settings: PiralDebugSettings) {
+  emit({
+    type: 'update-settings',
+    settings,
   });
 }

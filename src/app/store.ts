@@ -1,5 +1,6 @@
 import create, { SetState } from 'zustand';
-import { triggerPiletUpdate, triggerRouteUpdate } from './commands';
+import { triggerPiletUpdate, triggerRouteUpdate, triggerSettingsUpdate } from './commands';
+import { PiralDebugSettings } from '../types';
 
 export interface StoreState {
   connected: boolean;
@@ -8,6 +9,7 @@ export interface StoreState {
   kind?: string;
   pilets?: Array<any>;
   routes?: Array<any>;
+  settings?: PiralDebugSettings;
 }
 
 export interface StoreActions {
@@ -15,6 +17,7 @@ export interface StoreActions {
   disconnect(): void;
   updatePilets(pilets: Array<any>): void;
   updateRoutes(routes: Array<string>): void;
+  updateSettings(settings: PiralDebugSettings): void;
 }
 
 export interface Store {
@@ -45,9 +48,14 @@ const [useStore] = create<Store>(set => ({
         kind,
         pilets: [],
         routes: [],
+        settings: {
+          loadPilets: false,
+          viewState: true,
+        },
       }));
       triggerPiletUpdate();
       triggerRouteUpdate();
+      triggerSettingsUpdate();
     },
     disconnect() {
       dispatch(set, () => ({
@@ -63,6 +71,11 @@ const [useStore] = create<Store>(set => ({
       routes.sort();
       dispatch(set, () => ({
         routes,
+      }));
+    },
+    updateSettings(settings) {
+      dispatch(set, () => ({
+        settings,
       }));
     },
   },

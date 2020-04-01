@@ -1,4 +1,4 @@
-import { PiletMetadata } from '../types';
+import { PiletMetadata, PiralDebugSettings } from '../types';
 
 function injectScript(content: string) {
   const script = document.createElement('script');
@@ -44,6 +44,26 @@ export function getPilets() {
       detail: { pilets },
     });
     window.dispatchEvent(ev);
+  `);
+}
+
+export function getSettings() {
+  injectScript(`
+    const viewState = sessionStorage.getItem('dbg:view-state') !== 'off';
+    const loadPilets = sessionStorage.getItem('dbg:load-pilets') === 'on';
+    const ev = new CustomEvent('piral-settings', {
+      detail: { viewState, loadPilets },
+    });
+    window.dispatchEvent(ev);
+  `);
+}
+
+export function setSettings(settings: PiralDebugSettings) {
+  const viewState = JSON.stringify(settings.viewState ? 'on' : 'off');
+  const loadPilets = JSON.stringify(settings.loadPilets ? 'on' : 'off');
+  injectScript(`
+    sessionStorage.setItem('dbg:view-state', ${viewState});
+    sessionStorage.setItem('dbg:load-pilets', ${loadPilets});
   `);
 }
 

@@ -1,7 +1,8 @@
 import { FC } from 'react';
 import { jsx } from '@emotion/core';
-import { LinkPilets } from './LinkPilets';
 import { BasicInfo } from './BasicInfo';
+import { LinkPilets } from './LinkPilets';
+import { UploadPilets } from './UploadPilets';
 import { AvailablePilets } from './AvailablePilets';
 import { RegisteredRoutes } from './RegisteredRoutes';
 import { useStore } from './store';
@@ -25,6 +26,8 @@ export const View: FC<ViewProps> = () => {
           <h3>Add Pilets</h3>
           <p>You can add a feed address or an address referring to a pilet root module.</p>
           <LinkPilets />
+          <p>Alternatively, you can also bundle a local pilet and upload it here, too.</p>
+          <UploadPilets />
         </div>
         <div css={appSectionView}>
           <h3>Registered Routes</h3>

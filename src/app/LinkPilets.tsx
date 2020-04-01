@@ -1,5 +1,5 @@
 import { FC, useState, SyntheticEvent } from 'react';
-import { Button, Form, Input, InputGroup, InputGroupAddon } from 'reactstrap';
+import { Button, Form, Input, InputGroup, InputGroupAddon, CustomInput } from 'reactstrap';
 import { jsx } from '@emotion/core';
 import { appendPilet } from './commands';
 

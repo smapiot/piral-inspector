@@ -25,6 +25,10 @@ export const notConnectedView = css`
 
 export const appSectionView = css`
   margin-top: 1.5em;
+
+  > p {
+    margin-top: 1em;
+  }
 `;
 
 export const basicInfoView = css`
@@ -34,6 +38,10 @@ export const basicInfoView = css`
 
   h2 {
     flex: 1;
+  }
+
+  a {
+    padding: 1em;
   }
 
   a > svg {

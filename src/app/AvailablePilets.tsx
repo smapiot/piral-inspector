@@ -7,7 +7,7 @@ import { useStore } from './store';
 export interface AvailablePiletsProps {}
 
 export const AvailablePilets: FC<AvailablePiletsProps> = () => {
-  const { pilets } = useStore(m => m.state);
+  const pilets = useStore(m => m.state.pilets);
   return (
     <ListGroup>
       {pilets &&

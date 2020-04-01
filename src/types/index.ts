@@ -4,13 +4,20 @@ export type PiWorkerMessage =
   | PiWorkerResult
   | PiWorkerPilets
   | PiWorkerRoutes
-  | PiWorkerSettings;
+  | PiWorkerSettings
+  | PiWorkerEvent;
 
 export interface PiWorkerAvailable {
   type: 'available';
   name: string;
   version: string;
   kind: 'v0';
+}
+
+export interface PiWorkerEvent {
+  type: 'event';
+  name: string;
+  args: any;
 }
 
 export interface PiWorkerUnavailable {
@@ -54,6 +61,7 @@ export interface PiletMetadata {
 
 export type PiHostMessage =
   | PiHostCheckAvailable
+  | PiHostListenToEvents
   | PiHostRunQuery
   | PiHostGetRoutes
   | PiHostGotoRoute
@@ -86,6 +94,10 @@ export interface PiHostCheckAvailable {
 export interface PiHostGotoRoute {
   type: 'goto-route';
   route: string;
+}
+
+export interface PiHostListenToEvents {
+  type: 'listen-events';
 }
 
 export interface PiHostGetPilets {

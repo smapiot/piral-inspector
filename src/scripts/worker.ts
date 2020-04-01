@@ -11,6 +11,7 @@ import {
   gotoRoute,
   getSettings,
   setSettings,
+  listenToEvents,
 } from './helpers';
 import { PiWorkerMessage, PiHostMessage } from '../types';
 
@@ -35,6 +36,8 @@ function receiveMessage(message: PiHostMessage) {
       return appendPilet(message.meta);
     case 'remove-pilet':
       return removePilet(message.name);
+    case 'listen-events':
+      return listenToEvents();
     case 'get-pilets':
       return getPilets();
     case 'run-command':
@@ -63,7 +66,7 @@ function checkAvailable() {
   }
 }
 
-['result', 'pilets', 'routes', 'settings'].forEach(type => {
+['result', 'pilets', 'routes', 'settings', 'event'].forEach(type => {
   window.addEventListener(`piral-${type}`, (e: CustomEvent) => {
     sendMessage({
       ...e.detail,

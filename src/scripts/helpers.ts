@@ -122,6 +122,26 @@ export function appendPilet(meta: PiletMetadata) {
   `);
 }
 
+export function listenToEvents() {
+  injectScript(`
+    const _ = document.body.dispatchEvent;
+    document.body.dispatchEvent = function (e) {
+      _.call(this, e);
+
+      if (e.type.startsWith('piral-')) {
+        const ev = new CustomEvent('piral-event', {
+          detail: {
+            name: e.type.replace('piral-', ''),
+            args: e.detail.arg,
+          },
+        });
+
+        window.dispatchEvent(ev);
+      }
+    };
+  `);
+}
+
 export function removePilet(name: string) {
   injectScript(`
     const dp = window['dbg:piral'];

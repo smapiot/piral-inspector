@@ -25,6 +25,8 @@ export const App: FC<AppProps> = () => {
           return actions.updateRoutes(message.routes);
         case 'settings':
           return actions.updateSettings(message.settings);
+        case 'event':
+          return actions.recordEvent(message.name, message.args);
       }
     };
     window.addEventListener('pi-recv-response', handler);

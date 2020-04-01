@@ -1,3 +1,4 @@
+import { browser } from 'webextension-polyfill-ts';
 import { FC, SyntheticEvent } from 'react';
 import { CustomInput } from 'reactstrap';
 import { jsx } from '@emotion/core';

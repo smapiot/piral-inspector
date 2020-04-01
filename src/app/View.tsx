@@ -3,6 +3,7 @@ import { jsx } from '@emotion/core';
 import { BasicInfo } from './BasicInfo';
 import { LinkPilets } from './LinkPilets';
 import { UploadPilets } from './UploadPilets';
+import { RecordedEvents } from './RecordedEvents';
 import { AvailablePilets } from './AvailablePilets';
 import { RegisteredRoutes } from './RegisteredRoutes';
 import { useStore } from './store';
@@ -33,6 +34,11 @@ export const View: FC<ViewProps> = () => {
           <h3>Registered Routes</h3>
           <p>The following routes are currently registered.</p>
           <RegisteredRoutes />
+        </div>
+        <div css={appSectionView}>
+          <h3>Events</h3>
+          <p>These events from the Piral instance have been recorded so far.</p>
+          <RecordedEvents />
         </div>
       </div>
     );

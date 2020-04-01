@@ -7,6 +7,19 @@ function emit(detail: PiHostMessage) {
   window.dispatchEvent(ev);
 }
 
+export function initialize() {
+  triggerPiletUpdate();
+  triggerRouteUpdate();
+  triggerSettingsUpdate();
+  triggerEventListen();
+}
+
+export function triggerEventListen() {
+  emit({
+    type: 'listen-events',
+  });
+}
+
 export function triggerSettingsUpdate() {
   emit({
     type: 'get-settings',

@@ -1,6 +1,6 @@
 import create, { SetState } from 'zustand';
 import { initialize } from './commands';
-import { PiralDebugSettings } from '../types';
+import { PiralDebugSettings, PiralEvent } from '../types';
 
 export interface StoreState {
   connected: boolean;
@@ -9,12 +9,7 @@ export interface StoreState {
   kind?: string;
   pilets?: Array<any>;
   routes?: Array<any>;
-  events?: Array<{
-    id: string;
-    name: string;
-    time: number;
-    args: any;
-  }>;
+  events?: Array<PiralEvent>;
   settings?: PiralDebugSettings;
 }
 
@@ -24,7 +19,7 @@ export interface StoreActions {
   updatePilets(pilets: Array<any>): void;
   updateRoutes(routes: Array<string>): void;
   updateSettings(settings: PiralDebugSettings): void;
-  recordEvent(name: string, arg: any): void;
+  updateEvents(events: Array<PiralEvent>): void;
 }
 
 export interface Store {
@@ -84,10 +79,9 @@ const [useStore] = create<Store>(set => ({
         settings,
       }));
     },
-    recordEvent(name, args) {
-      const time = Date.now();
-      dispatch(set, state => ({
-        events: [{ id: state.events.length.toString(), name, time, args }, ...state.events],
+    updateEvents(events) {
+      dispatch(set, () => ({
+        events,
       }));
     },
   },

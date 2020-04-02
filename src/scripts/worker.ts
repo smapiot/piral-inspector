@@ -13,9 +13,10 @@ import {
   setSettings,
   listenToEvents,
 } from './helpers';
-import { PiWorkerMessage, PiHostMessage } from '../types';
+import { PiWorkerMessage, PiHostMessage, PiralEvent } from '../types';
 
 let available: any = undefined;
+const events: Array<PiralEvent> = [];
 
 const port = browser.runtime.connect(undefined, {
   name: 'piral-inspector-worker',
@@ -36,8 +37,8 @@ function receiveMessage(message: PiHostMessage) {
       return appendPilet(message.meta);
     case 'remove-pilet':
       return removePilet(message.name);
-    case 'listen-events':
-      return listenToEvents();
+    case 'get-events':
+      return getEvents();
     case 'get-pilets':
       return getPilets();
     case 'run-command':
@@ -66,7 +67,14 @@ function checkAvailable() {
   }
 }
 
-['result', 'pilets', 'routes', 'settings', 'event'].forEach(type => {
+function getEvents() {
+  sendMessage({
+    events,
+    type: 'events',
+  });
+}
+
+['result', 'pilets', 'routes', 'settings'].forEach(type => {
   window.addEventListener(`piral-${type}`, (e: CustomEvent) => {
     sendMessage({
       ...e.detail,
@@ -75,9 +83,19 @@ function checkAvailable() {
   });
 });
 
+window.addEventListener('piral-event', (e: CustomEvent) => {
+  events.unshift({
+    id: events.length.toString(),
+    time: Date.now(),
+    ...e.detail,
+  });
+  getEvents();
+});
+
 window.addEventListener('piral-found', (e: CustomEvent) => {
   available = e.detail;
   checkAvailable();
+  listenToEvents();
   console.info('Piral Inspector connected!');
 });
 

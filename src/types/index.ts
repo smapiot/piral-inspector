@@ -5,7 +5,7 @@ export type PiWorkerMessage =
   | PiWorkerPilets
   | PiWorkerRoutes
   | PiWorkerSettings
-  | PiWorkerEvent;
+  | PiWorkerEvents;
 
 export interface PiWorkerAvailable {
   type: 'available';
@@ -14,10 +14,9 @@ export interface PiWorkerAvailable {
   kind: 'v0';
 }
 
-export interface PiWorkerEvent {
-  type: 'event';
-  name: string;
-  args: any;
+export interface PiWorkerEvents {
+  type: 'events';
+  events: Array<PiralEvent>;
 }
 
 export interface PiWorkerUnavailable {
@@ -45,6 +44,13 @@ export interface PiWorkerSettings {
   settings: PiralDebugSettings;
 }
 
+export interface PiralEvent {
+  id: string;
+  name: string;
+  time: number;
+  args: any;
+}
+
 export interface PiralDebugSettings {
   viewState: boolean;
   loadPilets: boolean;
@@ -61,7 +67,7 @@ export interface PiletMetadata {
 
 export type PiHostMessage =
   | PiHostCheckAvailable
-  | PiHostListenToEvents
+  | PiHostGetEvents
   | PiHostRunQuery
   | PiHostGetRoutes
   | PiHostGotoRoute
@@ -96,8 +102,8 @@ export interface PiHostGotoRoute {
   route: string;
 }
 
-export interface PiHostListenToEvents {
-  type: 'listen-events';
+export interface PiHostGetEvents {
+  type: 'get-events';
 }
 
 export interface PiHostGetPilets {

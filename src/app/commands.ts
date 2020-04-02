@@ -11,12 +11,12 @@ export function initialize() {
   triggerPiletUpdate();
   triggerRouteUpdate();
   triggerSettingsUpdate();
-  triggerEventListen();
+  triggerEventsUpdate();
 }
 
-export function triggerEventListen() {
+export function triggerEventsUpdate() {
   emit({
-    type: 'listen-events',
+    type: 'get-events',
   });
 }
 

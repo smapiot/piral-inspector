@@ -96,9 +96,11 @@ window.addEventListener('piral-event', (e: CustomEvent) => {
 });
 
 window.addEventListener('piral-found', (e: CustomEvent) => {
+  clearTimeout(checkInterval);
   available = e.detail;
   checkAvailable();
   listenToEvents();
+  supervise();
   console.info('Piral Inspector connected!');
 });
 
@@ -109,5 +111,4 @@ window.addEventListener('unload', () => {
   });
 });
 
-check();
-supervise();
+const checkInterval = setInterval(check, 1000);

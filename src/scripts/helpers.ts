@@ -47,6 +47,14 @@ export function getPilets() {
   `);
 }
 
+export function sendEvent(name: string, args: any) {
+  injectScript(`
+    const dp = window['dbg:piral'];
+    const ctx = dp.instance.context;
+    ctx.emit(${JSON.stringify(name)}, ${JSON.stringify(args)});
+  `);
+}
+
 export function getSettings() {
   injectScript(`
     const viewState = sessionStorage.getItem('dbg:view-state') !== 'off';

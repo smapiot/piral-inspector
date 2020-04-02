@@ -65,3 +65,11 @@ export function updateSettings(settings: PiralDebugSettings) {
     settings,
   });
 }
+
+export function emitEvent(name: string, args: any) {
+  emit({
+    type: 'emit-event',
+    name,
+    args,
+  });
+}

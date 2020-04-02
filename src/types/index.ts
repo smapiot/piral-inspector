@@ -76,7 +76,14 @@ export type PiHostMessage =
   | PiHostRemovePilet
   | PiHostAppendPilet
   | PiHostRunCommand
-  | PiHostUpdateSettings;
+  | PiHostUpdateSettings
+  | PiHostEmitEvent;
+
+export interface PiHostEmitEvent {
+  type: 'emit-event';
+  name: string;
+  args: any;
+}
 
 export interface PiHostUpdateSettings {
   type: 'update-settings';

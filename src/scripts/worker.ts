@@ -12,6 +12,7 @@ import {
   getSettings,
   setSettings,
   listenToEvents,
+  sendEvent,
 } from './helpers';
 import { PiWorkerMessage, PiHostMessage, PiralEvent } from '../types';
 
@@ -53,6 +54,8 @@ function receiveMessage(message: PiHostMessage) {
       return getSettings();
     case 'update-settings':
       return setSettings(message.settings);
+    case 'emit-event':
+      return sendEvent(message.name, message.args);
   }
 }
 

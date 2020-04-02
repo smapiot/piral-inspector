@@ -4,6 +4,7 @@
 
 - Allow toggling state output (#6)
 - Added ability to submit events (#5)
+- Fixed timing issues (#4)
 - Added ability to load pilets from tarballs (#2)
 
 ## 0.3.0

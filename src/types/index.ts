@@ -54,6 +54,7 @@ export interface PiralEvent {
 export interface PiralDebugSettings {
   viewState: boolean;
   loadPilets: boolean;
+  hardRefresh: boolean;
 }
 
 export interface PiletMetadata {

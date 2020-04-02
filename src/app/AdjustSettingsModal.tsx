@@ -37,6 +37,13 @@ export const AdjustSettingsModal: FC<AdjustSettingsModalProps> = ({ settings, is
               checked={values.loadPilets}
               onChange={e => setValues({ ...values, loadPilets: e.target.checked })}
             />
+            <CustomInput
+              type="switch"
+              label="Full refresh on change"
+              id="switch-hard-refresh"
+              checked={values.hardRefresh}
+              onChange={e => setValues({ ...values, hardRefresh: e.target.checked })}
+            />
           </div>
         </FormGroup>
       </ModalBody>

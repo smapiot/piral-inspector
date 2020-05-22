@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, CustomInput, FormGroup } from 'reactstrap';
 import { jsx } from '@emotion/core';
 import { updateSettings } from './commands';
@@ -16,6 +16,12 @@ export const AdjustSettingsModal: FC<AdjustSettingsModalProps> = ({ settings, is
     updateSettings(values);
     toggle();
   };
+
+  useEffect(() => {
+    if (settings !== values) {
+      setValues(settings);
+    }
+  }, [settings]);
 
   return (
     <Modal isOpen={isOpen} toggle={toggle}>

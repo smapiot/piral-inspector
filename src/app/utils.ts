@@ -13,9 +13,10 @@ export function injectPiletsFromUrl(url: string) {
         }
       },
       () => {
+        const path = url.substr(url.indexOf('//') + 2).replace(/\//g, '-');
         // it's a JS (or non-JSON) file!
         appendPilet({
-          name: 'temp-pilet',
+          name: `pilet-${path}`,
           version: '1.0.0',
           link: url,
         });

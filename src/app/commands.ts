@@ -59,6 +59,13 @@ export function appendPilet(meta: PiletMetadata) {
   });
 }
 
+export function togglePilet(name: string) {
+  emit({
+    type: 'toggle-pilet',
+    name,
+  })
+}
+
 export function updateSettings(settings: PiralDebugSettings) {
   emit({
     type: 'update-settings',

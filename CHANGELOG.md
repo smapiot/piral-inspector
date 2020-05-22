@@ -1,5 +1,14 @@
 # Piral Inspector Changelog
 
+## 0.5.0
+
+- Improved temporary pilet name (#11)
+- Fixed current settings display
+- Disabled source maps (#10)
+- Fixed to have a single instance per tag (#9)
+- Show the state container (#8)
+- Provide disable capability (#7)
+
 ## 0.4.0
 
 - Allow toggling state output (#6)

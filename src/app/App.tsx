@@ -25,6 +25,8 @@ export const App: FC<AppProps> = () => {
           return actions.updateRoutes(message.routes);
         case 'settings':
           return actions.updateSettings(message.settings);
+        case 'container':
+          return actions.updateContainer(message.container);
         case 'events':
           return actions.updateEvents(message.events);
       }

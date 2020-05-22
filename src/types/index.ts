@@ -5,7 +5,8 @@ export type PiWorkerMessage =
   | PiWorkerPilets
   | PiWorkerRoutes
   | PiWorkerSettings
-  | PiWorkerEvents;
+  | PiWorkerEvents
+  | PiWorkerContainer;
 
 export interface PiWorkerAvailable {
   type: 'available';
@@ -17,6 +18,11 @@ export interface PiWorkerAvailable {
 export interface PiWorkerEvents {
   type: 'events';
   events: Array<PiralEvent>;
+}
+
+export interface PiWorkerContainer {
+  type: 'container';
+  container: any;
 }
 
 export interface PiWorkerUnavailable {
@@ -76,6 +82,7 @@ export type PiHostMessage =
   | PiHostGetSettings
   | PiHostRemovePilet
   | PiHostAppendPilet
+  | PiHostTogglePilet
   | PiHostRunCommand
   | PiHostUpdateSettings
   | PiHostEmitEvent;
@@ -99,6 +106,11 @@ export interface PiHostRemovePilet {
 export interface PiHostAppendPilet {
   type: 'append-pilet';
   meta: PiletMetadata;
+}
+
+export interface PiHostTogglePilet {
+  type: 'toggle-pilet';
+  name: string;
 }
 
 export interface PiHostCheckAvailable {

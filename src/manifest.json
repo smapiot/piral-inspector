@@ -8,7 +8,7 @@
   },
   "name": "Piral Inspector",
   "short_name": "pi-inspect",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "The official Piral developer tools browser extension.",
   "author": "smapiot",
   "homepage_url": "https://piral.io",

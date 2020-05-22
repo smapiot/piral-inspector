@@ -13,6 +13,7 @@ import {
   setSettings,
   listenToEvents,
   sendEvent,
+  togglePilet,
 } from './helpers';
 import { PiWorkerMessage, PiHostMessage, PiralEvent } from '../types';
 
@@ -38,6 +39,8 @@ function receiveMessage(message: PiHostMessage) {
       return appendPilet(message.meta);
     case 'remove-pilet':
       return removePilet(message.name);
+    case 'toggle-pilet':
+      return togglePilet(message.name);
     case 'get-events':
       return getEvents();
     case 'get-pilets':
@@ -77,7 +80,7 @@ function getEvents() {
   });
 }
 
-['result', 'pilets', 'routes', 'settings'].forEach(type => {
+['result', 'pilets', 'routes', 'settings', 'container'].forEach(type => {
   window.addEventListener(`piral-${type}`, (e: CustomEvent) => {
     sendMessage({
       ...e.detail,

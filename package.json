@@ -1,6 +1,6 @@
 {
   "name": "piral-inspector",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "A DevTools extension for Piral instances and their pilets.",
   "keywords": [
     "piral",
@@ -38,7 +38,7 @@
     "build:opera": "npm run build:parcel -- --out-dir dist/opera && npm run build:web-ext -- -s dist/opera -a web-ext-artifacts/opera",
     "deploy:opera": "rm -rf dist/opera && npm run build:opera && shipit opera dist/opera",
     "watch:parcel": "parcel watch --no-hmr src/devtools.html",
-    "build:parcel": "parcel build src/devtools.html",
+    "build:parcel": "parcel build src/devtools.html --no-source-maps",
     "watch:web-ext": "wait-on -d 6000 package.json && web-ext run",
     "build:web-ext": "web-ext build",
     "prettify": "prettier --config prettier.config.js --write \"src/**/*.{ts,tsx}\""

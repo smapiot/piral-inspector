@@ -61,7 +61,9 @@ export function getSettings() {
     const loadPilets = sessionStorage.getItem('dbg:load-pilets') === 'on';
     const hardRefresh = sessionStorage.getItem('dbg:hard-refresh') === 'on';
     const ev = new CustomEvent('piral-settings', {
-      detail: { viewState, loadPilets, hardRefresh },
+      detail: {
+        settings: { viewState, loadPilets, hardRefresh },
+      },
     });
     window.dispatchEvent(ev);
   `);
@@ -153,6 +155,27 @@ export function listenToEvents() {
   `);
 }
 
+export function togglePilet(name: string) {
+  injectScript(`
+    const dp = window['dbg:piral'];
+    const ctx = dp.instance.context;
+    const [pilet] = ctx.readState(state => state.modules).filter(m => m.name === ${JSON.stringify(name)});
+
+    if (pilet.disabled) {
+      try {
+        const { createApi } = dp.pilets;
+        const newApi = createApi(pilet);
+        ctx.injectPilet(pilet.original);
+        pilet.original.setup(newApi);
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      ctx.injectPilet({ name: ${JSON.stringify(name)}, disabled: true, original: pilet });
+    }
+  `);
+}
+
 export function removePilet(name: string) {
   injectScript(`
     const dp = window['dbg:piral'];
@@ -171,6 +194,15 @@ export function supervise() {
     const deps = dp.pilets.getDependencies();
     const ctx = dp.instance.context;
     const { addChangeHandler } = deps['@dbeining/react-atom'];
+    const triggerUpdate = (current) => {
+      window.dispatchEvent(new CustomEvent('piral-container', {
+        detail: {
+          container: JSON.parse(JSON.stringify(current)),
+        },
+      }));
+    };
+
+    triggerUpdate(ctx.readState(state => state));
 
     addChangeHandler(ctx.state, 'inspector', ({ current, previous }) => {
       if (current.modules !== previous.modules) {
@@ -190,6 +222,8 @@ export function supervise() {
         });
         window.dispatchEvent(ev);
       }
+
+      triggerUpdate(current);
     });
   `);
 }

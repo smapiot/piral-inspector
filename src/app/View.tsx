@@ -6,6 +6,7 @@ import { UploadPilets } from './UploadPilets';
 import { RecordedEvents } from './RecordedEvents';
 import { AvailablePilets } from './AvailablePilets';
 import { RegisteredRoutes } from './RegisteredRoutes';
+import { StateContainer } from './StateContainer';
 import { useStore } from './store';
 import { connectedView, notConnectedView, appSectionView } from './styles';
 
@@ -39,6 +40,11 @@ export const View: FC<ViewProps> = () => {
           <h3>Events</h3>
           <p>These events from the Piral instance have been recorded so far.</p>
           <RecordedEvents />
+        </div>
+        <div css={appSectionView}>
+          <h3>State Container</h3>
+          <p>The currently available global state.</p>
+          <StateContainer />
         </div>
       </div>
     );

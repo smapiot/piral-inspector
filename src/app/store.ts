@@ -10,6 +10,7 @@ export interface StoreState {
   pilets?: Array<any>;
   routes?: Array<any>;
   events?: Array<PiralEvent>;
+  container?: any;
   settings?: PiralDebugSettings;
 }
 
@@ -20,6 +21,7 @@ export interface StoreActions {
   updateRoutes(routes: Array<string>): void;
   updateSettings(settings: PiralDebugSettings): void;
   updateEvents(events: Array<PiralEvent>): void;
+  updateContainer(container: any): void;
 }
 
 export interface Store {
@@ -51,6 +53,7 @@ const [useStore] = create<Store>(set => ({
         events: [],
         pilets: [],
         routes: [],
+        container: {},
         settings: {
           loadPilets: false,
           viewState: true,
@@ -83,6 +86,11 @@ const [useStore] = create<Store>(set => ({
     updateEvents(events) {
       dispatch(set, () => ({
         events,
+      }));
+    },
+    updateContainer(container) {
+      dispatch(set, () => ({
+        container,
       }));
     },
   },

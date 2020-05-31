@@ -10,6 +10,10 @@ import {
 import { jsx } from '@emotion/core';
 import { useStore } from './store';
 
+function isPrimitive(value: any) {
+  return typeof value !== 'object' || (!Array.isArray(value) && !value);
+}
+
 function display(value: any) {
   switch (typeof value) {
     case 'boolean':
@@ -104,20 +108,27 @@ export const StateContainer: FC<StateContainerProps> = () => {
       <ListGroup>
         {Object.keys(current)
           .filter(c => removeIfEmpty(current[c]))
-          .map(c => (
-            <ListGroupItem
-              key={c}
-              tag="a"
-              href="#"
-              action
-              onClick={e => {
-                setPath([...path, c]);
-                e.preventDefault();
-              }}>
-              <ListGroupItemHeading>{c}</ListGroupItemHeading>
-              <ListGroupItemText>{display(current[c])}</ListGroupItemText>
-            </ListGroupItem>
-          ))}
+          .map(c =>
+            isPrimitive(current[c]) ? (
+              <ListGroupItem key={c} tag="span" action>
+                <ListGroupItemHeading>{c}</ListGroupItemHeading>
+                <ListGroupItemText>{display(current[c])}</ListGroupItemText>
+              </ListGroupItem>
+            ) : (
+              <ListGroupItem
+                key={c}
+                tag="a"
+                href="#"
+                action
+                onClick={e => {
+                  setPath([...path, c]);
+                  e.preventDefault();
+                }}>
+                <ListGroupItemHeading>{c}</ListGroupItemHeading>
+                <ListGroupItemText>{display(current[c])}</ListGroupItemText>
+              </ListGroupItem>
+            ),
+          )}
       </ListGroup>
     </Fragment>
   );

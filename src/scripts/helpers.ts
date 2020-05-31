@@ -198,9 +198,10 @@ export function supervise() {
     const ctx = dp.instance.context;
     const { addChangeHandler } = deps['@dbeining/react-atom'];
     const triggerUpdate = (current) => {
+      const { portals, routes, registry, ...state } = current;
       window.dispatchEvent(new CustomEvent('piral-container', {
         detail: {
-          container: JSON.parse(JSON.stringify(current)),
+          container: JSON.parse(JSON.stringify(state)),
         },
       }));
     };

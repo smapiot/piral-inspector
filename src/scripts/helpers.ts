@@ -60,9 +60,10 @@ export function getSettings() {
     const viewState = sessionStorage.getItem('dbg:view-state') !== 'off';
     const loadPilets = sessionStorage.getItem('dbg:load-pilets') === 'on';
     const hardRefresh = sessionStorage.getItem('dbg:hard-refresh') === 'on';
+    const viewOrigins = sessionStorage.getItem('dbg:view-origins') === 'on';
     const ev = new CustomEvent('piral-settings', {
       detail: {
-        settings: { viewState, loadPilets, hardRefresh },
+        settings: { viewState, loadPilets, hardRefresh, viewOrigins },
       },
     });
     window.dispatchEvent(ev);
@@ -73,10 +74,12 @@ export function setSettings(settings: PiralDebugSettings) {
   const viewState = JSON.stringify(settings.viewState ? 'on' : 'off');
   const loadPilets = JSON.stringify(settings.loadPilets ? 'on' : 'off');
   const hardRefresh = JSON.stringify(settings.hardRefresh ? 'on' : 'off');
+  const viewOrigins = JSON.stringify(settings.viewOrigins ? 'on' : 'off');
   injectScript(`
     sessionStorage.setItem('dbg:view-state', ${viewState});
     sessionStorage.setItem('dbg:load-pilets', ${loadPilets});
     sessionStorage.setItem('dbg:hard-refresh', ${hardRefresh});
+    sessionStorage.setItem('dbg:view-origins', ${viewOrigins});
   `);
 }
 

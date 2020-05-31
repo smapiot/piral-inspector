@@ -1,5 +1,10 @@
 # Piral Inspector Changelog
 
+## 0.6.0
+
+- Improved declaration of icons
+- Added optional visual indicators (#12)
+
 ## 0.5.0
 
 - Improved temporary pilet name (#11)

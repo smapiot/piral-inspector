@@ -61,6 +61,7 @@ export interface PiralDebugSettings {
   viewState: boolean;
   loadPilets: boolean;
   hardRefresh: boolean;
+  viewOrigins: boolean;
 }
 
 export interface PiletMetadata {

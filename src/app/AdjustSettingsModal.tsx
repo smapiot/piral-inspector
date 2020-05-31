@@ -50,6 +50,13 @@ export const AdjustSettingsModal: FC<AdjustSettingsModalProps> = ({ settings, is
               checked={values.hardRefresh}
               onChange={e => setValues({ ...values, hardRefresh: e.target.checked })}
             />
+            <CustomInput
+              type="switch"
+              label="Visualize component origins"
+              id="show-component-origins"
+              checked={values.viewOrigins}
+              onChange={e => setValues({ ...values, viewOrigins: e.target.checked })}
+            />
           </div>
         </FormGroup>
       </ModalBody>

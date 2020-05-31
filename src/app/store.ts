@@ -58,6 +58,7 @@ const [useStore] = create<Store>(set => ({
           loadPilets: false,
           viewState: true,
           hardRefresh: false,
+          viewOrigins: false,
         },
       }));
       initialize();

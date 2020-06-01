@@ -197,13 +197,115 @@ export function supervise() {
     const deps = dp.pilets.getDependencies();
     const ctx = dp.instance.context;
     const { addChangeHandler } = deps['@dbeining/react-atom'];
+    const rect = {
+      border: '1px solid red',
+      position: 'absolute',
+      top: 0, bottom: 0, right: 0, left: 0,
+      zIndex: 99999999999,
+      pointerEvents: 'none',
+    };
+    const info = {
+      background: 'red',
+      color: 'white',
+      position: 'absolute',
+      right: 0,
+      top: 0,
+      fontSize: '8px',
+    };
+    const colors = [
+      '#001F3F',
+      '#0074D9',
+      '#7FDBFF',
+      '#39CCCC',
+      '#3D9970',
+      '#2ECC40',
+      '#01FF70',
+      '#FFDC00',
+      '#FF851B',
+      '#FF4136',
+      '#85144B',
+      '#F012BE',
+      '#B10DC9',
+    ];
+    const moduleColor = {};
+    const visualizer = props => {
+      const r = deps.react;
+      const location = deps['react-router-dom'].useLocation();
+      const container = r.useRef(null);
+      const active = sessionStorage.getItem('dbg:view-origins') === 'on';
+      const title = props.name.split('://')[0];
+      const color = moduleColor[title] || (moduleColor[title] = colors[Object.keys(moduleColor).length % colors.length]);
+
+      r.useEffect(() => {
+        const sibling = container.current.nextElementSibling;
+
+        if (sibling) {
+          const style = container.current.style;
+          style.left = '0px';
+          style.top = '0px';
+          style.bottom = '0px';
+          style.right = '0px';
+          const targetRect = sibling.getBoundingClientRect();
+          const sourceRect = container.current.getBoundingClientRect();
+          style.left = (targetRect.left - sourceRect.left) + 'px';
+          style.top = (targetRect.top - sourceRect.top) + 'px';
+          style.bottom = -(targetRect.bottom - sourceRect.bottom) + 'px';
+          style.right = -(targetRect.right - sourceRect.right) + 'px';
+        }
+      }, [location.key]);
+
+      return r.createElement('div',
+        { style: { ...rect, display: active ? 'block' : 'none', borderColor: color }, ref: container },
+        r.createElement('div', { style: { ...info, background: color } }, title));
+    };
     const triggerUpdate = (current) => {
       const { portals, routes, registry, ...state } = current;
+      const newRegistry = { ...registry };
+      let requireChange = false;
+
       window.dispatchEvent(new CustomEvent('piral-container', {
         detail: {
           container: JSON.parse(JSON.stringify(state)),
         },
       }));
+
+      Object.keys(registry).forEach(key => {
+        const items = registry[key];
+        const newItems = { ...items };
+
+        Object.keys(items).forEach(name => {
+          const item = items[name];
+          const fn = item.component;
+
+          if (fn && !fn.$visual) {
+            requireChange = true;
+            const component = function(props) {
+              const r = deps.react;
+              return r.createElement(
+                r.Fragment, undefined,
+                  r.createElement(visualizer, { name }),
+                  r.createElement(fn, props)
+              );
+            };
+            component.$visual = true;
+            newItems[name] = {
+              ...item,
+              component,
+            };
+          } else {
+            newItems[name] = item;
+          }
+        });
+
+        newRegistry[key] = newItems;
+      });
+
+      if (requireChange) {
+        ctx.dispatch(state => ({
+          ...state,
+          registry: newRegistry,
+        }));
+      }
     };
 
     triggerUpdate(ctx.readState(state => state));

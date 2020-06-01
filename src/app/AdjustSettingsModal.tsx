@@ -59,6 +59,7 @@ export const AdjustSettingsModal: FC<AdjustSettingsModalProps> = ({ settings, is
             />
           </div>
         </FormGroup>
+        <p style={{ fontSize: '0.8em' }}>We recommend to refresh the page after changing these settings.</p>
       </ModalBody>
       <ModalFooter>
         <Button color="primary" onClick={send}>

@@ -55,17 +55,26 @@ export function sendEvent(name: string, args: any) {
   `);
 }
 
+export function sendVisualizeAll() {
+  injectScript(`
+    const ev = new CustomEvent('visualize-all');
+    document.body.dispatchEvent(ev);
+  `);
+}
+
 export function getSettings() {
   injectScript(`
     const viewState = sessionStorage.getItem('dbg:view-state') !== 'off';
     const loadPilets = sessionStorage.getItem('dbg:load-pilets') === 'on';
     const hardRefresh = sessionStorage.getItem('dbg:hard-refresh') === 'on';
     const viewOrigins = sessionStorage.getItem('dbg:view-origins') === 'on';
+
     const ev = new CustomEvent('piral-settings', {
       detail: {
         settings: { viewState, loadPilets, hardRefresh, viewOrigins },
       },
     });
+
     window.dispatchEvent(ev);
   `);
 }
@@ -80,7 +89,14 @@ export function setSettings(settings: PiralDebugSettings) {
     sessionStorage.setItem('dbg:load-pilets', ${loadPilets});
     sessionStorage.setItem('dbg:hard-refresh', ${hardRefresh});
     sessionStorage.setItem('dbg:view-origins', ${viewOrigins});
+
+    const dp = window['dbg:piral'];
+    const deps = dp.pilets.getDependencies();
+    const r = deps.react;
+    const ctx = dp.instance.context;
+    ctx.includeProvider(r.createElement(props => props.children));
   `);
+  getSettings();
 }
 
 export function gotoRoute(route: string) {
@@ -199,6 +215,7 @@ export function supervise() {
     const { addChangeHandler } = deps['@dbeining/react-atom'];
     const rect = {
       border: '1px solid red',
+      display: 'none',
       position: 'absolute',
       top: 0, bottom: 0, right: 0, left: 0,
       zIndex: 99999999999,
@@ -232,31 +249,56 @@ export function supervise() {
       const r = deps.react;
       const location = deps['react-router-dom'].useLocation();
       const container = r.useRef(null);
-      const active = sessionStorage.getItem('dbg:view-origins') === 'on';
-      const title = props.name.split('://')[0];
+      const title = props.pilet;
       const color = moduleColor[title] || (moduleColor[title] = colors[Object.keys(moduleColor).length % colors.length]);
+      const active = sessionStorage.getItem('dbg:view-origins') === 'on';
 
       r.useEffect(() => {
-        const sibling = container.current.nextElementSibling;
+        const sibling = container.current && container.current.nextElementSibling;
 
-        if (sibling) {
+        if (sibling && active) {
           const style = container.current.style;
-          style.left = '0px';
-          style.top = '0px';
-          style.bottom = '0px';
-          style.right = '0px';
-          const targetRect = sibling.getBoundingClientRect();
-          const sourceRect = container.current.getBoundingClientRect();
-          style.left = (targetRect.left - sourceRect.left) + 'px';
-          style.top = (targetRect.top - sourceRect.top) + 'px';
-          style.bottom = -(targetRect.bottom - sourceRect.bottom) + 'px';
-          style.right = -(targetRect.right - sourceRect.right) + 'px';
-        }
-      }, [location.key]);
 
-      return r.createElement('div',
-        { style: { ...rect, display: active ? 'block' : 'none', borderColor: color }, ref: container },
-        r.createElement('div', { style: { ...info, background: color } }, title));
+          const mouseIn = () => {
+            style.display = 'block';
+            style.left = '0px';
+            style.top = '0px';
+            style.bottom = '0px';
+            style.right = '0px';
+            const targetRect = sibling.getBoundingClientRect();
+            const sourceRect = container.current.getBoundingClientRect();
+            style.left = (targetRect.left - sourceRect.left) + 'px';
+            style.top = (targetRect.top - sourceRect.top) + 'px';
+            style.bottom = -(targetRect.bottom - sourceRect.bottom) + 'px';
+            style.right = -(targetRect.right - sourceRect.right) + 'px';
+          };
+          const mouseOut = () => {
+            style.display = 'none';
+          };
+          const forcedVisualize = () => {
+            mouseIn();
+            setTimeout(mouseOut, 5000);
+          };
+
+          document.body.addEventListener('visualize-all', forcedVisualize);
+          sibling.addEventListener('mouseover', mouseIn);
+          sibling.addEventListener('mouseout', mouseOut);
+
+          return () => {
+            document.body.removeEventListener('visualize-all', forcedVisualize);
+            sibling.removeEventListener('mouseover', mouseIn);
+            sibling.removeEventListener('mouseout', mouseOut);
+          };
+        }
+      }, [location.key, active]);
+
+      if (active) {
+        return r.createElement('div',
+          { style: { ...rect, borderColor: color }, ref: container },
+          r.createElement('div', { style: { ...info, background: color } }, title));
+      }
+
+      return null;
     };
     const triggerUpdate = (current) => {
       const { portals, routes, registry, ...state } = current;
@@ -283,7 +325,7 @@ export function supervise() {
               const r = deps.react;
               return r.createElement(
                 r.Fragment, undefined,
-                  r.createElement(visualizer, { name }),
+                  r.createElement(visualizer, { name, pilet: item.pilet }),
                   r.createElement(fn, props)
               );
             };

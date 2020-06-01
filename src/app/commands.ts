@@ -80,3 +80,9 @@ export function emitEvent(name: string, args: any) {
     args,
   });
 }
+
+export function visualizeAll() {
+  emit({
+    type: 'visualize-all',
+  });
+}

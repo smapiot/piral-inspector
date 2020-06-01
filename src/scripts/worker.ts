@@ -1,4 +1,5 @@
 import { browser } from 'webextension-polyfill-ts';
+import { PiWorkerMessage, PiHostMessage, PiralEvent } from '../types';
 import {
   check,
   supervise,
@@ -14,8 +15,8 @@ import {
   listenToEvents,
   sendEvent,
   togglePilet,
+  sendVisualizeAll,
 } from './helpers';
-import { PiWorkerMessage, PiHostMessage, PiralEvent } from '../types';
 
 let available: any = undefined;
 const events: Array<PiralEvent> = [];
@@ -59,6 +60,8 @@ function receiveMessage(message: PiHostMessage) {
       return setSettings(message.settings);
     case 'emit-event':
       return sendEvent(message.name, message.args);
+    case 'visualize-all':
+      return sendVisualizeAll();
   }
 }
 

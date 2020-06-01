@@ -86,12 +86,17 @@ export type PiHostMessage =
   | PiHostTogglePilet
   | PiHostRunCommand
   | PiHostUpdateSettings
-  | PiHostEmitEvent;
+  | PiHostEmitEvent
+  | PiHostVisualizeAll;
 
 export interface PiHostEmitEvent {
   type: 'emit-event';
   name: string;
   args: any;
+}
+
+export interface PiHostVisualizeAll {
+  type: 'visualize-all';
 }
 
 export interface PiHostUpdateSettings {

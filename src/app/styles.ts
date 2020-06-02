@@ -44,10 +44,6 @@ export const basicInfoView = css`
     padding: 1em;
   }
 
-  a + a {
-    padding-left: 0.5em;
-  }
-
   a > svg {
     fill: #777;
   }

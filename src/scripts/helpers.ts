@@ -254,10 +254,22 @@ export function supervise() {
       const active = sessionStorage.getItem('dbg:view-origins') === 'on';
 
       r.useEffect(() => {
-        const sibling = container.current && container.current.nextElementSibling;
+        let sibling = container.current && container.current.nextElementSibling;
 
         if (sibling && active) {
           const style = container.current.style;
+          const target = container.current.parentNode;
+          const observer = new MutationObserver(changes => {
+            for (let change of changes) {
+              const newSibling = container.current.nextElementSibling;
+
+              if (newSibling !== sibling) {
+                sibling = newSibling;
+                sibling.addEventListener('mouseover', mouseIn);
+                sibling.addEventListener('mouseout', mouseOut);
+              }
+            }
+          });
 
           const mouseIn = () => {
             style.display = 'block';
@@ -283,11 +295,13 @@ export function supervise() {
           document.body.addEventListener('visualize-all', forcedVisualize);
           sibling.addEventListener('mouseover', mouseIn);
           sibling.addEventListener('mouseout', mouseOut);
+          observer.observe(target, { childList: true });
 
           return () => {
             document.body.removeEventListener('visualize-all', forcedVisualize);
             sibling.removeEventListener('mouseover', mouseIn);
             sibling.removeEventListener('mouseout', mouseOut);
+            observer.disconnect();
           };
         }
       }, [location.key, active]);

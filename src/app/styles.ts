@@ -63,8 +63,16 @@ export const globalView = css`
 
   @media (prefers-color-scheme: dark) {
     body.is-chrome {
-      background-color: #000;
+      background-color: rgb(36, 36, 36);
       color: white;
+
+      .modal, .list-group {
+        color: black;
+      }
     }
   }
+`;
+
+export const customSwitchStyle = css`
+  margin-right: 2em;
 `;

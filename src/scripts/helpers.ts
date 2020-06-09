@@ -35,15 +35,24 @@ export function runQuery(id: string, value: string) {
   `);
 }
 
+const getPiletsEvent = `
+  new CustomEvent('piral-pilets', {
+    detail: {
+      pilets: pilets.map(pilet => ({
+        name: pilet.name,
+        version: pilet.version,
+        disabled: pilet.disabled,
+      })),
+    },
+  })
+`;
+
 export function getPilets() {
   injectScript(`
     const dp = window['dbg:piral'];
     const ctx = dp.instance.context;
     const pilets = ctx.readState(state => state.modules);
-    const ev = new CustomEvent('piral-pilets', {
-      detail: { pilets },
-    });
-    window.dispatchEvent(ev);
+    window.dispatchEvent(${getPiletsEvent});
   `);
 }
 
@@ -368,12 +377,8 @@ export function supervise() {
 
     addChangeHandler(ctx.state, 'inspector', ({ current, previous }) => {
       if (current.modules !== previous.modules) {
-        const ev = new CustomEvent('piral-pilets', {
-          detail: {
-            pilets: JSON.parse(JSON.stringify(current.modules)),
-          },
-        });
-        window.dispatchEvent(ev);
+        const pilets = current.modules;
+        window.dispatchEvent(${getPiletsEvent});
       }
 
       if (current.registry.pages !== previous.registry.pages || current.routes !== previous.routes) {

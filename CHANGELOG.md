@@ -4,6 +4,7 @@
 
 - Improved declaration of icons
 - Added optional visual indicators (#12)
+- Fixed dark mode font colors (#13)
 
 ## 0.5.0
 

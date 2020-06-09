@@ -3,6 +3,7 @@ import { ListGroup, ListGroupItem, Button, CustomInput } from 'reactstrap';
 import { jsx } from '@emotion/core';
 import { removePilet, togglePilet } from './commands';
 import { useStore } from './store';
+import { customSwitchStyle } from './styles';
 
 export interface AvailablePiletsProps {}
 
@@ -16,6 +17,7 @@ export const AvailablePilets: FC<AvailablePiletsProps> = () => {
           <ListGroupItem key={pilet.name}>
             <Button onClick={() => removePilet(pilet.name)} close />
             <CustomInput
+              css={customSwitchStyle}
               type="switch"
               id={`toggle-${pilet.name}`}
               label={pilet.name}

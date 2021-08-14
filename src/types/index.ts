@@ -6,13 +6,18 @@ export type PiWorkerMessage =
   | PiWorkerRoutes
   | PiWorkerSettings
   | PiWorkerEvents
-  | PiWorkerContainer;
+  | PiWorkerContainer
+  | PiWorkerReconnect;
+
+export interface PiWorkerReconnect {
+  type: 'cs-connect';
+}
 
 export interface PiWorkerAvailable {
   type: 'available';
   name: string;
   version: string;
-  kind: 'v0';
+  kind: 'v0' | 'v1';
 }
 
 export interface PiWorkerEvents {
@@ -74,12 +79,10 @@ export interface PiletMetadata {
 }
 
 export type PiHostMessage =
+  | PiHostInit
+  | PiHostAllInfos
   | PiHostCheckAvailable
-  | PiHostGetEvents
   | PiHostRunQuery
-  | PiHostGetRoutes
-  | PiHostGotoRoute
-  | PiHostGetPilets
   | PiHostGetSettings
   | PiHostRemovePilet
   | PiHostAppendPilet
@@ -88,6 +91,8 @@ export type PiHostMessage =
   | PiHostUpdateSettings
   | PiHostEmitEvent
   | PiHostVisualizeAll;
+
+export type PiLegacyHostMessage = PiHostMessage | PiHostGetEvents | PiHostGetRoutes | PiHostGotoRoute | PiHostGetPilets;
 
 export interface PiHostEmitEvent {
   type: 'emit-event';
@@ -132,6 +137,14 @@ export interface PiHostGetEvents {
   type: 'get-events';
 }
 
+export interface PiHostInit {
+  type: 'init';
+}
+
+export interface PiHostAllInfos {
+  type: 'all-infos';
+}
+
 export interface PiHostGetPilets {
   type: 'get-pilets';
 }
@@ -154,4 +167,16 @@ export interface PiHostRunCommand {
   type: 'run-command';
   method: string;
   args: Array<any>;
+}
+
+export interface PiralDebugApiMessage {
+  source: 'piral-debug-api';
+  version: 'v1';
+  content: any;
+}
+
+export interface PiralInspectorMessage {
+  source: 'piral-inspector';
+  version: 'v1';
+  content: any;
 }

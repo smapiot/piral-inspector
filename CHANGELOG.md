@@ -1,5 +1,11 @@
 # Piral Inspector Changelog
 
+## 0.7.0
+
+- Extended internals to support new debug API
+- Improved core to efficiently handle debugging multiple Piral instances
+- Use wrappers if available for visualization
+
 ## 0.6.0
 
 - Improved declaration of icons

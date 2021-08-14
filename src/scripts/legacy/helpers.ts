@@ -1,4 +1,4 @@
-import { PiletMetadata, PiralDebugSettings } from '../types';
+import { PiletMetadata, PiralDebugSettings } from '../../types';
 
 function injectScript(content: string) {
   const script = document.createElement('script');

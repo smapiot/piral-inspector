@@ -1,5 +1,4 @@
 import create, { SetState } from 'zustand';
-import { initialize } from './commands';
 import { PiralDebugSettings, PiralEvent } from '../types';
 
 export interface StoreState {
@@ -39,7 +38,7 @@ function dispatch(set: SetState<Store>, update: (state: StoreState) => Partial<S
   }));
 }
 
-const [useStore] = create<Store>(set => ({
+export const store = create<Store>(set => ({
   state: {
     connected: false,
   },
@@ -61,7 +60,6 @@ const [useStore] = create<Store>(set => ({
           viewOrigins: false,
         },
       }));
-      initialize();
     },
     disconnect() {
       dispatch(set, () => ({
@@ -97,4 +95,4 @@ const [useStore] = create<Store>(set => ({
   },
 }));
 
-export { useStore };
+export const useStore = store[0];

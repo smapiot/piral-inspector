@@ -1,40 +1,28 @@
-import { useEffect, FC, Fragment } from 'react';
+import { FC, Fragment, useEffect } from 'react';
 import { jsx, Global } from '@emotion/core';
+import { StoreApi } from 'zustand';
 import { View } from './View';
-import { useStore } from './store';
 import { globalView } from './styles';
-import { PiWorkerMessage } from '../types';
+import { Store, store } from './store';
+
+function useSyncedStore(localApi: StoreApi<Store>) {
+  useEffect(() => {
+    let dispose = () => window.removeEventListener('pi-store', handler);
+    const handler = (e: CustomEvent<typeof store>) => {
+      const [_, remoteApi] = e.detail;
+      localApi.setState(remoteApi.getState);
+      dispose();
+      dispose = remoteApi.subscribe<Store>(state => localApi.setState(state));
+    };
+    window.addEventListener('pi-store', handler);
+    return () => dispose();
+  }, []);
+}
 
 export interface AppProps {}
 
 export const App: FC<AppProps> = () => {
-  const actions = useStore(m => m.actions);
-
-  useEffect(() => {
-    const handler = (e: CustomEvent<PiWorkerMessage>) => {
-      const message = e.detail;
-
-      switch (message.type) {
-        case 'available':
-          return actions.connect(message.name, message.version, message.kind);
-        case 'unavailable':
-          return actions.disconnect();
-        case 'pilets':
-          return actions.updatePilets(message.pilets);
-        case 'routes':
-          return actions.updateRoutes(message.routes);
-        case 'settings':
-          return actions.updateSettings(message.settings);
-        case 'container':
-          return actions.updateContainer(message.container);
-        case 'events':
-          return actions.updateEvents(message.events);
-      }
-    };
-    window.addEventListener('pi-recv-response', handler);
-
-    return () => window.removeEventListener('pi-recv-response', handler);
-  }, []);
+  useSyncedStore(store[1]);
 
   return (
     <Fragment>

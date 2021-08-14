@@ -1,6 +1,6 @@
 {
   "name": "piral-inspector",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "A DevTools extension for Piral instances and their pilets.",
   "keywords": [
     "piral",
@@ -14,7 +14,6 @@
   "author": "smapiot",
   "homepage": "https://piral.io",
   "license": "MIT",
-  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/smapiot/piral-inspector.git"
@@ -55,7 +54,7 @@
     "prettier": "^1.19.1",
     "typescript": "^3.8.3",
     "wait-on": "^4.0.1",
-    "web-ext": "^4.1.0"
+    "web-ext": "^6.2.0"
   },
   "dependencies": {
     "@emotion/core": "^10.0.28",
@@ -63,7 +62,7 @@
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "reactstrap": "^8.4.1",
-    "webextension-polyfill-ts": "0.14.0",
+    "webextension-polyfill-ts": "0.26.0",
     "zustand": "^2.2.3"
   }
 }

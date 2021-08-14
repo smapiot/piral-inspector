@@ -1,4 +1,5 @@
 import { browser } from 'webextension-polyfill-ts';
+import { store } from './app/store';
 import { PiWorkerMessage, PiHostMessage } from './types';
 
 function initPanel() {
@@ -6,7 +7,9 @@ function initPanel() {
 }
 
 function connectPanel(panel: any) {
-  let port = undefined;
+  let window: Window = undefined;
+
+  const port = browser.runtime.connect(undefined, { name: 'piral-inspector-host' });
 
   const sendMessage = (message: PiHostMessage) => {
     const tabId = browser.devtools.inspectedWindow.tabId;
@@ -16,28 +19,50 @@ function connectPanel(panel: any) {
     });
   };
 
+  const sendHandler = (e: CustomEvent) => {
+    sendMessage(e.detail);
+  };
+
+  const readAllInfos = () => sendMessage({ type: 'all-infos' });
+
+  const init = () => sendMessage({ type: 'init' });
+
   panel.onShown.addListener((panelWindow: Window) => {
-    port = browser.runtime.connect(undefined, { name: 'piral-inspector-host' });
-    port.onMessage.addListener((message: PiWorkerMessage) => {
-      const e = new CustomEvent<PiWorkerMessage>('pi-recv-response', {
-        detail: message,
-      });
-      panelWindow.dispatchEvent(e);
-    });
-
-    panelWindow.addEventListener('pi-send-request', (e: CustomEvent) => {
-      sendMessage(e.detail);
-    });
-
-    sendMessage({
-      type: 'check-available',
-    });
+    window = panelWindow;
+    window.addEventListener('pi-send-request', sendHandler);
+    window.dispatchEvent(new CustomEvent('pi-store', { detail: store }));
   });
 
   panel.onHidden.addListener(() => {
-    port?.disconnect();
-    port = undefined;
+    window?.removeEventListener('pi-send-request', sendHandler);
   });
+
+  port.onMessage.addListener((message: PiWorkerMessage) => {
+    const [_, api] = store;
+    const { actions } = api.getState();
+
+    switch (message.type) {
+      case 'cs-connect':
+        return init();
+      case 'available':
+        setTimeout(readAllInfos, 0);
+        return actions.connect(message.name, message.version, message.kind);
+      case 'unavailable':
+        return actions.disconnect();
+      case 'pilets':
+        return actions.updatePilets(message.pilets);
+      case 'routes':
+        return actions.updateRoutes(message.routes);
+      case 'settings':
+        return actions.updateSettings(message.settings);
+      case 'container':
+        return actions.updateContainer(message.container);
+      case 'events':
+        return actions.updateEvents(message.events);
+    }
+  });
+
+  init();
 }
 
 function logError(err: Error) {

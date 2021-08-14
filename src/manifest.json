@@ -8,7 +8,7 @@
   },
   "name": "Piral Inspector",
   "short_name": "pi-inspect",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "The official Piral developer tools browser extension.",
   "author": "smapiot",
   "homepage_url": "https://piral.io",
@@ -18,11 +18,15 @@
     "96": "assets/logo_96.png",
     "128": "assets/logo_128.png"
   },
+  "externally_connectable": {
+    "ids": ["*"],
+    "matches": ["*://localhost/*"]
+  },
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "content_scripts": [
     {
       "matches": ["*://localhost/*"],
-      "js": ["./scripts/worker.js"]
+      "js": ["./scripts/contentScript.js"]
     }
   ],
   "background": {

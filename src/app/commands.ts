@@ -1,4 +1,4 @@
-import { PiHostMessage, PiletMetadata, PiralDebugSettings } from '../types';
+import { PiHostMessage, PiletMetadata } from '../types';
 
 function emit(detail: PiHostMessage) {
   const ev = new CustomEvent('pi-send-request', {
@@ -35,7 +35,7 @@ export function togglePilet(name: string) {
   })
 }
 
-export function updateSettings(settings: PiralDebugSettings) {
+export function updateSettings(settings: Record<string, any>) {
   emit({
     type: 'update-settings',
     settings,

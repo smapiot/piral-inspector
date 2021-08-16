@@ -21,12 +21,22 @@ export interface PiralDebugCapabilities {
   settings: boolean;
 }
 
+export interface PiralWorkerInitialState {
+  container?: any;
+  events?: Array<PiralEvent>;
+  pilets?: Array<any>;
+  routes?: Array<string>;
+  settings?: PiralDebugSettings;
+  [name: string]: any;
+}
+
 export interface PiWorkerAvailable {
   type: 'available';
   name: string;
   version: string;
   kind: 'v0' | 'v1';
   capabilities: Array<keyof PiralDebugCapabilities>;
+  state: PiralWorkerInitialState;
 }
 
 export interface PiWorkerEvents {
@@ -90,19 +100,14 @@ export interface PiletMetadata {
 
 export type PiHostMessage =
   | PiHostInit
-  | PiHostAllInfos
   | PiHostCheckAvailable
-  | PiHostRunQuery
-  | PiHostGetSettings
+  | PiHostGotoRoute
   | PiHostRemovePilet
   | PiHostAppendPilet
   | PiHostTogglePilet
-  | PiHostRunCommand
   | PiHostUpdateSettings
   | PiHostEmitEvent
   | PiHostVisualizeAll;
-
-export type PiLegacyHostMessage = PiHostMessage | PiHostGetEvents | PiHostGetRoutes | PiHostGotoRoute | PiHostGetPilets;
 
 export interface PiHostEmitEvent {
   type: 'emit-event';
@@ -116,7 +121,7 @@ export interface PiHostVisualizeAll {
 
 export interface PiHostUpdateSettings {
   type: 'update-settings';
-  settings: PiralDebugSettings;
+  settings: Record<string, any>;
 }
 
 export interface PiHostRemovePilet {
@@ -143,40 +148,8 @@ export interface PiHostGotoRoute {
   route: string;
 }
 
-export interface PiHostGetEvents {
-  type: 'get-events';
-}
-
 export interface PiHostInit {
   type: 'init';
-}
-
-export interface PiHostAllInfos {
-  type: 'all-infos';
-}
-
-export interface PiHostGetPilets {
-  type: 'get-pilets';
-}
-
-export interface PiHostGetSettings {
-  type: 'get-settings';
-}
-
-export interface PiHostGetRoutes {
-  type: 'get-routes';
-}
-
-export interface PiHostRunQuery {
-  type: 'run-query';
-  value: string;
-  id: string;
-}
-
-export interface PiHostRunCommand {
-  type: 'run-command';
-  method: string;
-  args: Array<any>;
 }
 
 export interface PiralDebugApiMessage {

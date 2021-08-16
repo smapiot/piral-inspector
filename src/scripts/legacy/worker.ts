@@ -1,15 +1,10 @@
-import { PiWorkerMessage, PiLegacyHostMessage, PiralEvent } from '../../types';
+import { PiWorkerMessage, PiHostMessage, PiralEvent } from '../../types';
 import {
   check,
   supervise,
-  runQuery,
-  runCommand,
-  getPilets,
   removePilet,
   appendPilet,
-  getRoutes,
   gotoRoute,
-  getSettings,
   setSettings,
   listenToEvents,
   sendEvent,
@@ -30,7 +25,7 @@ function sendMessage(message: PiWorkerMessage) {
   window.postMessage(envelope, '*');
 }
 
-export function handleLegacyMessage(message: PiLegacyHostMessage) {
+export function handleLegacyMessage(message: PiHostMessage) {
   if (message.type === 'init') {
     return initLegacyApi();
   } else if (!available) {
@@ -39,41 +34,14 @@ export function handleLegacyMessage(message: PiLegacyHostMessage) {
   }
 
   switch (message.type) {
-    case 'all-infos':
-      return [
-        handleLegacyMessage({
-          type: 'get-events',
-        }),
-        handleLegacyMessage({
-          type: 'get-settings',
-        }),
-        handleLegacyMessage({
-          type: 'get-pilets',
-        }),
-        handleLegacyMessage({
-          type: 'get-routes',
-        }),
-      ];
     case 'append-pilet':
       return appendPilet(message.meta);
     case 'remove-pilet':
       return removePilet(message.name);
     case 'toggle-pilet':
       return togglePilet(message.name);
-    case 'get-events':
-      return getEvents();
-    case 'get-pilets':
-      return getPilets();
-    case 'run-command':
-      return runCommand(message.method, message.args);
-    case 'run-query':
-      return runQuery(message.id, message.value);
-    case 'get-routes':
-      return getRoutes();
     case 'goto-route':
       return gotoRoute(message.route);
-    case 'get-settings':
-      return getSettings();
     case 'update-settings':
       return setSettings(message.settings);
     case 'emit-event':
@@ -117,6 +85,10 @@ export function initLegacyApi() {
     setupEvents();
     sendMessage({
       ...e.detail,
+      state: {
+        ...e.detail.state,
+        events,
+      },
       type: 'available',
     });
     listenToEvents();

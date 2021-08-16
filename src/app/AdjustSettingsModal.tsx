@@ -1,4 +1,4 @@
-import { FC, useState, useCallback } from 'react';
+import { FC, useState, useCallback, useEffect } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, CustomInput, FormGroup, Input, Label } from 'reactstrap';
 import { jsx } from '@emotion/core';
 import { updateSettings } from './commands';
@@ -12,11 +12,13 @@ export interface AdjustSettingsModalProps {
 }
 
 export const AdjustSettingsModal: FC<AdjustSettingsModalProps> = ({ settings, isOpen, toggle, initialValues }) => {
-  const [values, setValues] = useState(initialValues);
+  const [values, setValues] = useState({});
   const send = useCallback(() => {
     updateSettings(values);
     toggle();
   }, [values, toggle]);
+
+  useEffect(() => setValues(initialValues), [initialValues]);
 
   return (
     <Modal isOpen={isOpen} toggle={toggle}>

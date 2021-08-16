@@ -1,5 +1,5 @@
 import create, { SetState } from 'zustand';
-import { PiralDebugCapabilities, PiralDebugSettings, PiralEvent } from '../types';
+import { PiralDebugCapabilities, PiralDebugSettings, PiralEvent, PiralWorkerInitialState } from '../types';
 
 export interface StoreState {
   connected: boolean;
@@ -15,7 +15,7 @@ export interface StoreState {
 }
 
 export interface StoreActions {
-  connect(name: string, version: string, kind: string, capabilities: Array<string>): void;
+  connect(name: string, version: string, kind: string, capabilities: Array<string>, state: PiralWorkerInitialState): void;
   disconnect(): void;
   updatePilets(pilets: Array<any>): void;
   updateRoutes(routes: Array<string>): void;
@@ -44,17 +44,18 @@ export const store = create<Store>(set => ({
     connected: false,
   },
   actions: {
-    connect(name, version, kind, capabilities) {
+    connect(name, version, kind, capabilities, state) {
       dispatch(set, () => ({
-        connected: true,
-        name,
-        version,
-        kind,
         events: [],
         pilets: [],
         routes: [],
         container: {},
         settings: {},
+        ...state,
+        connected: true,
+        name,
+        version,
+        kind,
         capabilities: {
           container: capabilities.includes('container'),
           events: capabilities.includes('events'),

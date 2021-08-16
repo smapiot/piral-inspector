@@ -23,8 +23,6 @@ function connectPanel(panel: any) {
     sendMessage(e.detail);
   };
 
-  const readAllInfos = () => sendMessage({ type: 'all-infos' });
-
   const init = () => sendMessage({ type: 'init' });
 
   panel.onShown.addListener((panelWindow: Window) => {
@@ -45,8 +43,7 @@ function connectPanel(panel: any) {
       case 'cs-connect':
         return init();
       case 'available':
-        setTimeout(readAllInfos, 0);
-        return actions.connect(message.name, message.version, message.kind, message.capabilities);
+        return actions.connect(message.name, message.version, message.kind, message.capabilities, message.state);
       case 'unavailable':
         return actions.disconnect();
       case 'pilets':

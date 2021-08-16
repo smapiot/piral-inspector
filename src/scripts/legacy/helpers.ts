@@ -1,4 +1,4 @@
-import { PiletMetadata, PiralDebugSettings } from '../../types';
+import { PiletMetadata } from '../../types';
 
 function injectScript(content: string) {
   const script = document.createElement('script');
@@ -11,49 +11,6 @@ function injectScript(content: string) {
   `;
   document.head.appendChild(script);
   script.remove();
-}
-
-export function runCommand(method: string, args: Array<any>) {
-  injectScript(`
-    const dp = window['dbg:piral'];
-    const f = dp.${method};
-    f.apply(f, ${JSON.stringify(args)});
-  `);
-}
-
-export function runQuery(id: string, value: string) {
-  injectScript(`
-    const dp = window['dbg:piral'];
-    const result = dp.${value};
-    const ev = new CustomEvent('piral-result', {
-      detail: {
-        id: ${JSON.stringify(id)},
-        result,
-      },
-    });
-    window.dispatchEvent(ev);
-  `);
-}
-
-const getPiletsEvent = `
-  new CustomEvent('piral-pilets', {
-    detail: {
-      pilets: pilets.map(pilet => ({
-        name: pilet.name,
-        version: pilet.version,
-        disabled: pilet.disabled,
-      })),
-    },
-  })
-`;
-
-export function getPilets() {
-  injectScript(`
-    const dp = window['dbg:piral'];
-    const ctx = dp.instance.context;
-    const pilets = ctx.readState(state => state.modules);
-    window.dispatchEvent(${getPiletsEvent});
-  `);
 }
 
 export function sendEvent(name: string, args: any) {
@@ -109,7 +66,7 @@ export function getSettings() {
   `);
 }
 
-export function setSettings(settings: PiralDebugSettings) {
+export function setSettings(settings: Record<string, any>) {
   const viewState = JSON.stringify(settings.viewState ? 'on' : 'off');
   const loadPilets = JSON.stringify(settings.loadPilets ? 'on' : 'off');
   const hardRefresh = JSON.stringify(settings.hardRefresh ? 'on' : 'off');
@@ -145,19 +102,6 @@ export function gotoRoute(route: string) {
       return null;
     };
     ctx.setComponent('Debug', GoToComponent);
-  `);
-}
-
-export function getRoutes() {
-  injectScript(`
-    const dp = window['dbg:piral'];
-    const ctx = dp.instance.context;
-    const registeredRoutes = ctx.readState(state => Object.keys(state.registry.pages));
-    const componentRoutes = ctx.readState(state => Object.keys(state.routes));
-    const ev = new CustomEvent('piral-routes', {
-      detail: { routes: [...componentRoutes, ...registeredRoutes] },
-    });
-    window.dispatchEvent(ev);
   `);
 }
 
@@ -399,7 +343,17 @@ export function supervise() {
     addChangeHandler(ctx.state, 'inspector', ({ current, previous }) => {
       if (current.modules !== previous.modules) {
         const pilets = current.modules;
-        window.dispatchEvent(${getPiletsEvent});
+        window.dispatchEvent(
+          new CustomEvent('piral-pilets', {
+            detail: {
+              pilets: pilets.map(pilet => ({
+                name: pilet.name,
+                version: pilet.version,
+                disabled: pilet.disabled,
+              })),
+            },
+          })
+        );
       }
 
       if (current.registry.pages !== previous.registry.pages || current.routes !== previous.routes) {
@@ -419,6 +373,17 @@ export function supervise() {
 export function check() {
   injectScript(`
     const dp = window['dbg:piral'];
+    const ctx = dp.instance.context;
+
+    const registeredRoutes = ctx.readState(state => Object.keys(state.registry.pages));
+    const componentRoutes = ctx.readState(state => Object.keys(state.routes));
+
+    const viewState = sessionStorage.getItem('dbg:view-state') !== 'off';
+    const loadPilets = sessionStorage.getItem('dbg:load-pilets') === 'on';
+    const hardRefresh = sessionStorage.getItem('dbg:hard-refresh') === 'on';
+    const viewOrigins = sessionStorage.getItem('dbg:view-origins') === 'on';
+
+    const pilets = ctx.readState(state => state.modules);
 
     const ev = new CustomEvent('piral-found', {
       detail: {
@@ -426,6 +391,36 @@ export function check() {
         name: dp.instance.name,
         version: dp.instance.version,
         capabilities: ["events", "container", "routes", "pilets", "settings"],
+        state: {
+          routes: [...componentRoutes, ...registeredRoutes],
+          pilets: pilets.map(pilet => ({
+            name: pilet.name,
+            version: pilet.version,
+            disabled: pilet.disabled,
+          })),
+          settings: {
+            viewState: {
+              value: viewState,
+              type: 'boolean',
+              label: 'State container logging',
+            },
+            loadPilets: {
+              value: loadPilets,
+              type: 'boolean',
+              label: 'Load available pilets',
+            },
+            hardRefresh: {
+              value: hardRefresh,
+              type: 'boolean',
+              label: 'Full refresh on change',
+            },
+            viewOrigins: {
+              value: viewOrigins,
+              type: 'boolean',
+              label: 'Visualize component origins',
+            },
+          },
+        },
       },
     });
     window.dispatchEvent(ev);

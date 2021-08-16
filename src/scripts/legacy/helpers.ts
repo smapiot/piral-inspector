@@ -80,7 +80,28 @@ export function getSettings() {
 
     const ev = new CustomEvent('piral-settings', {
       detail: {
-        settings: { viewState, loadPilets, hardRefresh, viewOrigins },
+        settings: {
+          viewState: {
+            value: viewState,
+            type: 'boolean',
+            label: 'State container logging',
+          },
+          loadPilets: {
+            value: loadPilets,
+            type: 'boolean',
+            label: 'Load available pilets',
+          },
+          hardRefresh: {
+            value: hardRefresh,
+            type: 'boolean',
+            label: 'Full refresh on change',
+          },
+          viewOrigins: {
+            value: viewOrigins,
+            type: 'boolean',
+            label: 'Visualize component origins',
+          },
+        },
       },
     });
 
@@ -404,6 +425,7 @@ export function check() {
         kind: dp.debug,
         name: dp.instance.name,
         version: dp.instance.version,
+        capabilities: ["events", "container", "routes", "pilets", "settings"],
       },
     });
     window.dispatchEvent(ev);

@@ -13,11 +13,20 @@ export interface PiWorkerReconnect {
   type: 'cs-connect';
 }
 
+export interface PiralDebugCapabilities {
+  events: boolean;
+  container: boolean;
+  routes: boolean;
+  pilets: boolean;
+  settings: boolean;
+}
+
 export interface PiWorkerAvailable {
   type: 'available';
   name: string;
   version: string;
   kind: 'v0' | 'v1';
+  capabilities: Array<keyof PiralDebugCapabilities>;
 }
 
 export interface PiWorkerEvents {
@@ -63,10 +72,11 @@ export interface PiralEvent {
 }
 
 export interface PiralDebugSettings {
-  viewState: boolean;
-  loadPilets: boolean;
-  hardRefresh: boolean;
-  viewOrigins: boolean;
+  [name: string]: {
+    value: any;
+    label: string;
+    type: 'boolean' | 'string' | 'number';
+  };
 }
 
 export interface PiletMetadata {

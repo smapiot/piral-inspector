@@ -46,7 +46,7 @@ function connectPanel(panel: any) {
         return init();
       case 'available':
         setTimeout(readAllInfos, 0);
-        return actions.connect(message.name, message.version, message.kind);
+        return actions.connect(message.name, message.version, message.kind, message.capabilities);
       case 'unavailable':
         return actions.disconnect();
       case 'pilets':

@@ -37,6 +37,9 @@ browser.runtime.onMessage.addListener(content => {
   handleLegacyMessage(content);
 });
 
+/**
+ * Tries to connect the instance to the dev tools.
+ */
 browser.runtime.sendMessage({
   type: 'cs-connect',
 });

@@ -19,7 +19,12 @@ window.addEventListener('message', event => {
     const message: PiralDebugApiMessage = event.data;
 
     if (typeof message === 'object' && message?.source === 'piral-debug-api') {
-      browser.runtime.sendMessage(message.content);
+      const { content } = message;
+      browser.runtime.sendMessage(content);
+
+      if (content.type === 'available') {
+        console.info(`Piral Inspector (${content.kind}) connected!`);
+      }
     }
   }
 });

@@ -28,26 +28,23 @@ function sendMessage(message: PiWorkerMessage) {
 export function handleLegacyMessage(message: PiHostMessage) {
   if (message.type === 'init') {
     return initLegacyApi();
-  } else if (!available) {
-    clearTimeout(checkInterval);
-    return;
-  }
-
-  switch (message.type) {
-    case 'append-pilet':
-      return appendPilet(message.meta);
-    case 'remove-pilet':
-      return removePilet(message.name);
-    case 'toggle-pilet':
-      return togglePilet(message.name);
-    case 'goto-route':
-      return gotoRoute(message.route);
-    case 'update-settings':
-      return setSettings(message.settings);
-    case 'emit-event':
-      return sendEvent(message.name, message.args);
-    case 'visualize-all':
-      return sendVisualizeAll();
+  } else if (available) {
+    switch (message.type) {
+      case 'append-pilet':
+        return appendPilet(message.meta);
+      case 'remove-pilet':
+        return removePilet(message.name);
+      case 'toggle-pilet':
+        return togglePilet(message.name);
+      case 'goto-route':
+        return gotoRoute(message.route);
+      case 'update-settings':
+        return setSettings(message.settings);
+      case 'emit-event':
+        return sendEvent(message.name, message.args);
+      case 'visualize-all':
+        return sendVisualizeAll();
+    }
   }
 }
 
@@ -95,7 +92,8 @@ export function initLegacyApi() {
       });
       listenToEvents();
       supervise();
-      console.info('Piral Inspector connected!');
+    } else {
+      available = false;
     }
   });
 

@@ -374,7 +374,7 @@ export function check() {
   injectScript(`
     const dp = window['dbg:piral'];
 
-    if (dp.debug === 'v0) {
+    if (dp.debug === 'v0') {
       const ctx = dp.instance.context;
 
       const registeredRoutes = ctx.readState(state => Object.keys(state.registry.pages));

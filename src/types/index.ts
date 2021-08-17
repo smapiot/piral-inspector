@@ -163,3 +163,9 @@ export interface PiralInspectorMessage {
   version: 'v1';
   content: any;
 }
+
+declare global {
+  interface Window {
+    sendCommand(message: PiHostMessage): void;
+  }
+}

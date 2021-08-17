@@ -1,49 +1,42 @@
-import { PiHostMessage, PiletMetadata } from '../types';
-
-function emit(detail: PiHostMessage) {
-  const ev = new CustomEvent('pi-send-request', {
-    detail,
-  });
-  window.dispatchEvent(ev);
-}
+import { PiletMetadata } from '../types';
 
 export function goToRoute(route: string) {
-  emit({
+  window.sendCommand({
     type: 'goto-route',
     route,
   });
 }
 
 export function removePilet(name: string) {
-  emit({
+  window.sendCommand({
     type: 'remove-pilet',
     name,
   });
 }
 
 export function appendPilet(meta: PiletMetadata) {
-  emit({
+  window.sendCommand({
     type: 'append-pilet',
     meta,
   });
 }
 
 export function togglePilet(name: string) {
-  emit({
+  window.sendCommand({
     type: 'toggle-pilet',
     name,
-  })
+  });
 }
 
 export function updateSettings(settings: Record<string, any>) {
-  emit({
+  window.sendCommand({
     type: 'update-settings',
     settings,
   });
 }
 
 export function emitEvent(name: string, args: any) {
-  emit({
+  window.sendCommand({
     type: 'emit-event',
     name,
     args,
@@ -51,7 +44,7 @@ export function emitEvent(name: string, args: any) {
 }
 
 export function visualizeAll() {
-  emit({
+  window.sendCommand({
     type: 'visualize-all',
   });
 }

@@ -7,8 +7,6 @@ function initPanel() {
 }
 
 function connectPanel(panel: any) {
-  let window: Window = undefined;
-
   const port = browser.runtime.connect(undefined, { name: 'piral-inspector-host' });
 
   const sendMessage = (message: PiHostMessage) => {
@@ -19,20 +17,11 @@ function connectPanel(panel: any) {
     });
   };
 
-  const sendHandler = (e: CustomEvent) => {
-    sendMessage(e.detail);
-  };
-
   const init = () => sendMessage({ type: 'init' });
 
   panel.onShown.addListener((panelWindow: Window) => {
-    window = panelWindow;
-    window.addEventListener('pi-send-request', sendHandler);
-    window.dispatchEvent(new CustomEvent('pi-store', { detail: store }));
-  });
-
-  panel.onHidden.addListener(() => {
-    window?.removeEventListener('pi-send-request', sendHandler);
+    panelWindow.sendCommand = sendMessage;
+    panelWindow.dispatchEvent(new CustomEvent('pi-store', { detail: store }));
   });
 
   port.onMessage.addListener((message: PiWorkerMessage) => {

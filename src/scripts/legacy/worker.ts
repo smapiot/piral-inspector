@@ -80,20 +80,23 @@ function setupEvents() {
 
 export function initLegacyApi() {
   window.addEventListener('piral-found', (e: CustomEvent) => {
-    available = true;
     clearTimeout(checkInterval);
-    setupEvents();
-    sendMessage({
-      ...e.detail,
-      state: {
-        ...e.detail.state,
-        events,
-      },
-      type: 'available',
-    });
-    listenToEvents();
-    supervise();
-    console.info('Piral Inspector connected!');
+
+    if (e.detail.kind === 'v0') {
+      available = true;
+      setupEvents();
+      sendMessage({
+        ...e.detail,
+        state: {
+          ...e.detail.state,
+          events,
+        },
+        type: 'available',
+      });
+      listenToEvents();
+      supervise();
+      console.info('Piral Inspector connected!');
+    }
   });
 
   checkInterval = setInterval(check, 1000);

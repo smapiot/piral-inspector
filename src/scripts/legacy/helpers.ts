@@ -373,56 +373,66 @@ export function supervise() {
 export function check() {
   injectScript(`
     const dp = window['dbg:piral'];
-    const ctx = dp.instance.context;
 
-    const registeredRoutes = ctx.readState(state => Object.keys(state.registry.pages));
-    const componentRoutes = ctx.readState(state => Object.keys(state.routes));
+    if (dp.debug === 'v0) {
+      const ctx = dp.instance.context;
 
-    const viewState = sessionStorage.getItem('dbg:view-state') !== 'off';
-    const loadPilets = sessionStorage.getItem('dbg:load-pilets') === 'on';
-    const hardRefresh = sessionStorage.getItem('dbg:hard-refresh') === 'on';
-    const viewOrigins = sessionStorage.getItem('dbg:view-origins') === 'on';
+      const registeredRoutes = ctx.readState(state => Object.keys(state.registry.pages));
+      const componentRoutes = ctx.readState(state => Object.keys(state.routes));
 
-    const pilets = ctx.readState(state => state.modules);
+      const viewState = sessionStorage.getItem('dbg:view-state') !== 'off';
+      const loadPilets = sessionStorage.getItem('dbg:load-pilets') === 'on';
+      const hardRefresh = sessionStorage.getItem('dbg:hard-refresh') === 'on';
+      const viewOrigins = sessionStorage.getItem('dbg:view-origins') === 'on';
 
-    const ev = new CustomEvent('piral-found', {
-      detail: {
-        kind: dp.debug,
-        name: dp.instance.name,
-        version: dp.instance.version,
-        capabilities: ["events", "container", "routes", "pilets", "settings"],
-        state: {
-          routes: [...componentRoutes, ...registeredRoutes],
-          pilets: pilets.map(pilet => ({
-            name: pilet.name,
-            version: pilet.version,
-            disabled: pilet.disabled,
-          })),
-          settings: {
-            viewState: {
-              value: viewState,
-              type: 'boolean',
-              label: 'State container logging',
-            },
-            loadPilets: {
-              value: loadPilets,
-              type: 'boolean',
-              label: 'Load available pilets',
-            },
-            hardRefresh: {
-              value: hardRefresh,
-              type: 'boolean',
-              label: 'Full refresh on change',
-            },
-            viewOrigins: {
-              value: viewOrigins,
-              type: 'boolean',
-              label: 'Visualize component origins',
+      const pilets = ctx.readState(state => state.modules);
+
+      const ev = new CustomEvent('piral-found', {
+        detail: {
+          kind: dp.debug,
+          name: dp.instance.name,
+          version: dp.instance.version,
+          capabilities: ["events", "container", "routes", "pilets", "settings"],
+          state: {
+            routes: [...componentRoutes, ...registeredRoutes],
+            pilets: pilets.map(pilet => ({
+              name: pilet.name,
+              version: pilet.version,
+              disabled: pilet.disabled,
+            })),
+            settings: {
+              viewState: {
+                value: viewState,
+                type: 'boolean',
+                label: 'State container logging',
+              },
+              loadPilets: {
+                value: loadPilets,
+                type: 'boolean',
+                label: 'Load available pilets',
+              },
+              hardRefresh: {
+                value: hardRefresh,
+                type: 'boolean',
+                label: 'Full refresh on change',
+              },
+              viewOrigins: {
+                value: viewOrigins,
+                type: 'boolean',
+                label: 'Visualize component origins',
+              },
             },
           },
         },
-      },
-    });
-    window.dispatchEvent(ev);
+      });
+      window.dispatchEvent(ev);
+    } else {
+      const ev = new CustomEvent('piral-found', {
+        detail: {
+          kind: dp.debug,
+        }
+      });
+      window.dispatchEvent(ev);
+    }
   `);
 }

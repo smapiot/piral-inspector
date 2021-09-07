@@ -1,6 +1,6 @@
-[![Piral Logo](https://github.com/smapiot/piral/raw/master/docs/assets/logo.png)](https://piral.io)
+[![Piral Logo](https://github.com/smapiot/piral/raw/main/docs/assets/logo.png)](https://piral.io)
 
-# [Piral Inspector](https://piral.io) &middot; [![GitHub License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/smapiot/piral-inspector/blob/master/LICENSE) [![GitHub Tag](https://img.shields.io/github/tag/smapiot/piral-inspector.svg)](https://github.com/smapiot/piral-inspector/releases) [![GitHub Issues](https://img.shields.io/github/issues/smapiot/piral-inspector.svg)](https://github.com/smapiot/piral-inspector/issues) [![Gitter Chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/piral-io/community) [![CLA Assistant](https://cla-assistant.io/readme/badge/smapiot/piral)](https://cla-assistant.io/smapiot/piral)
+# [Piral Inspector](https://piral.io) &middot; [![GitHub License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/smapiot/piral-inspector/blob/main/LICENSE) [![GitHub Tag](https://img.shields.io/github/tag/smapiot/piral-inspector.svg)](https://github.com/smapiot/piral-inspector/releases) [![GitHub Issues](https://img.shields.io/github/issues/smapiot/piral-inspector.svg)](https://github.com/smapiot/piral-inspector/issues) [![Gitter Chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/piral-io/community) [![CLA Assistant](https://cla-assistant.io/readme/badge/smapiot/piral)](https://cla-assistant.io/smapiot/piral)
 
 A DevTools extension for Piral instances and their pilets.
 

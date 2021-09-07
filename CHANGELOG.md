@@ -1,5 +1,12 @@
 # Piral Inspector Changelog
 
+## 0.8.0
+
+- Changed the default/primary branch to `main`
+- Added support for extensions / extension catalogue
+- Reorganized the UI features
+- Updated dependencies
+
 ## 0.7.0
 
 - Extended internals to support new debug API

@@ -23,3 +23,12 @@ export function injectPiletsFromUrl(url: string) {
       },
     );
 }
+
+export function checkJson(input: string) {
+  try {
+    JSON.parse(input);
+    return true;
+  } catch {
+    return false;
+  }
+}

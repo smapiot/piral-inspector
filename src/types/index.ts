@@ -6,6 +6,7 @@ export type PiWorkerMessage =
   | PiWorkerRoutes
   | PiWorkerSettings
   | PiWorkerEvents
+  | PiWorkerExtensions
   | PiWorkerContainer
   | PiWorkerReconnect;
 
@@ -19,6 +20,7 @@ export interface PiralDebugCapabilities {
   routes: boolean;
   pilets: boolean;
   settings: boolean;
+  extensions: boolean;
 }
 
 export interface PiralWorkerInitialState {
@@ -47,6 +49,11 @@ export interface PiWorkerEvents {
 export interface PiWorkerContainer {
   type: 'container';
   container: any;
+}
+
+export interface PiWorkerExtensions {
+  type: 'extensions';
+  extensions: Array<string>;
 }
 
 export interface PiWorkerUnavailable {
@@ -146,6 +153,7 @@ export interface PiHostCheckAvailable {
 export interface PiHostGotoRoute {
   type: 'goto-route';
   route: string;
+  state?: any;
 }
 
 export interface PiHostInit {

@@ -1,9 +1,10 @@
 import { PiletMetadata } from '../types';
 
-export function goToRoute(route: string) {
+export function goToRoute(route: string, state?: any) {
   window.sendCommand({
     type: 'goto-route',
     route,
+    state,
   });
 }
 

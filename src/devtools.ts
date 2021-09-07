@@ -45,6 +45,8 @@ function connectPanel(panel: any) {
         return actions.updateContainer(message.container);
       case 'events':
         return actions.updateEvents(message.events);
+      case 'extensions':
+        return actions.updateContainer(message.extensions);
     }
   });
 

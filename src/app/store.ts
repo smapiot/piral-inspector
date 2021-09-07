@@ -6,8 +6,12 @@ export interface StoreState {
   name?: string;
   version?: string;
   kind?: string;
-  pilets?: Array<any>;
-  routes?: Array<any>;
+  pilets?: Array<{
+    name: string;
+    disabled?: boolean;
+  }>;
+  routes?: Array<string>;
+  extensions?: Array<string>;
   events?: Array<PiralEvent>;
   container?: any;
   settings?: PiralDebugSettings;
@@ -15,13 +19,20 @@ export interface StoreState {
 }
 
 export interface StoreActions {
-  connect(name: string, version: string, kind: string, capabilities: Array<string>, state: PiralWorkerInitialState): void;
+  connect(
+    name: string,
+    version: string,
+    kind: string,
+    capabilities: Array<string>,
+    state: PiralWorkerInitialState,
+  ): void;
   disconnect(): void;
   updatePilets(pilets: Array<any>): void;
   updateRoutes(routes: Array<string>): void;
   updateSettings(settings: PiralDebugSettings): void;
   updateEvents(events: Array<PiralEvent>): void;
   updateContainer(container: any): void;
+  updateExtensions(extensions: Array<string>): void;
 }
 
 export interface Store {
@@ -49,6 +60,7 @@ export const store = create<Store>(set => ({
         events: [],
         pilets: [],
         routes: [],
+        extensions: [],
         container: {},
         settings: {},
         ...state,
@@ -62,6 +74,7 @@ export const store = create<Store>(set => ({
           pilets: capabilities.includes('pilets'),
           routes: capabilities.includes('routes'),
           settings: capabilities.includes('settings'),
+          extensions: capabilities.includes('extensions'),
         },
       }));
     },
@@ -94,6 +107,11 @@ export const store = create<Store>(set => ({
     updateContainer(container) {
       dispatch(set, () => ({
         container,
+      }));
+    },
+    updateExtensions(extensions) {
+      dispatch(set, () => ({
+        extensions,
       }));
     },
   },

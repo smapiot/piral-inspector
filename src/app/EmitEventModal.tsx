@@ -2,19 +2,11 @@ import { FC, useState, ChangeEvent } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, Input } from 'reactstrap';
 import { jsx } from '@emotion/core';
 import { emitEvent } from './commands';
+import { checkJson } from './utils';
 
 export interface EmitEventModalProps {
   isOpen: boolean;
   toggle(): void;
-}
-
-function checkJson(input: string) {
-  try {
-    JSON.parse(input);
-    return true;
-  } catch {
-    return false;
-  }
 }
 
 const initialValues = {

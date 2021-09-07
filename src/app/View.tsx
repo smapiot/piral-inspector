@@ -7,6 +7,7 @@ import { RecordedEvents } from './RecordedEvents';
 import { AvailablePilets } from './AvailablePilets';
 import { RegisteredRoutes } from './RegisteredRoutes';
 import { StateContainer } from './StateContainer';
+import { ExtensionCatalogue } from './ExtensionCatalogue';
 import { useStore } from './store';
 import { connectedView, notConnectedView, appSectionView } from './styles';
 
@@ -54,6 +55,13 @@ export const View: FC<ViewProps> = () => {
             <h3>State Container</h3>
             <p>The currently available global state.</p>
             <StateContainer />
+          </div>
+        )}
+        {capabilities.extensions && (
+          <div css={appSectionView}>
+            <h3>Extension Catalogue</h3>
+            <p>The registered extension components.</p>
+            <ExtensionCatalogue />
           </div>
         )}
       </div>

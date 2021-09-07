@@ -8,6 +8,7 @@ export interface StoreState {
   kind?: string;
   pilets?: Array<{
     name: string;
+    version: string;
     disabled?: boolean;
   }>;
   routes?: Array<string>;

@@ -106,7 +106,7 @@ export const StateContainer: FC<StateContainerProps> = () => {
         ))}
       </Breadcrumb>
       <ListGroup>
-        {Object.keys(current)
+        {Object.keys(current || {})
           .filter(c => removeIfEmpty(current[c]))
           .map(c =>
             isPrimitive(current[c]) ? (

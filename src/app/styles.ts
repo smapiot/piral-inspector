@@ -23,6 +23,12 @@ export const notConnectedView = css`
   }
 `;
 
+export const tabLink = css`
+  > a:not(.active) {
+    cursor: pointer;
+  }
+`;
+
 export const appSectionView = css`
   margin-top: 1.5em;
 

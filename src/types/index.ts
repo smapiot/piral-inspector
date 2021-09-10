@@ -26,9 +26,14 @@ export interface PiralDebugCapabilities {
 export interface PiralWorkerInitialState {
   container?: any;
   events?: Array<PiralEvent>;
-  pilets?: Array<any>;
+  pilets?: Array<{
+    name: string;
+    version: string;
+    disabled?: boolean;
+  }>;
   routes?: Array<string>;
   settings?: PiralDebugSettings;
+  extensions?: Array<string>;
   [name: string]: any;
 }
 

@@ -32,7 +32,7 @@ export const AdjustSettingsModal: FC<AdjustSettingsModalProps> = ({ settings, is
               switch (setting.type) {
                 case 'number':
                   return (
-                    <FormGroup>
+                    <FormGroup key={name}>
                       <Label for={`number-${name}`}>{setting.label}</Label>
                       <Input
                         type="number"
@@ -44,7 +44,7 @@ export const AdjustSettingsModal: FC<AdjustSettingsModalProps> = ({ settings, is
                   );
                 case 'string':
                   return (
-                    <FormGroup>
+                    <FormGroup key={name}>
                       <Label for={`text-${name}`}>{setting.label}</Label>
                       <Input
                         type="text"
@@ -58,6 +58,7 @@ export const AdjustSettingsModal: FC<AdjustSettingsModalProps> = ({ settings, is
                   return (
                     <CustomInput
                       type="switch"
+                      key={name}
                       label={setting.label}
                       id={`switch-${name}`}
                       checked={values[name]}

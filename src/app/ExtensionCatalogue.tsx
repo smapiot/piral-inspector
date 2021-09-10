@@ -1,5 +1,6 @@
-import { ChangeEvent, FC, useState } from 'react';
+import { ChangeEvent, FC, SyntheticEvent, useState } from 'react';
 import {
+  Alert,
   Button,
   FormGroup,
   Input,
@@ -21,11 +22,14 @@ interface ExtensionItemProps {
 const ExtensionItem: FC<ExtensionItemProps> = ({ name }) => {
   const [isOpen, setOpen] = useState(false);
   const [params, setParams] = useState('{}');
-  const toggle = () => setOpen(!isOpen);
+  const toggle = (ev: SyntheticEvent) => {
+    setOpen(!isOpen);
+    ev.preventDefault();
+  };
   const setValue = (e: ChangeEvent<HTMLInputElement>) => setParams(e.currentTarget.value);
   const disabled = !checkJson(params);
 
-  const send = () => {
+  const send = (ev: SyntheticEvent) => {
     if (!disabled) {
       goToRoute('/$debug-extension-catalogue', {
         name,
@@ -33,12 +37,14 @@ const ExtensionItem: FC<ExtensionItemProps> = ({ name }) => {
       });
     }
 
-    toggle();
+    toggle(ev);
   };
 
   return (
     <ListGroupItem>
-      <ListGroupItemHeading onClick={toggle}>{name}</ListGroupItemHeading>
+      <ListGroupItemHeading tag="a" href="#" onClick={toggle}>
+        {name}
+      </ListGroupItemHeading>
       {isOpen && (
         <ListGroupItemText>
           <FormGroup>
@@ -69,9 +75,11 @@ export const ExtensionCatalogue: FC<ExtensionCatalogueProps> = () => {
 
   return (
     <ListGroup>
-      {extensions.map(name => (
-        <ExtensionItem name={name} key={name} />
-      ))}
+      {extensions.length > 0 ? (
+        extensions.map(name => <ExtensionItem name={name} key={name} />)
+      ) : (
+        <Alert color="warning">No extensions available.</Alert>
+      )}
     </ListGroup>
   );
 };

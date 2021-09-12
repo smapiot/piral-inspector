@@ -13,10 +13,23 @@
   "author": "smapiot",
   "homepage_url": "https://piral.io",
   "icons": {
+    "16": "assets/logo_16.png",
+    "32": "assets/logo_32.png",
     "48": "assets/logo_48.png",
     "64": "assets/logo_64.png",
     "96": "assets/logo_96.png",
     "128": "assets/logo_128.png"
+  },
+  "browser_action": {
+    "default_icon": {
+      "16": "assets/disabled_16.png",
+      "32": "assets/disabled_32.png",
+      "48": "assets/disabled_48.png",
+      "64": "assets/disabled_64.png",
+      "96": "assets/disabled_96.png",
+      "128": "assets/disabled_128.png"
+    },
+    "default_popup": "popups/disabled.html"
   },
   "externally_connectable": {
     "ids": ["*"],

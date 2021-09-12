@@ -61,17 +61,6 @@ function display(value: any) {
   }
 }
 
-function removeIfEmpty(value: any) {
-  /**
-   * We have an object (non-null) that has no keys -> potentially should be removed.
-   */
-  if (typeof value === 'object' && value && Object.keys(value).length === 0) {
-    return false;
-  }
-
-  return true;
-}
-
 export interface StateContainerProps {}
 
 export const StateContainer: FC<StateContainerProps> = () => {
@@ -107,7 +96,6 @@ export const StateContainer: FC<StateContainerProps> = () => {
       </Breadcrumb>
       <ListGroup>
         {Object.keys(current || {})
-          .filter(c => removeIfEmpty(current[c]))
           .map(c =>
             isPrimitive(current[c]) ? (
               <ListGroupItem key={c} tag="span" action>

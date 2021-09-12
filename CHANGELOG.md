@@ -4,6 +4,7 @@
 
 - Changed the default/primary branch to `main`
 - Added support for extensions / extension catalogue
+- Detect Piral build type in popup (#14)
 - Reorganized the UI features
 - Updated dependencies
 

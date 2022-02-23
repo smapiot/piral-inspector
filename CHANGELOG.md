@@ -1,5 +1,9 @@
 # Piral Inspector Changelog
 
+## 0.8.1
+
+- Fixed issue on Chrome when navigating (#15)
+
 ## 0.8.0
 
 - Changed the default/primary branch to `main`

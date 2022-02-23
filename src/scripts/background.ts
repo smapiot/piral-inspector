@@ -4,6 +4,9 @@ import { setIconAndPopup } from './icons';
 // Stores the connections from devtools.js
 const tabPorts: Record<number, Runtime.Port> = {};
 
+// Could be used to disitnguish / improve behavior in Firefox
+const isFirefox = navigator.userAgent.indexOf('Firefox') >= 0;
+
 /**
  * From contentScript.js to background.js (and maybe to devtools.js)
  *            s -------------------> o -------------------> t

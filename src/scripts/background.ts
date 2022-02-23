@@ -1,37 +1,8 @@
 import { browser, Runtime } from 'webextension-polyfill-ts';
+import { setIconAndPopup } from './icons';
 
 // Stores the connections from devtools.js
 const tabPorts: Record<number, Runtime.Port> = {};
-
-function setIconAndPopup(type: 'disabled' | 'production' | 'development', tabId: number) {
-  browser.browserAction.setIcon({
-    tabId,
-    path: {
-      '16': `assets/${type}_16.png`,
-      '32': `assets/${type}_32.png`,
-      '48': `assets/${type}_48.png`,
-      '64': `assets/${type}_64.png`,
-      '96': `assets/${type}_96.png`,
-      '128': `assets/${type}_128.png`,
-    },
-  });
-
-  browser.browserAction.setPopup({
-    tabId,
-    popup: `popups/${type}.html`,
-  });
-}
-
-browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-  if (tab.active && changeInfo.status === 'loading') {
-    const port = tabPorts[tabId];
-
-    if (typeof port?.postMessage === 'function') {
-      port.postMessage({ type: 'unavailable' });
-      setIconAndPopup('disabled', tabId);
-    }
-  }
-});
 
 /**
  * From contentScript.js to background.js (and maybe to devtools.js)
@@ -47,6 +18,8 @@ browser.runtime.onMessage.addListener((message, sender) => {
     if (message.type === 'available') {
       const type = message.mode === 'production' ? 'production' : 'development';
       setIconAndPopup(type, tabId);
+    } else if (message.type === 'cs-connect') {
+      browser.tabs.sendMessage(tabId, { type: 'init' });
     }
 
     // Only send back to devtools.js if connection still available

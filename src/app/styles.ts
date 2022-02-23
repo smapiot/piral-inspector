@@ -66,18 +66,22 @@ export const globalView = css`
     margin: 0;
     padding: 0;
   }
+`;
+
+/**
+ * Dark mode for now removed; should be re-implemented with all colors improved:
 
   @media (prefers-color-scheme: dark) {
-    body.is-chrome {
+    body {
       background-color: rgb(36, 36, 36);
-      color: white;
+      color: #eee;
 
       .modal, .list-group {
         color: black;
       }
     }
   }
-`;
+ */
 
 export const customSwitchStyle = css`
   margin-right: 2em;

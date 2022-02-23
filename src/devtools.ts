@@ -17,8 +17,6 @@ function connectPanel(panel: any) {
     });
   };
 
-  const init = () => sendMessage({ type: 'init' });
-
   panel.onShown.addListener((panelWindow: Window) => {
     panelWindow.sendCommand = sendMessage;
     panelWindow.dispatchEvent(new CustomEvent('pi-store', { detail: store }));
@@ -29,8 +27,6 @@ function connectPanel(panel: any) {
     const { actions } = api.getState();
 
     switch (message.type) {
-      case 'cs-connect':
-        return init();
       case 'available':
         return actions.connect(message.name, message.version, message.kind, message.capabilities, message.state);
       case 'unavailable':
@@ -50,7 +46,7 @@ function connectPanel(panel: any) {
     }
   });
 
-  init();
+  sendMessage({ type: 'init' });
 }
 
 function logError(err: Error) {

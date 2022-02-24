@@ -27,10 +27,80 @@ export const tabLink = css`
   > a:not(.active) {
     cursor: pointer;
   }
+
+  @media (prefers-color-scheme: dark) {
+    a.nav-link {
+      color: #BEAEE2;
+    }
+  }
 `;
+
+export const showRoute = css`
+  @media (prefers-color-scheme: dark) {
+    .list-group-item-action {
+      color: #BEAEE2;
+    }
+  }
+` 
+
+export const stateContainer = css`
+  @media (prefers-color-scheme: dark) {
+    .stateContainer__a {
+      color: #afafaf;
+    }
+  }
+`;
+
+export const extensionCatalogue = css`
+  @media (prefers-color-scheme: dark) {
+    .list-group-item {
+      background: hsl(0, 0%, 14%);
+      color: #afafaf;
+    }
+  }
+`
 
 export const appSectionView = css`
   margin-top: 1.5em;
+
+  @media (prefers-color-scheme: dark) {
+    .list-group-item {
+      background: hsl(0, 0%, 14%);
+      color: #afafaf;
+    }
+
+    .modal-content {
+      background-color: #292a2b;
+      color: #afafaf;
+    }
+  
+    .close {
+      color: #afafaf;
+    }
+  
+    .form-control {
+      background: hsl(0, 0%, 14%);
+      border:1px solid hsl(0, 0%, 14%);
+      color: #afafaf;
+    }
+   
+    .custom-file-label {
+      background: hsl(0, 0%, 14%);
+    }
+    
+    .custom-file-label::placeholder {
+      color: #6c757d;
+    }
+
+    .custom-control-input:checked~.custom-control-label::before {
+      border-color: #8e5cff;
+      background-color: #8e5cff;
+    }
+
+    .list-group-item-heading {
+      color: #afafaf;
+    }
+  }
 
   > p {
     margin-top: 1em;
@@ -57,6 +127,12 @@ export const basicInfoView = css`
   a:hover > svg {
     fill: #007bff;
   }
+
+  @media (prefers-color-scheme: dark) {
+    a:hover > svg {
+      fill: #BEAEE2;
+    }
+  }
 `;
 
 export const globalView = css`
@@ -66,22 +142,19 @@ export const globalView = css`
     margin: 0;
     padding: 0;
   }
-`;
-
-/**
- * Dark mode for now removed; should be re-implemented with all colors improved:
 
   @media (prefers-color-scheme: dark) {
     body {
-      background-color: rgb(36, 36, 36);
-      color: #eee;
+      background-color: #292a2b;
+      color: #afafaf;
 
       .modal, .list-group {
         color: black;
       }
     }
   }
- */
+
+`;
 
 export const customSwitchStyle = css`
   margin-right: 2em;

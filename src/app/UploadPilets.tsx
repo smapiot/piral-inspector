@@ -2,6 +2,7 @@ import { FC, ChangeEvent, useState } from 'react';
 import { CustomInput, InputGroup, InputGroupAddon, Button } from 'reactstrap';
 import { jsx } from '@emotion/core';
 import { injectPiletsFromUrl } from './utils';
+import { appSectionView } from './styles';
 
 export interface UploadPiletsProps {}
 
@@ -36,11 +37,14 @@ export const UploadPilets: FC<UploadPiletsProps> = () => {
     setFile({ value: undefined, key: file.key + 1 });
   };
 
+  // detect if the user prefers dark mode
+  const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
   return (
-    <InputGroup>
+    <InputGroup css={appSectionView} >
       <CustomInput key={file.key} type="file" id="upload-pilet" label="Select a local pilet" onChange={uploadPilet} />
-      <InputGroupAddon addonType="append">
-        <Button color="primary" disabled={!file.value} onClick={upload}>
+      <InputGroupAddon  addonType="append">
+        <Button color={userPrefersDark? "secondary" : "primary"} disabled={!file.value} onClick={upload}>
           Upload
         </Button>
       </InputGroupAddon>

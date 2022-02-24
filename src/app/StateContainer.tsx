@@ -9,6 +9,7 @@ import {
 } from 'reactstrap';
 import { jsx } from '@emotion/core';
 import { useStore } from './store';
+import { stateContainer } from './styles';
 
 function isPrimitive(value: any) {
   return typeof value !== 'object' || (!Array.isArray(value) && !value);
@@ -74,6 +75,7 @@ export const StateContainer: FC<StateContainerProps> = () => {
         <BreadcrumbItem>
           <a
             href="#"
+            style={{ color: "#afafaf"}}
             onClick={e => {
               setPath(path.slice(0, 0));
               e.preventDefault();
@@ -82,9 +84,10 @@ export const StateContainer: FC<StateContainerProps> = () => {
           </a>
         </BreadcrumbItem>
         {path.map((item, i) => (
-          <BreadcrumbItem key={`${i}_${item}`}>
+          <BreadcrumbItem key={`${i}_${item}`} css={stateContainer}>
             <a
               href="#"
+              className='stateContainer__a'
               onClick={e => {
                 setPath(path.slice(0, i + 1));
                 e.preventDefault();
@@ -107,6 +110,7 @@ export const StateContainer: FC<StateContainerProps> = () => {
                 key={c}
                 tag="a"
                 href="#"
+                className='stateContainer__a'
                 action
                 onClick={e => {
                   setPath([...path, c]);

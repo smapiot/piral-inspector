@@ -3,6 +3,7 @@ import { ListGroupItem } from 'reactstrap';
 import { jsx } from '@emotion/core';
 import { ConfigureRouteModal } from './ConfigureRouteModal';
 import { goToRoute } from './commands';
+import { showRoute } from './styles';
 
 export interface ShowRouteProps {
   route: string;
@@ -30,6 +31,7 @@ export const ShowRoute: FC<ShowRouteProps> = ({ route }) => {
 
   return (
     <ListGroupItem
+      css={showRoute}
       action
       tag="a"
       href="#"

@@ -7,7 +7,7 @@ import { PiralDebugCapabilities } from '../types';
 import { useViews } from './useViews';
 
 export interface ConnectedViewProps {
-  capabilities: PiralDebugCapabilities;
+  capabilities: PiralDebugCapabilities; 
 }
 
 export const ConnectedView: FC<ConnectedViewProps> = ({ capabilities }) => {

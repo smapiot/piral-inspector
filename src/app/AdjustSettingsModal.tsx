@@ -3,6 +3,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, CustomInput, FormGr
 import { jsx } from '@emotion/core';
 import { updateSettings } from './commands';
 import { PiralDebugSettings } from '../types';
+import { appSectionView } from './styles';
 
 export interface AdjustSettingsModalProps {
   isOpen: boolean;
@@ -20,8 +21,11 @@ export const AdjustSettingsModal: FC<AdjustSettingsModalProps> = ({ settings, is
 
   useEffect(() => setValues(initialValues), [initialValues]);
 
+  // detect if the user prefers dark mode
+  const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
   return (
-    <Modal isOpen={isOpen} toggle={toggle}>
+    <Modal isOpen={isOpen} toggle={toggle} css={appSectionView}>
       <ModalHeader toggle={toggle}>Debug Settings</ModalHeader>
       <ModalBody>
         <FormGroup>
@@ -74,7 +78,7 @@ export const AdjustSettingsModal: FC<AdjustSettingsModalProps> = ({ settings, is
         <p style={{ fontSize: '0.8em' }}>We recommend to refresh the page after changing these settings.</p>
       </ModalBody>
       <ModalFooter>
-        <Button color="primary" onClick={send}>
+        <Button color={userPrefersDark? "secondary" : "primary"} onClick={send}>
           Save
         </Button>
       </ModalFooter>

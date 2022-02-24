@@ -2,6 +2,7 @@ import { FC, useState, SyntheticEvent } from 'react';
 import { Button, Form, Input, InputGroup, InputGroupAddon } from 'reactstrap';
 import { jsx } from '@emotion/core';
 import { injectPiletsFromUrl } from './utils';
+import { appSectionView } from './styles';
 
 export interface LinkPiletsProps {}
 
@@ -17,12 +18,15 @@ export const LinkPilets: FC<LinkPiletsProps> = () => {
     e.preventDefault();
   };
 
+  // detect if the user prefers dark mode
+  const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
   return (
-    <Form onSubmit={submit}>
+    <Form onSubmit={submit} css={appSectionView}>
       <InputGroup>
-        <Input type="text" value={url} onChange={e => setUrl(e.currentTarget.value)} />
-        <InputGroupAddon addonType="append">
-          <Button color="primary" disabled={url === ''}>
+        <Input type="text" className="input" value={url} onChange={e => setUrl(e.currentTarget.value)} />
+        <InputGroupAddon  addonType="append">
+          <Button color={userPrefersDark? "secondary" : "primary"} disabled={url === ''}>
             Add
           </Button>
         </InputGroupAddon>

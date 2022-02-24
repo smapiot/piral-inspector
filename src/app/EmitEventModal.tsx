@@ -3,6 +3,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, I
 import { jsx } from '@emotion/core';
 import { emitEvent } from './commands';
 import { checkJson } from './utils';
+import { appSectionView } from './styles';
 
 export interface EmitEventModalProps {
   isOpen: boolean;
@@ -31,8 +32,11 @@ export const EmitEventModal: FC<EmitEventModalProps> = ({ isOpen, toggle }) => {
     toggle();
   };
 
+  // detect if the user prefers dark mode
+  const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
   return (
-    <Modal isOpen={isOpen} toggle={toggle}>
+    <Modal isOpen={isOpen} toggle={toggle} css={appSectionView}>
       <ModalHeader toggle={toggle}>Event Details</ModalHeader>
       <ModalBody>
         <FormGroup>
@@ -60,7 +64,7 @@ export const EmitEventModal: FC<EmitEventModalProps> = ({ isOpen, toggle }) => {
         </FormGroup>
       </ModalBody>
       <ModalFooter>
-        <Button color="primary" onClick={send} disabled={disabled}>
+        <Button color={userPrefersDark? "secondary" : "primary"} onClick={send} disabled={disabled}>
           Emit
         </Button>
       </ModalFooter>

@@ -61,7 +61,7 @@ export const EmitEventModal: FC<EmitEventModalProps> = ({ isOpen, toggle }) => {
         </FormGroup>
       </ModalBody>
       <ModalFooter>
-        <Button onClick={send} disabled={disabled}>
+        <Button color="primary" onClick={send} disabled={disabled}>
           Emit
         </Button>
       </ModalFooter>

@@ -19,7 +19,7 @@ export const LinkPilets: FC<LinkPiletsProps> = () => {
   };
 
   return (
-    <Form onSubmit={submit} css={appSectionView}>
+    <Form onSubmit={submit}>
       <InputGroup>
         <Input type="text" value={url} onChange={e => setUrl(e.currentTarget.value)} />
         <InputGroupAddon addonType="append">

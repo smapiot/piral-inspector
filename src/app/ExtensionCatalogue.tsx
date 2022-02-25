@@ -59,7 +59,7 @@ const ExtensionItem: FC<ExtensionItemProps> = ({ name }) => {
               onChange={setValue}
             />
           </FormGroup>
-          <Button onClick={send} disabled={disabled}>
+          <Button color="primary" onClick={send} disabled={disabled}>
             Render
           </Button>
         </ListGroupItemText>

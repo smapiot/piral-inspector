@@ -94,6 +94,21 @@ export const globalViewDark = css`
     color: #afafaf;
   }
 
+  .btn-primary {
+    background: #6c757d;
+    border: 1px solid #6c757d;
+  }
+
+  .btn-primary:hover {
+    background: #6c757d;
+    border: 1px solid #6c757d;
+  }
+
+  .btn-primary:disabled {
+    background: #6c757d;
+    border: 1px solid #6c757d;
+  }
+
   .nav-link {
     color: #beaee2;
   }

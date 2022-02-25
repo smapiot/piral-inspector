@@ -41,7 +41,7 @@ export const UploadPilets: FC<UploadPiletsProps> = () => {
     <InputGroup css={appSectionView}>
       <CustomInput key={file.key} type="file" id="upload-pilet" label="Select a local pilet" onChange={uploadPilet} />
       <InputGroupAddon addonType="append">
-        <Button disabled={!file.value} onClick={upload}>
+        <Button color="primary" disabled={!file.value} onClick={upload}>
           Upload
         </Button>
       </InputGroupAddon>

@@ -28,7 +28,7 @@ export const AdjustSettingsModal: FC<AdjustSettingsModalProps> = ({ settings, is
   const currentTheme = useStore(m => m.state.theme);
 
   return (
-    <Modal isOpen={isOpen} toggle={toggle} css={appSectionView}>
+    <Modal isOpen={isOpen} toggle={toggle}>
       <ModalHeader toggle={toggle}>Debug Settings</ModalHeader>
       <ModalBody>
         <FormGroup>
@@ -87,7 +87,9 @@ export const AdjustSettingsModal: FC<AdjustSettingsModalProps> = ({ settings, is
         <p style={{ fontSize: '0.8em' }}>We recommend to refresh the page after changing these settings.</p>
       </ModalBody>
       <ModalFooter>
-        <Button onClick={send}>Save</Button>
+        <Button color="primary" onClick={send}>
+          Save
+        </Button>
       </ModalFooter>
     </Modal>
   );

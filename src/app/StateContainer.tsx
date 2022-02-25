@@ -85,7 +85,6 @@ export const StateContainer: FC<StateContainerProps> = () => {
           <BreadcrumbItem key={`${i}_${item}`}>
             <a
               href="#"
-              className='stateContainer__a'
               onClick={e => {
                 setPath(path.slice(0, i + 1));
                 e.preventDefault();

@@ -18,9 +18,6 @@ export const LinkPilets: FC<LinkPiletsProps> = () => {
     e.preventDefault();
   };
 
-  // detect if the user prefers dark mode
-  const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-
   return (
     <Form onSubmit={submit} css={appSectionView}>
       <InputGroup>

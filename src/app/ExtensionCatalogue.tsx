@@ -40,9 +40,6 @@ const ExtensionItem: FC<ExtensionItemProps> = ({ name }) => {
     toggle(ev);
   };
 
-  // detect if the user prefers dark mode
-  const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-
   return (
     <ListGroupItem>
       <ListGroupItemHeading tag="a" href="#" onClick={toggle}>

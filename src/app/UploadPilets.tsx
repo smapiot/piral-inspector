@@ -37,9 +37,6 @@ export const UploadPilets: FC<UploadPiletsProps> = () => {
     setFile({ value: undefined, key: file.key + 1 });
   };
 
-  // detect if the user prefers dark mode
-  const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-
   return (
     <InputGroup css={appSectionView}>
       <CustomInput key={file.key} type="file" id="upload-pilet" label="Select a local pilet" onChange={uploadPilet} />

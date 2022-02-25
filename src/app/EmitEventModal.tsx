@@ -31,10 +31,7 @@ export const EmitEventModal: FC<EmitEventModalProps> = ({ isOpen, toggle }) => {
 
     toggle();
   };
-
-  // detect if the user prefers dark mode
-  const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-
+  
   return (
     <Modal isOpen={isOpen} toggle={toggle} css={appSectionView}>
       <ModalHeader toggle={toggle}>Event Details</ModalHeader>

@@ -2,8 +2,8 @@ import { FC, Fragment, useEffect } from 'react';
 import { jsx, Global } from '@emotion/core';
 import { StoreApi } from 'zustand';
 import { View } from './View';
-import { globalView } from './styles';
-import { Store, store } from './store';
+import { globalViewLight, globalViewDark } from './styles';
+import { Store, store, useStore } from './store';
 
 function useSyncedStore(localApi: StoreApi<Store>) {
   useEffect(() => {
@@ -26,7 +26,7 @@ export const App: FC<AppProps> = () => {
 
   return (
     <Fragment>
-      <Global styles={globalView} />
+      <Global styles={useStore(m => m.state.theme) == 'dark' ? globalViewDark : globalViewLight} />
       <View />
     </Fragment>
   );

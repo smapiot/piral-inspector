@@ -1,8 +1,10 @@
 import create, { SetState } from 'zustand';
 import { PiralDebugCapabilities, PiralDebugSettings, PiralEvent, PiralWorkerInitialState } from '../types';
+import { getTheme } from '../scripts/legacy/helpers';
 
 export interface StoreState {
   connected: boolean;
+  theme: string;
   name?: string;
   version?: string;
   kind?: string;
@@ -28,6 +30,7 @@ export interface StoreActions {
     state: PiralWorkerInitialState,
   ): void;
   disconnect(): void;
+  toggleTheme(): void;
   updatePilets(pilets: Array<any>): void;
   updateRoutes(routes: Array<string>): void;
   updateSettings(settings: PiralDebugSettings): void;
@@ -54,6 +57,7 @@ function dispatch(set: SetState<Store>, update: (state: StoreState) => Partial<S
 export const store = create<Store>(set => ({
   state: {
     connected: false,
+    theme: getTheme(),
   },
   actions: {
     connect(name, version, kind, capabilities, state) {
@@ -83,6 +87,15 @@ export const store = create<Store>(set => ({
       dispatch(set, () => ({
         connected: false,
       }));
+    },
+    toggleTheme() {
+      dispatch(set, state => {
+        const theme = state.theme === 'dark' ? 'light' : 'dark';
+        localStorage.setItem('theme', theme);
+        return {
+          theme,
+        };
+      });
     },
     updatePilets(pilets) {
       dispatch(set, () => ({

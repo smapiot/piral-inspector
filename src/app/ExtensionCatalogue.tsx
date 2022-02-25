@@ -14,7 +14,6 @@ import { jsx } from '@emotion/core';
 import { goToRoute } from './commands';
 import { useStore } from './store';
 import { checkJson } from './utils';
-import { extensionCatalogue } from './styles';
 
 interface ExtensionItemProps {
   name: string;
@@ -45,7 +44,7 @@ const ExtensionItem: FC<ExtensionItemProps> = ({ name }) => {
   const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 
   return (
-    <ListGroupItem css={extensionCatalogue}>
+    <ListGroupItem>
       <ListGroupItemHeading tag="a" href="#" onClick={toggle}>
         {name}
       </ListGroupItemHeading>
@@ -63,7 +62,7 @@ const ExtensionItem: FC<ExtensionItemProps> = ({ name }) => {
               onChange={setValue}
             />
           </FormGroup>
-          <Button color={userPrefersDark? "secondary" : "primary"} onClick={send} disabled={disabled}>
+          <Button onClick={send} disabled={disabled}>
             Render
           </Button>
         </ListGroupItemText>

@@ -1,4 +1,4 @@
-import { css } from "@emotion/core";
+import { css } from '@emotion/core';
 
 export const connectedView = css`
   display: flex;
@@ -27,80 +27,10 @@ export const tabLink = css`
   > a:not(.active) {
     cursor: pointer;
   }
-
-  @media (prefers-color-scheme: dark) {
-    a.nav-link {
-      color: #BEAEE2;
-    }
-  }
 `;
-
-export const showRoute = css`
-  @media (prefers-color-scheme: dark) {
-    .list-group-item-action {
-      color: #BEAEE2;
-    }
-  }
-` 
-
-export const stateContainer = css`
-  @media (prefers-color-scheme: dark) {
-    .stateContainer__a {
-      color: #afafaf;
-    }
-  }
-`;
-
-export const extensionCatalogue = css`
-  @media (prefers-color-scheme: dark) {
-    .list-group-item {
-      background: hsl(0, 0%, 14%);
-      color: #afafaf;
-    }
-  }
-`
 
 export const appSectionView = css`
   margin-top: 1.5em;
-
-  @media (prefers-color-scheme: dark) {
-    .list-group-item {
-      background: hsl(0, 0%, 14%);
-      color: #afafaf;
-    }
-
-    .modal-content {
-      background-color: #292a2b;
-      color: #afafaf;
-    }
-  
-    .close {
-      color: #afafaf;
-    }
-  
-    .form-control {
-      background: hsl(0, 0%, 14%);
-      border:1px solid hsl(0, 0%, 14%);
-      color: #afafaf;
-    }
-   
-    .custom-file-label {
-      background: hsl(0, 0%, 14%);
-    }
-    
-    .custom-file-label::placeholder {
-      color: #6c757d;
-    }
-
-    .custom-control-input:checked~.custom-control-label::before {
-      border-color: #8e5cff;
-      background-color: #8e5cff;
-    }
-
-    .list-group-item-heading {
-      color: #afafaf;
-    }
-  }
 
   > p {
     margin-top: 1em;
@@ -119,6 +49,17 @@ export const basicInfoView = css`
   a {
     padding: 1em;
   }
+`;
+
+export const globalViewLight = css`
+  html,
+  body,
+  #app {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
 
   a > svg {
     fill: #777;
@@ -128,32 +69,97 @@ export const basicInfoView = css`
     fill: #007bff;
   }
 
-  @media (prefers-color-scheme: dark) {
-    a:hover > svg {
-      fill: #BEAEE2;
-    }
+  .btn-secondary {
+    background: #007bff;
+  }
+
+  .btn-secondary:hover {
+    background: #007bff;
+  }
+
+  .btn-secondary:disabled {
+    background: #007bff;
   }
 `;
 
-export const globalView = css`
-  html, body, #app {
+export const globalViewDark = css`
+  html,
+  body,
+  #app {
     height: 100%;
     width: 100%;
     margin: 0;
     padding: 0;
+    background-color: #292a2b;
+    color: #afafaf;
   }
 
-  @media (prefers-color-scheme: dark) {
-    body {
-      background-color: #292a2b;
-      color: #afafaf;
-
-      .modal, .list-group {
-        color: black;
-      }
-    }
+  .nav-link {
+    color: #beaee2;
   }
 
+  .nav-link:hover {
+    color: #beaee2;
+  }
+
+  .breadcrumb-item a {
+    color: #611cfb;
+  }
+
+  a > svg {
+    fill: #777;
+  }
+
+  a:hover > svg {
+    fill: #beaee2;
+  }
+
+  .list-group-item {
+    background: hsl(0, 0%, 14%);
+    color: #afafaf;
+  }
+
+  .close {
+    color: #afafaf;
+  }
+
+  .form-control {
+    background: hsl(0, 0%, 14%);
+    border: 1px solid hsl(0, 0%, 14%);
+    color: #afafaf;
+  }
+
+  .form-control:focus {
+    background: hsl(0, 0%, 14%);
+    border: 1px solid hsl(0, 0%, 14%);
+    color: #afafaf;
+  }
+
+  .custom-file-label {
+    background: hsl(0, 0%, 14%);
+  }
+
+  .custom-file-label::placeholder {
+    color: #6c757d;
+  }
+
+  .custom-control-input:checked ~ .custom-control-label::before {
+    border-color: #8e5cff;
+    background-color: #8e5cff;
+  }
+
+  .modal-content {
+    background-color: #292a2b;
+    color: #afafaf;
+  }
+
+  .list-group-item-heading {
+    color: #afafaf;
+  }
+
+  .list-group-item-heading:hover {
+    color: #afafaf;
+  }
 `;
 
 export const customSwitchStyle = css`

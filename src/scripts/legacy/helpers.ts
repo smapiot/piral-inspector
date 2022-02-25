@@ -28,6 +28,19 @@ export function sendVisualizeAll() {
   `);
 }
 
+export function getTheme() {
+  if (localStorage.getItem('theme')) {
+    return localStorage.getItem('theme');
+  } else {
+    const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (userPrefersDark) {
+      return 'dark';
+    } else {
+      return 'light';
+    }
+  }
+}
+
 export function getSettings() {
   injectScript(`
     const viewState = sessionStorage.getItem('dbg:view-state') !== 'off';

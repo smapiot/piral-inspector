@@ -41,10 +41,10 @@ export const UploadPilets: FC<UploadPiletsProps> = () => {
   const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 
   return (
-    <InputGroup css={appSectionView} >
+    <InputGroup css={appSectionView}>
       <CustomInput key={file.key} type="file" id="upload-pilet" label="Select a local pilet" onChange={uploadPilet} />
-      <InputGroupAddon  addonType="append">
-        <Button color={userPrefersDark? "secondary" : "primary"} disabled={!file.value} onClick={upload}>
+      <InputGroupAddon addonType="append">
+        <Button disabled={!file.value} onClick={upload}>
           Upload
         </Button>
       </InputGroupAddon>

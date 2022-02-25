@@ -21,9 +21,9 @@ const PiletsTab = {
         <AvailablePilets />
       </div>
       <div css={appSectionView}>
-        <h3 >Add Pilets</h3>
+        <h3>Add Pilets</h3>
         <p>You can add a feed address or an address referring to a pilet root module.</p>
-        <LinkPilets/>
+        <LinkPilets />
         <p>Alternatively, you can also bundle a local pilet and upload it here, too.</p>
         <UploadPilets />
       </div>

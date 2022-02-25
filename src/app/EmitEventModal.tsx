@@ -33,7 +33,7 @@ export const EmitEventModal: FC<EmitEventModalProps> = ({ isOpen, toggle }) => {
   };
 
   return (
-    <Modal isOpen={isOpen} toggle={toggle} css={appSectionView}>
+    <Modal isOpen={isOpen} toggle={toggle}>
       <ModalHeader toggle={toggle}>Event Details</ModalHeader>
       <ModalBody>
         <FormGroup>

@@ -21,6 +21,10 @@ export const notConnectedView = css`
     width: 80%;
     text-align: center;
   }
+
+  .btn-primary {
+    margin-top: 10px;
+  }
 `;
 
 export const tabLink = css`

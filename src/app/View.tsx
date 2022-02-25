@@ -23,7 +23,9 @@ export const View: FC<ViewProps> = () => {
         <h2>Not connected</h2>
         <p>You are currently not running a Piral instance in debug mode.</p>
         <p>Note that you need to run Piral v0.10 or later on localhost for Piral Inspector to work.</p>
-        <Button style={{ marginTop: 10 }} onClick={actions.toggleTheme}>Switch to {currentTheme == "dark"? "light": "dark"}</Button>
+        <Button color="primary" onClick={actions.toggleTheme}>
+          Switch to {currentTheme == 'dark' ? 'light' : 'dark'}
+        </Button>
       </div>
     );
   }

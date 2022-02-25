@@ -35,8 +35,10 @@ export function checkJson(input: string) {
 
 
 export function getTheme() {
-  if (localStorage.getItem('theme')) {
-    return localStorage.getItem('theme');
+  const theme = localStorage.getItem('theme');
+
+  if (theme) {
+    return theme;
   } else {
     const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     if (userPrefersDark) {

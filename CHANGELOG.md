@@ -3,6 +3,7 @@
 ## 0.8.1
 
 - Fixed issue on Chrome when navigating (#15)
+- Improved dark mode support (#17)
 
 ## 0.8.0
 

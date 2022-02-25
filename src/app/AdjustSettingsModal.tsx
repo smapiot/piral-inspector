@@ -2,8 +2,9 @@ import { FC, useState, useCallback, useEffect } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, CustomInput, FormGroup, Input, Label } from 'reactstrap';
 import { jsx } from '@emotion/core';
 import { updateSettings } from './commands';
-import { PiralDebugSettings } from '../types';
 import { store, useStore } from './store';
+import { miniInfo } from './styles';
+import { PiralDebugSettings } from '../types';
 
 export interface AdjustSettingsModalProps {
   isOpen: boolean;
@@ -25,6 +26,7 @@ export const AdjustSettingsModal: FC<AdjustSettingsModalProps> = ({ settings, is
   const { actions } = api.getState();
 
   const currentTheme = useStore(m => m.state.theme);
+  const otherTheme = currentTheme === 'dark' ? 'light' : 'dark';
 
   return (
     <Modal isOpen={isOpen} toggle={toggle}>
@@ -77,13 +79,13 @@ export const AdjustSettingsModal: FC<AdjustSettingsModalProps> = ({ settings, is
             })}
             <CustomInput
               type="switch"
-              label={`Switch to ${currentTheme === 'dark' ? 'light' : 'dark'} mode`}
+              label={`Switch to ${otherTheme} mode`}
               id="change theme"
               onChange={actions.toggleTheme}
             />
           </div>
         </FormGroup>
-        <p style={{ fontSize: '0.8em' }}>We recommend to refresh the page after changing these settings.</p>
+        <p css={miniInfo}>We recommend to refresh the page after changing these settings.</p>
       </ModalBody>
       <ModalFooter>
         <Button color="primary" onClick={send}>

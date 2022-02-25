@@ -3,8 +3,8 @@ import { Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap';
 import { jsx } from '@emotion/core';
 import { BasicInfo } from './BasicInfo';
 import { connectedView, tabLink } from './styles';
-import { PiralDebugCapabilities } from '../types';
 import { useViews } from './useViews';
+import { PiralDebugCapabilities } from '../types';
 
 export interface ConnectedViewProps {
   capabilities: PiralDebugCapabilities;

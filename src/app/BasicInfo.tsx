@@ -6,7 +6,6 @@ import { visualizeAll } from './commands';
 import { basicInfoView } from './styles';
 import VisualizeIcon from './VisualizeIcon';
 import SettingsIcon from './SettingsIcon';
-import { store } from './store';
 
 export interface BasicInfoProps {
   showSettings?: boolean;

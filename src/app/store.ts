@@ -1,6 +1,6 @@
 import create, { SetState } from 'zustand';
-import { PiralDebugCapabilities, PiralDebugSettings, PiralEvent, PiralWorkerInitialState } from '../types';
 import { getTheme } from './utils';
+import { PiralDebugCapabilities, PiralDebugSettings, PiralEvent, PiralWorkerInitialState } from '../types';
 
 export interface StoreState {
   connected: boolean;

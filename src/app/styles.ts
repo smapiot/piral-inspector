@@ -55,6 +55,10 @@ export const basicInfoView = css`
   }
 `;
 
+export const miniInfo = css`
+  font-size: 0.8em;
+`;
+
 export const globalViewLight = css`
   html,
   body,

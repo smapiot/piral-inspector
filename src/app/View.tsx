@@ -1,8 +1,8 @@
 import { FC } from 'react';
+import { Button } from 'reactstrap';
 import { jsx } from '@emotion/core';
 import { ConnectedView } from './ConnectedView';
 import { notConnectedView } from './styles';
-import { Button } from 'reactstrap';
 import { store, useStore } from './store';
 
 export interface ViewProps {}
@@ -14,6 +14,7 @@ export const View: FC<ViewProps> = () => {
   const { actions } = api.getState();
 
   const currentTheme = useStore(m => m.state.theme);
+  const otherTheme = currentTheme === 'dark' ? 'light' : 'dark';
 
   if (connected) {
     return <ConnectedView capabilities={capabilities} />;
@@ -24,7 +25,7 @@ export const View: FC<ViewProps> = () => {
         <p>You are currently not running a Piral instance in debug mode.</p>
         <p>Note that you need to run Piral v0.10 or later on localhost for Piral Inspector to work.</p>
         <Button color="primary" onClick={actions.toggleTheme}>
-          Switch to {currentTheme == 'dark' ? 'light' : 'dark'}
+          Switch to {otherTheme}
         </Button>
       </div>
     );

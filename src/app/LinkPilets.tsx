@@ -2,7 +2,6 @@ import { FC, useState, SyntheticEvent } from 'react';
 import { Button, Form, Input, InputGroup, InputGroupAddon } from 'reactstrap';
 import { jsx } from '@emotion/core';
 import { injectPiletsFromUrl } from './utils';
-import { appSectionView } from './styles';
 
 export interface LinkPiletsProps {}
 

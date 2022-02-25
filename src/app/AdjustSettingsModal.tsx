@@ -3,7 +3,6 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, CustomInput, FormGr
 import { jsx } from '@emotion/core';
 import { updateSettings } from './commands';
 import { PiralDebugSettings } from '../types';
-import { appSectionView } from './styles';
 import { store, useStore } from './store';
 
 export interface AdjustSettingsModalProps {

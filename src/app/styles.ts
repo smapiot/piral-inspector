@@ -68,18 +68,6 @@ export const globalViewLight = css`
   a:hover > svg {
     fill: #007bff;
   }
-
-  .btn-secondary {
-    background: #007bff;
-  }
-
-  .btn-secondary:hover {
-    background: #007bff;
-  }
-
-  .btn-secondary:disabled {
-    background: #007bff;
-  }
 `;
 
 export const globalViewDark = css`

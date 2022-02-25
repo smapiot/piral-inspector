@@ -56,6 +56,18 @@ For building the solution the following steps should be followed.
 
 All source files are available in the `src` folder.
 
+## Architecture
+
+The extension follows the general guidelines for building browser extensions that send and retrieve information from a website in a dev tools panel. The architecture looks as follows:
+
+![Architecture](./docs/architecture.png)
+
+The singleton [background script](./src/scripts/background.ts) is the exchange driver between a website and the dev tools panel. The website (restricted to `localhost`, i.e., Piral instances in development) can be accessed through the [content script](./src/scripts/contentScript.ts), which knows how to talk to the Piral Debug API.
+
+The Piral Debug API comes from the [piral-debug-utils](https://www.npmjs.com/package/piral-debug-utils) npm package. Right now its quite flexible and fully message based. However, in the past this has been achieved from the Piral Inspector itself. In order to still support such older Piral instances the [legacy API](./src/scripts/legacy/worker.ts) is still part of the Piral Inspector.
+
+The dev tools panel is a small [web app](./src/app/index.html). Mainly, it is driven by [message exchange with the background script](./src/devtools.ts). As such when a panel opens it sends a message to the website (via the background script) to get the initial state.
+
 ## License
 
 The code is licensed [under the MIT license](./LICENSE).

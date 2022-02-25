@@ -3,7 +3,6 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, I
 import { jsx } from '@emotion/core';
 import { emitEvent } from './commands';
 import { checkJson } from './utils';
-import { appSectionView } from './styles';
 
 export interface EmitEventModalProps {
   isOpen: boolean;

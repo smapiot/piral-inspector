@@ -2,7 +2,6 @@ import { FC, ChangeEvent, useState } from 'react';
 import { CustomInput, InputGroup, InputGroupAddon, Button } from 'reactstrap';
 import { jsx } from '@emotion/core';
 import { injectPiletsFromUrl } from './utils';
-import { appSectionView } from './styles';
 
 export interface UploadPiletsProps {}
 

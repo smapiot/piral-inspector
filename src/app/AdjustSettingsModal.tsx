@@ -3,6 +3,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, CustomInput, FormGr
 import { jsx } from '@emotion/core';
 import { updateSettings } from './commands';
 import { PiralDebugSettings } from '../types';
+import { store, useStore } from './store';
 
 export interface AdjustSettingsModalProps {
   isOpen: boolean;
@@ -19,6 +20,11 @@ export const AdjustSettingsModal: FC<AdjustSettingsModalProps> = ({ settings, is
   }, [values, toggle]);
 
   useEffect(() => setValues(initialValues), [initialValues]);
+
+  const [_, api] = store;
+  const { actions } = api.getState();
+
+  const currentTheme = useStore(m => m.state.theme);
 
   return (
     <Modal isOpen={isOpen} toggle={toggle}>
@@ -69,6 +75,12 @@ export const AdjustSettingsModal: FC<AdjustSettingsModalProps> = ({ settings, is
                   return null;
               }
             })}
+            <CustomInput
+              type="switch"
+              label={`Switch to ${currentTheme === 'dark' ? 'light' : 'dark'} mode`}
+              id="change theme"
+              onChange={actions.toggleTheme}
+            />
           </div>
         </FormGroup>
         <p style={{ fontSize: '0.8em' }}>We recommend to refresh the page after changing these settings.</p>

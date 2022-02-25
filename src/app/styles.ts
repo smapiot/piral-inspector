@@ -1,4 +1,4 @@
-import { css } from "@emotion/core";
+import { css } from '@emotion/core';
 
 export const connectedView = css`
   display: flex;
@@ -20,6 +20,10 @@ export const notConnectedView = css`
     margin: 0.5em 0;
     width: 80%;
     text-align: center;
+  }
+
+  .btn-primary {
+    margin-top: 10px;
   }
 `;
 
@@ -49,6 +53,17 @@ export const basicInfoView = css`
   a {
     padding: 1em;
   }
+`;
+
+export const globalViewLight = css`
+  html,
+  body,
+  #app {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
 
   a > svg {
     fill: #777;
@@ -59,29 +74,100 @@ export const basicInfoView = css`
   }
 `;
 
-export const globalView = css`
-  html, body, #app {
+export const globalViewDark = css`
+  html,
+  body,
+  #app {
     height: 100%;
     width: 100%;
     margin: 0;
     padding: 0;
+    background-color: #292a2b;
+    color: #afafaf;
+  }
+
+  .btn-primary {
+    background: #6c757d;
+    border: 1px solid #6c757d;
+  }
+
+  .btn-primary:hover {
+    background: #6c757d;
+    border: 1px solid #6c757d;
+  }
+
+  .btn-primary:disabled {
+    background: #6c757d;
+    border: 1px solid #6c757d;
+  }
+
+  .nav-link {
+    color: #beaee2;
+  }
+
+  .nav-link:hover {
+    color: #beaee2;
+  }
+
+  .breadcrumb-item a {
+    color: #611cfb;
+  }
+
+  a > svg {
+    fill: #777;
+  }
+
+  a:hover > svg {
+    fill: #beaee2;
+  }
+
+  .list-group-item {
+    background: hsl(0, 0%, 14%);
+    color: #afafaf;
+  }
+
+  .close {
+    color: #afafaf;
+  }
+
+  .form-control {
+    background: hsl(0, 0%, 14%);
+    border: 1px solid hsl(0, 0%, 14%);
+    color: #afafaf;
+  }
+
+  .form-control:focus {
+    background: hsl(0, 0%, 14%);
+    border: 1px solid hsl(0, 0%, 14%);
+    color: #afafaf;
+  }
+
+  .custom-file-label {
+    background: hsl(0, 0%, 14%);
+  }
+
+  .custom-file-label::placeholder {
+    color: #6c757d;
+  }
+
+  .custom-control-input:checked ~ .custom-control-label::before {
+    border-color: #8e5cff;
+    background-color: #8e5cff;
+  }
+
+  .modal-content {
+    background-color: #292a2b;
+    color: #afafaf;
+  }
+
+  .list-group-item-heading {
+    color: #afafaf;
+  }
+
+  .list-group-item-heading:hover {
+    color: #afafaf;
   }
 `;
-
-/**
- * Dark mode for now removed; should be re-implemented with all colors improved:
-
-  @media (prefers-color-scheme: dark) {
-    body {
-      background-color: rgb(36, 36, 36);
-      color: #eee;
-
-      .modal, .list-group {
-        color: black;
-      }
-    }
-  }
- */
 
 export const customSwitchStyle = css`
   margin-right: 2em;

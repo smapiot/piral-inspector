@@ -32,3 +32,19 @@ export function checkJson(input: string) {
     return false;
   }
 }
+
+
+export function getTheme() {
+  const theme = localStorage.getItem('theme');
+
+  if (theme) {
+    return theme;
+  } else {
+    const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (userPrefersDark) {
+      return 'dark';
+    } else {
+      return 'light';
+    }
+  }
+}

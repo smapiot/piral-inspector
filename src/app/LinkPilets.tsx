@@ -22,7 +22,9 @@ export const LinkPilets: FC<LinkPiletsProps> = () => {
       <InputGroup>
         <Input type="text" value={url} onChange={e => setUrl(e.currentTarget.value)} />
         <InputGroupAddon addonType="append">
-          <Button color="primary" disabled={url === ''}>Add</Button>
+          <Button color="primary" disabled={url === ''}>
+            Add
+          </Button>
         </InputGroupAddon>
       </InputGroup>
     </Form>

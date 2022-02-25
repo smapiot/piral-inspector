@@ -33,7 +33,6 @@ export function checkJson(input: string) {
   }
 }
 
-
 export function getTheme() {
   const theme = localStorage.getItem('theme');
 

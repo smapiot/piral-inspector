@@ -31,7 +31,7 @@ export const EmitEventModal: FC<EmitEventModalProps> = ({ isOpen, toggle }) => {
 
     toggle();
   };
-  
+
   return (
     <Modal isOpen={isOpen} toggle={toggle} css={appSectionView}>
       <ModalHeader toggle={toggle}>Event Details</ModalHeader>

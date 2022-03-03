@@ -1,6 +1,6 @@
 {
   "name": "piral-inspector",
-  "version": "0.8.1",
+  "version": "0.9.0",
   "description": "A DevTools extension for Piral instances and their pilets.",
   "keywords": [
     "piral",
@@ -27,7 +27,7 @@
   ],
   "scripts": {
     "start": "npm run watch:firefox",
-    "build:all": "npm run build:firefox && npm run build:opera && npm run build:chrome",
+    "build:all": "npm run build:firefox && npm run build:opera && npm run build:chrome && npm run build:edge",
     "watch:firefox": "concurrently --kill-others \"npm run watch:parcel -- --out-dir dist/firefox\" \"npm run watch:web-ext -- -s dist/firefox -t firefox-desktop\"",
     "build:firefox": "npm run build:parcel -- --out-dir dist/firefox && npm run build:web-ext -- -s dist/firefox -a web-ext-artifacts/firefox",
     "deploy:firefox": "rm -rf dist/firefox && npm run build:firefox && shipit firefox dist/firefox",
@@ -37,6 +37,9 @@
     "watch:opera": "concurrently --kill-others \"npm run watch:parcel -- --out-dir dist/opera\" \"npm run watch:web-ext -- -s dist/opera -t chromium\"",
     "build:opera": "npm run build:parcel -- --out-dir dist/opera && npm run build:web-ext -- -s dist/opera -a web-ext-artifacts/opera",
     "deploy:opera": "rm -rf dist/opera && npm run build:opera && shipit opera dist/opera",
+    "watch:edge": "concurrently --kill-others \"npm run watch:parcel -- --out-dir dist/edge\" \"npm run watch:web-ext -- -s dist/edge -t chromium\"",
+    "build:edge": "npm run build:parcel -- --out-dir dist/edge && npm run build:web-ext -- -s dist/edge -a web-ext-artifacts/edge",
+    "deploy:edge": "rm -rf dist/edge && npm run build:edge && shipit edge dist/edge",
     "watch:parcel": "parcel watch --no-hmr src/devtools.html",
     "build:parcel": "parcel build src/devtools.html --no-source-maps",
     "watch:web-ext": "wait-on -d 6000 package.json && web-ext run",

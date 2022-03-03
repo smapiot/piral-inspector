@@ -8,7 +8,9 @@ export type PiWorkerMessage =
   | PiWorkerEvents
   | PiWorkerExtensions
   | PiWorkerContainer
-  | PiWorkerReconnect;
+  | PiWorkerReconnect
+  | PiWorkerInfo
+  | PiWorkerDependencyMap;
 
 export interface PiWorkerReconnect {
   type: 'cs-connect';
@@ -21,6 +23,8 @@ export interface PiralDebugCapabilities {
   pilets: boolean;
   settings: boolean;
   extensions: boolean;
+  dependencies: boolean;
+  'dependency-map': boolean;
 }
 
 export interface PiralWorkerInitialState {
@@ -37,12 +41,25 @@ export interface PiralWorkerInitialState {
   [name: string]: any;
 }
 
-export interface PiWorkerAvailable {
-  type: 'available';
+export interface BaseWorkerDetails {
   name: string;
   version: string;
   kind: 'v0' | 'v1';
+  mode: 'production' | 'development';
   capabilities: Array<keyof PiralDebugCapabilities>;
+}
+
+export interface PiWorkerInfo extends BaseWorkerDetails {
+  type: 'info';
+}
+
+export interface PiWorkerDependencyMap {
+  type: 'dependency-map';
+  dependencyMap: Record<string, Array<string>>;
+}
+
+export interface PiWorkerAvailable extends BaseWorkerDetails {
+  type: 'available';
   state: PiralWorkerInitialState;
 }
 
@@ -119,7 +136,9 @@ export type PiHostMessage =
   | PiHostTogglePilet
   | PiHostUpdateSettings
   | PiHostEmitEvent
-  | PiHostVisualizeAll;
+  | PiHostVisualizeAll
+  | PiHostGetDependencyMap
+  | PiHostCheckPiral;
 
 export interface PiHostEmitEvent {
   type: 'emit-event';
@@ -163,6 +182,14 @@ export interface PiHostGotoRoute {
 
 export interface PiHostInit {
   type: 'init';
+}
+
+export interface PiHostCheckPiral {
+  type: 'check-piral';
+}
+
+export interface PiHostGetDependencyMap {
+  type: 'get-dependency-map';
 }
 
 export interface PiralDebugApiMessage {

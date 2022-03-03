@@ -9,6 +9,7 @@ A DevTools extension for Piral instances and their pilets.
 - [Firefox Add-Ons](https://addons.mozilla.org/en-US/firefox/addon/piral-inspector/)
 - [Chrome Marketplace](https://chrome.google.com/webstore/detail/piral-inspector/ikbpelpjfgmplidagknaaegjhfigcbfl)
 - [Opera Addons](https://addons.opera.com/en/extensions/details/piral-inspector/)
+- [Edge Extensions](https://microsoftedge.microsoft.com/addons/detail/piral-inspector/hbdhpkhidilkmkbkklcbjgddbeodibml)
 
 ## Description
 
@@ -27,6 +28,8 @@ Right now the Piral Inspector comes with the following set of functionality:
 - Detection of the running Piral instance (name, version)
 - See and call the registered routes
 - See and unload the loaded pilets
+- Look at the used dependencies
+- Inspect the available extensions
 - Toggle global settings such as state container logging
 - Load new pilets from their root module URL
 - Load new pilets from a given feed URL

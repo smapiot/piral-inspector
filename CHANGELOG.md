@@ -1,8 +1,13 @@
 # Piral Inspector Changelog
 
+## 0.9.0
+
+- (tbd)
+
 ## 0.8.1
 
 - Fixed issue on Chrome when navigating (#15)
+- First release for Microsoft Edge
 
 ## 0.8.0
 

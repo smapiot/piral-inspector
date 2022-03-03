@@ -17,6 +17,7 @@ export interface StoreState {
   extensions?: Array<string>;
   events?: Array<PiralEvent>;
   container?: any;
+  dependencyMap?: Record<string, Array<string>>;
   settings?: PiralDebugSettings;
   capabilities?: PiralDebugCapabilities;
 }
@@ -36,6 +37,8 @@ export interface StoreActions {
   updateSettings(settings: PiralDebugSettings): void;
   updateEvents(events: Array<PiralEvent>): void;
   updateContainer(container: any): void;
+  updateInfo(name: string, version: string, kind: string, capabilities: Array<string>): void;
+  updateDependencyMap(dependencyMap: Record<string, Array<string>>): void;
   updateExtensions(extensions: Array<string>): void;
 }
 
@@ -68,6 +71,7 @@ export const store = create<Store>(set => ({
         extensions: [],
         container: {},
         settings: {},
+        dependencyMap: {},
         ...state,
         connected: true,
         name,
@@ -80,12 +84,36 @@ export const store = create<Store>(set => ({
           routes: capabilities.includes('routes'),
           settings: capabilities.includes('settings'),
           extensions: capabilities.includes('extensions'),
+          dependencies: capabilities.includes('dependencies'),
+          'dependency-map': capabilities.includes('dependency-map'),
         },
       }));
     },
     disconnect() {
       dispatch(set, () => ({
         connected: false,
+      }));
+    },
+    updateInfo(name, version, kind, capabilities) {
+      dispatch(set, () => ({
+        name,
+        version,
+        kind,
+        capabilities: {
+          container: capabilities.includes('container'),
+          events: capabilities.includes('events'),
+          pilets: capabilities.includes('pilets'),
+          routes: capabilities.includes('routes'),
+          settings: capabilities.includes('settings'),
+          extensions: capabilities.includes('extensions'),
+          dependencies: capabilities.includes('dependencies'),
+          'dependency-map': capabilities.includes('dependency-map'),
+        },
+      }));
+    },
+    updateDependencyMap(dependencyMap) {
+      dispatch(set, () => ({
+        dependencyMap,
       }));
     },
     toggleTheme() {

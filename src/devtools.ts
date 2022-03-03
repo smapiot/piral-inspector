@@ -43,6 +43,10 @@ function connectPanel(panel: any) {
         return actions.updateEvents(message.events);
       case 'extensions':
         return actions.updateExtensions(message.extensions);
+      case 'info':
+        return actions.updateInfo(message.name, message.version, message.kind, message.capabilities);
+      case 'dependency-map':
+        return actions.updateDependencyMap(message.dependencyMap);
     }
   });
 

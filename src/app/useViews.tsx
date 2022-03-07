@@ -7,8 +7,21 @@ import { AvailablePilets } from './AvailablePilets';
 import { RegisteredRoutes } from './RegisteredRoutes';
 import { StateContainer } from './StateContainer';
 import { ExtensionCatalogue } from './ExtensionCatalogue';
+import { Dependencies } from './Dependencies';
 import { appSectionView } from './styles';
 import { PiralDebugCapabilities } from '../types';
+
+// const PiletsTab = {
+//   id: 'pilets',
+//   title: 'Dependencies',
+//   content: (
+//     <Fragment>
+//       <div>
+//         <Dependencies />
+//       </div>
+//     </Fragment>
+//   ),
+// };
 
 const PiletsTab = {
   id: 'pilets',
@@ -79,6 +92,16 @@ const StateTab = {
   ),
 };
 
+const DependenciesTab = {
+  id: 'dependencies',
+  title: 'Dependencies',
+  content: (
+    <div css={appSectionView}>
+      <Dependencies />
+    </div>
+  ),
+};
+
 export function useViews(capabilities: PiralDebugCapabilities) {
   const availableTabs = useMemo(
     () =>
@@ -88,6 +111,7 @@ export function useViews(capabilities: PiralDebugCapabilities) {
         capabilities.extensions && ExtensionsTab,
         capabilities.events && EventsTab,
         capabilities.container && StateTab,
+        capabilities['dependency-map'] && DependenciesTab,
       ].filter(Boolean),
     [capabilities],
   );

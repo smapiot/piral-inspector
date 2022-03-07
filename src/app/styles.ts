@@ -76,6 +76,19 @@ export const globalViewLight = css`
   a:hover > svg {
     fill: #007bff;
   }
+
+  .react-flow {
+    flex-grow: 1;
+    position: relative;
+    height: 100vh;
+  }
+
+  .react-flow .controls {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 10;
+  }
 `;
 
 export const globalViewDark = css`
@@ -86,8 +99,8 @@ export const globalViewDark = css`
     width: 100%;
     margin: 0;
     padding: 0;
-    background-color: #292a2b;
-    color: #afafaf;
+    background-color: #2a2f3a;
+    color: #ffffff;
   }
 
   .btn-primary {
@@ -118,7 +131,7 @@ export const globalViewDark = css`
   }
 
   a > svg {
-    fill: #777;
+    fill: #ffffff;
   }
 
   a:hover > svg {
@@ -126,32 +139,38 @@ export const globalViewDark = css`
   }
 
   .list-group-item {
-    background: hsl(0, 0%, 14%);
-    color: #afafaf;
+    background: rgb(60, 68, 79);
+    color: #ffffff;
+  }
+
+  .list-group-item:hover {
+    background: rgb(60, 68, 79);
+    color: #ffffff;
   }
 
   .close {
-    color: #afafaf;
+    color: #ffffff;
   }
 
   .form-control {
-    background: hsl(0, 0%, 14%);
-    border: 1px solid hsl(0, 0%, 14%);
-    color: #afafaf;
+    background: rgb(60, 68, 79);
+    border: 1px solid rgb(60, 68, 79);
+    color: #ffffff;
   }
 
   .form-control:focus {
-    background: hsl(0, 0%, 14%);
-    border: 1px solid hsl(0, 0%, 14%);
-    color: #afafaf;
+    background: rgb(60, 68, 79);
+    border: 1px solid rgb(60, 68, 79);
+    color: #ffffff;
   }
 
   .custom-file-label {
-    background: hsl(0, 0%, 14%);
+    background: rgb(60, 68, 79);
+    color: #ffffff;
   }
 
   .custom-file-label::placeholder {
-    color: #6c757d;
+    color: #ffffff;
   }
 
   .custom-control-input:checked ~ .custom-control-label::before {
@@ -160,16 +179,56 @@ export const globalViewDark = css`
   }
 
   .modal-content {
-    background-color: #292a2b;
-    color: #afafaf;
+    background-color: rgb(60, 68, 79);
+    color: #ffffff;
   }
 
   .list-group-item-heading {
-    color: #afafaf;
+    color: #ffffff;
   }
 
   .list-group-item-heading:hover {
-    color: #afafaf;
+    color: #ffffff;
+  }
+
+  .react-flow {
+    flex-grow: 1;
+    position: relative;
+    height: 75vh;
+    color: #FFFFFF;
+  }
+
+  .react-flow .controls {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 10;
+  }
+
+  .react-flow__node-default {
+    background: #ff6060;
+    color: #ffff;
+    font-size: 20px;
+  }
+
+  .react-flow__node-input {
+    background: #637c93;
+    color: #ffff;
+    font-size: 20px;
+    border-color: #637c93
+  }
+
+  .react-flow__node-output {
+    background: #4b11cb;
+    color: #ffff;
+    font-size: 20px;
+    border-color: #4b11cb;
+  }
+
+  .react-flow__edge-path {
+    fill: none;
+    stroke: #FFFFFF;
+    stroke-width: 2;
   }
 `;
 

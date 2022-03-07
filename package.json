@@ -31,7 +31,7 @@
     "watch:firefox": "concurrently --kill-others \"npm run watch:parcel -- --out-dir dist/firefox\" \"npm run watch:web-ext -- -s dist/firefox -t firefox-desktop\"",
     "build:firefox": "npm run build:parcel -- --out-dir dist/firefox && npm run build:web-ext -- -s dist/firefox -a web-ext-artifacts/firefox",
     "deploy:firefox": "rm -rf dist/firefox && npm run build:firefox && shipit firefox dist/firefox",
-    "watch:chrome": "concurrently --kill-others \"npm run watch:parcel -- --out-dir dist/chrome\" \"npm run watch:web-ext -- -s dist/chrome -t chromium --chromium-profile \"$CHROME_PROFILE_PATH\"\"",
+    "watch:chrome": "concurrently --kill-others \"npm run watch:parcel -- --out-dir dist/chrome\" \"npm run watch:web-ext -- -s dist/chrome -t chromium --chromium-profile \"",
     "build:chrome": "npm run build:parcel -- --out-dir dist/chrome && npm run build:web-ext -- -s dist/chrome -a web-ext-artifacts/chrome",
     "deploy:chrome": "rm -rf dist/chrome && npm run build:chrome && shipit chrome dist/chrome",
     "watch:opera": "concurrently --kill-others \"npm run watch:parcel -- --out-dir dist/opera\" \"npm run watch:web-ext -- -s dist/opera -t chromium\"",
@@ -47,6 +47,7 @@
     "prettify": "prettier --config prettier.config.js --write \"src/**/*.{ts,tsx}\""
   },
   "devDependencies": {
+    "@types/dagre": "^0.7.47",
     "@types/react": "^16.14.15",
     "@types/react-dom": "^16.9.14",
     "@types/reactstrap": "^8.7.2",
@@ -62,9 +63,13 @@
   "dependencies": {
     "@emotion/core": "^10.1.1",
     "bootstrap": "^4.6.0",
-    "react": "^16.14.0",
-    "react-dom": "^16.14.0",
+    "dagre": "^0.8.5",
+    "react": "^17.0.2",
+    "react-d3-tree": "^3.2.1",
+    "react-dom": "^17.0.2",
+    "react-flow-renderer": "^9.7.4",
     "reactstrap": "^8.10.0",
+    "uuidv4": "^6.2.12",
     "webextension-polyfill-ts": "0.26.0",
     "zustand": "^2.2.4"
   }

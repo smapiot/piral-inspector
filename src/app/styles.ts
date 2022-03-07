@@ -80,7 +80,8 @@ export const globalViewLight = css`
   .react-flow {
     flex-grow: 1;
     position: relative;
-    height: 100vh;
+    height: 75vh;
+    color: #ffffff;
   }
 
   .react-flow .controls {
@@ -88,6 +89,32 @@ export const globalViewLight = css`
     right: 10px;
     top: 10px;
     z-index: 10;
+  }
+
+  .react-flow__node-default {
+    background: #ff6060;
+    color: #ffff;
+    font-size: 20px;
+  }
+
+  .react-flow__node-input {
+    background: #637c93;
+    color: #ffff;
+    font-size: 20px;
+    border-color: #637c93;
+  }
+
+  .react-flow__node-output {
+    background: #4b11cb;
+    color: #ffff;
+    font-size: 20px;
+    border-color: #4b11cb;
+  }
+
+  .react-flow__edge-path {
+    fill: none;
+    stroke: #a79797;
+    stroke-width: 2;
   }
 `;
 
@@ -195,7 +222,7 @@ export const globalViewDark = css`
     flex-grow: 1;
     position: relative;
     height: 75vh;
-    color: #FFFFFF;
+    color: #ffffff;
   }
 
   .react-flow .controls {
@@ -215,7 +242,7 @@ export const globalViewDark = css`
     background: #637c93;
     color: #ffff;
     font-size: 20px;
-    border-color: #637c93
+    border-color: #637c93;
   }
 
   .react-flow__node-output {
@@ -227,7 +254,7 @@ export const globalViewDark = css`
 
   .react-flow__edge-path {
     fill: none;
-    stroke: #FFFFFF;
+    stroke: #ffffff;
     stroke-width: 2;
   }
 `;

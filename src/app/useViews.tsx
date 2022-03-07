@@ -11,18 +11,6 @@ import { Dependencies } from './Dependencies';
 import { appSectionView } from './styles';
 import { PiralDebugCapabilities } from '../types';
 
-// const PiletsTab = {
-//   id: 'pilets',
-//   title: 'Dependencies',
-//   content: (
-//     <Fragment>
-//       <div>
-//         <Dependencies />
-//       </div>
-//     </Fragment>
-//   ),
-// };
-
 const PiletsTab = {
   id: 'pilets',
   title: 'Pilets',

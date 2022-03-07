@@ -122,13 +122,3 @@ export const Dependencies = () => {
     </ReactFlowProvider>
   );
 };
-
-// const orgChart = {
-//   name: 'Piral',
-//   children: Object.keys(dependencies).map(pilet => ({
-//     name: pilet,
-//     children: dependencies[pilet].map(depName => ({
-//       name: depName,
-//     })),
-//   })),
-// };

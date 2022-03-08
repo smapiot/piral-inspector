@@ -219,17 +219,9 @@ export const globalViewDark = css`
   }
 
   .react-flow {
-    flex-grow: 1;
+    flex: 1;
     position: relative;
-    height: 75vh;
     color: #ffffff;
-  }
-
-  .react-flow .controls {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    z-index: 10;
   }
 
   .react-flow__node-default {

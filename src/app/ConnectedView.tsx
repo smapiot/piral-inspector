@@ -28,7 +28,7 @@ export const ConnectedView: FC<ConnectedViewProps> = ({ capabilities }) => {
       <TabContent activeTab={activeTab}>
         {availableTabs.map(tab => (
           <TabPane key={tab.id} tabId={tab.id}>
-            {tab.content}
+            <tab.Content active={activeTab === tab.id} />
           </TabPane>
         ))}
       </TabContent>

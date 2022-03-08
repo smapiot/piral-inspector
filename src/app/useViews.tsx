@@ -11,10 +11,14 @@ import { Dependencies } from './Dependencies';
 import { appSectionView } from './styles';
 import { PiralDebugCapabilities } from '../types';
 
+interface TabProps {
+  active: boolean;
+}
+
 const PiletsTab = {
   id: 'pilets',
   title: 'Pilets',
-  content: (
+  Content: (props: TabProps) => (
     <Fragment>
       <div css={appSectionView}>
         <h3>Available Pilets</h3>
@@ -35,7 +39,7 @@ const PiletsTab = {
 const RoutesTab = {
   id: 'routes',
   title: 'Pages',
-  content: (
+  Content: (props: TabProps) => (
     <div css={appSectionView}>
       <h3>Registered Routes</h3>
       <p>The following routes are currently registered.</p>
@@ -47,7 +51,7 @@ const RoutesTab = {
 const EventsTab = {
   id: 'events',
   title: 'Events',
-  content: (
+  Content: (props: TabProps) => (
     <div css={appSectionView}>
       <h3>Events</h3>
       <p>These events from the Piral instance have been recorded so far.</p>
@@ -59,7 +63,7 @@ const EventsTab = {
 const ExtensionsTab = {
   id: 'extensions',
   title: 'Extensions',
-  content: (
+  Content: (props: TabProps) => (
     <div css={appSectionView}>
       <h3>Extension Catalogue</h3>
       <p>The registered extension components.</p>
@@ -71,7 +75,7 @@ const ExtensionsTab = {
 const StateTab = {
   id: 'state',
   title: 'App State',
-  content: (
+  Content: (props: TabProps) => (
     <div css={appSectionView}>
       <h3>State Container</h3>
       <p>The currently available global state.</p>
@@ -83,9 +87,9 @@ const StateTab = {
 const DependenciesTab = {
   id: 'dependencies',
   title: 'Dependencies',
-  content: (
+  Content: (props: TabProps) => (
     <div css={appSectionView}>
-      <Dependencies />
+      <Dependencies active={props.active} />
     </div>
   ),
 };

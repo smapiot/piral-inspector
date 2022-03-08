@@ -2,6 +2,12 @@ import create, { SetState } from 'zustand';
 import { getTheme } from './utils';
 import { PiralDebugCapabilities, PiralDebugSettings, PiralEvent, PiralWorkerInitialState } from '../types';
 
+export type DependencyRelation = { demanded: string; resolved: string };
+
+export type Dependencies = Array<DependencyRelation>;
+
+export type DependencyMap = Record<string, Array<string | DependencyRelation>>;
+
 export interface StoreState {
   connected: boolean;
   theme: string;
@@ -17,7 +23,7 @@ export interface StoreState {
   extensions?: Array<string>;
   events?: Array<PiralEvent>;
   container?: any;
-  dependencyMap?: Record<string, Array<string>>;
+  dependencyMap?: DependencyMap;
   settings?: PiralDebugSettings;
   capabilities?: PiralDebugCapabilities;
 }
@@ -55,6 +61,45 @@ function dispatch(set: SetState<Store>, update: (state: StoreState) => Partial<S
       ...update(store.state),
     },
   }));
+}
+
+function compareDependencyMap(oldMap: DependencyMap, newMap: DependencyMap) {
+  const oldKeys = Object.keys(oldMap);
+  const newKeys = Object.keys(newMap);
+
+  if (oldKeys.length === newKeys.length) {
+    for (const key of oldKeys) {
+      if (!newKeys.includes(key)) {
+        return newMap;
+      }
+
+      const oldPiletDeps = oldMap[key];
+      const newPiletDeps = newMap[key];
+
+      if (oldPiletDeps.length !== newPiletDeps.length) {
+        return newMap;
+      }
+
+      for (let i = 0; i < oldPiletDeps.length; i++) {
+        const oldDep = oldPiletDeps[i];
+        const newDep = newPiletDeps[i];
+
+        if (typeof oldDep !== typeof newDep) {
+          return newMap;
+        } else if (typeof oldDep === 'string' || typeof newDep === 'string') {
+          if (oldDep !== newDep) {
+            return newMap;
+          }
+        } else if (oldDep.resolved !== newDep.resolved || oldDep.demanded !== newDep.demanded) {
+          return newMap;
+        }
+      }
+    }
+
+    return oldMap;
+  }
+
+  return newMap;
 }
 
 export const store = create<Store>(set => ({
@@ -112,8 +157,8 @@ export const store = create<Store>(set => ({
       }));
     },
     updateDependencyMap(dependencyMap) {
-      dispatch(set, () => ({
-        dependencyMap,
+      dispatch(set, (state) => ({
+        dependencyMap: compareDependencyMap(state.dependencyMap, dependencyMap),
       }));
     },
     toggleTheme() {

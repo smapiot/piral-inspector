@@ -35,8 +35,8 @@ function getLayoutedElements(dagreGraph: dagre.graphlib.Graph<{}>, elements: Arr
     if (isNode(el)) {
       const nodeWithPosition = dagreGraph.node(el.id);
       el.position = {
-        x: nodeWithPosition.x - nodeWidth / 1000 + Math.random() / 1000,
-        y: nodeWithPosition.y - nodeHeight / 1000,
+        x: nodeWithPosition.x - nodeWidth / 2 + Math.random() / 1000,
+        y: nodeWithPosition.y - nodeHeight / 2,
       };
     }
     return el;

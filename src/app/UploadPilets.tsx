@@ -1,5 +1,5 @@
 import { FC, ChangeEvent, useState } from 'react';
-import { CustomInput, InputGroup, InputGroupAddon, Button, Progress, Alert, UncontrolledAlert } from 'reactstrap';
+import { CustomInput, InputGroup, InputGroupAddon, Button, Progress, UncontrolledAlert } from 'reactstrap';
 import { jsx } from '@emotion/core';
 import { injectPiletsFromUrl } from './utils';
 
@@ -13,9 +13,9 @@ export const UploadPilets: FC<UploadPiletsProps> = () => {
 
   const [progress, setProgress] = useState(0);
   const [failedUpload, setFailedUpload] = useState(false);
-  const [piletName, setPiletName] = useState()
+  const [piletName, setPiletName] = useState();
   const [succeededUpload, setSucceededUpload] = useState(false);
-  const [err, setErr] = useState<any>()
+  const [err, setErr] = useState<any>();
 
   const uploadPilet = (e: ChangeEvent<HTMLInputElement>) =>
     setFile({
@@ -41,24 +41,23 @@ export const UploadPilets: FC<UploadPiletsProps> = () => {
           if (res.status === 400) {
             setProgress(0);
             setFailedUpload(true);
-            throw res
+            throw res;
           }
           return res.json();
         })
         .then(res => {
           res.success && injectPiletsFromUrl(`${url}?id=${res.name}`);
-          setPiletName(res.name)
+          setPiletName(res.name);
           setProgress(0);
           setSucceededUpload(true);
-          setInterval(() => setSucceededUpload(false), 5000)
+          setInterval(() => setSucceededUpload(false), 5000);
         })
         .catch(err => {
           err.text().then(errorMassage => {
-            const formatedError = JSON.parse(errorMassage)
-            setErr(formatedError.message)
-          })
-        }
-        )
+            const formatedError = JSON.parse(errorMassage);
+            setErr(formatedError.message);
+          });
+        });
     }
 
     setFile({ value: undefined, key: file.key + 1 });
@@ -77,7 +76,11 @@ export const UploadPilets: FC<UploadPiletsProps> = () => {
 
       {progress > 0 && <Progress animated color="success" value={progress} style={{ marginTop: 10 }} />}
       {failedUpload && (
-        <UncontrolledAlert color="danger" isOpen={failedUpload} style={{ marginTop: 10 }} toggle={() => setFailedUpload(false)} >
+        <UncontrolledAlert
+          color="danger"
+          isOpen={failedUpload}
+          style={{ marginTop: 10 }}
+          toggle={() => setFailedUpload(false)}>
           Failed to upload a local pilet, {err}
         </UncontrolledAlert>
       )}

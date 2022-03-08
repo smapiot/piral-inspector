@@ -8,7 +8,6 @@
   },
   "name": "Piral Inspector",
   "short_name": "pi-inspect",
-  "default_locale": "en",
   "version": "0.9.0",
   "description": "The official Piral developer tools browser extension.",
   "author": "smapiot",

@@ -15,7 +15,7 @@ export const UploadPilets: FC<UploadPiletsProps> = () => {
   const [failedUpload, setFailedUpload] = useState(false);
   const [piletName, setPiletName] = useState();
   const [succeededUpload, setSucceededUpload] = useState(false);
-  const [err, setErr] = useState<any>();
+  const [err, setErr] = useState();
 
   const uploadPilet = (e: ChangeEvent<HTMLInputElement>) =>
     setFile({

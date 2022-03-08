@@ -220,6 +220,7 @@ export const globalViewDark = css`
 
   .react-flow {
     flex: 1;
+    height: 75vh;
     position: relative;
     color: #ffffff;
   }

@@ -12,24 +12,43 @@ interface ExtensionItemProps {
 
 const DisplayDependencies: FC<ExtensionItemProps> = ({ dependencies }) => {
   const [elements, setElements] = useState([]);
-
-  useEffect(() => {
-    getData();
-  }, []);
-
   const position = { x: 0, y: 0 };
   const edgeType = 'smoothstep';
   const dagreGraph = new dagre.graphlib.Graph();
   dagreGraph.setDefaultEdgeLabel(() => ({}));
-
   const nodeWidth = 172;
   const nodeHeight = 36;
 
-  function getData() {
-    let nonDuplicatedDependencies: Array<string> = [];
+  const getLayoutedElements = elements => {
+    dagreGraph.setGraph({ rankdir: 'TB' });
+
+    elements.forEach(el => {
+      if (isNode(el)) {
+        dagreGraph.setNode(el.id, { width: nodeWidth, height: nodeHeight });
+      } else {
+        dagreGraph.setEdge(el.source, el.target);
+      }
+    });
+
+    dagre.layout(dagreGraph);
+
+    return elements.map(el => {
+      if (isNode(el)) {
+        const nodeWithPosition = dagreGraph.node(el.id);
+        el.position = {
+          x: nodeWithPosition.x - nodeWidth / 2 + Math.random() / 1000,
+          y: nodeWithPosition.y - nodeHeight / 2,
+        };
+      }
+      return el;
+    });
+  };
+
+  useEffect(() => {
+    let nonDuplicatedDependencies = [];
 
     Object.keys(dependencies).map(pilet =>
-      dependencies[pilet].map(dep => nonDuplicatedDependencies.push(dep.resolved || dep)),
+      dependencies[pilet].map((dep: any) => nonDuplicatedDependencies.push(dep.resolved || dep)),
     );
 
     const allDependencies = nonDuplicatedDependencies.filter((v, i, a) => a.indexOf(v) === i);
@@ -60,7 +79,7 @@ const DisplayDependencies: FC<ExtensionItemProps> = ({ dependencies }) => {
         position,
       })),
       ...Object.keys(dependencies).flatMap(pilet =>
-        dependencies[pilet].map(depName => ({
+        dependencies[pilet].map((depName: any) => ({
           id: uuid(),
           source: pilet,
           target: depName.resolved || depName,
@@ -73,33 +92,9 @@ const DisplayDependencies: FC<ExtensionItemProps> = ({ dependencies }) => {
     ];
 
     const layoutedElements = getLayoutedElements(initialElements);
-    setElements(layoutedElements);
-  }
+    setElements(layoutedElements);;
+  }, []);
 
-  const getLayoutedElements = elements => {
-    dagreGraph.setGraph({ rankdir: 'TB' });
-
-    elements.forEach(el => {
-      if (isNode(el)) {
-        dagreGraph.setNode(el.id, { width: nodeWidth, height: nodeHeight });
-      } else {
-        dagreGraph.setEdge(el.source, el.target);
-      }
-    });
-
-    dagre.layout(dagreGraph);
-
-    return elements.map(el => {
-      if (isNode(el)) {
-        const nodeWithPosition = dagreGraph.node(el.id);
-        el.position = {
-          x: nodeWithPosition.x - nodeWidth / 2 + Math.random() / 1000,
-          y: nodeWithPosition.y - nodeHeight / 2,
-        };
-      }
-      return el;
-    });
-  };
 
   return (
     <ReactFlowProvider>
@@ -118,6 +113,6 @@ export const Dependencies: FC<DependenciesProps> = () => {
   }, []);
 
   return (
-    <Fragment>{Object.keys(dependencies).length >= 1 && <DisplayDependencies dependencies={dependencies} />}</Fragment>
+    <Fragment><DisplayDependencies dependencies={dependencies} /></Fragment>
   );
 };

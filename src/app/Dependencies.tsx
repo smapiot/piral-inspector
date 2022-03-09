@@ -1,6 +1,6 @@
 import * as dagre from 'dagre';
 import ReactFlow, { ReactFlowProvider, isNode, Node, Connection, Edge } from 'react-flow-renderer';
-import { useState, useEffect, FC } from 'react';
+import { useState, useEffect, FC, useRef } from 'react';
 import { jsx } from '@emotion/core';
 import { getDependencyMap } from './commands';
 import { DependencyMap, DependencyRelation, useStore } from './store';
@@ -9,7 +9,7 @@ interface PiletDependencyRelation extends DependencyRelation {
   pilet: string;
 }
 
-interface ExtensionItemProps {
+interface DisplayDependenciesProps {
   dependencies: DependencyMap;
 }
 
@@ -43,8 +43,9 @@ function getLayoutedElements(dagreGraph: dagre.graphlib.Graph<{}>, elements: Arr
   });
 }
 
-const DisplayDependencies: FC<ExtensionItemProps> = ({ dependencies }) => {
+const DisplayDependencies: FC<DisplayDependenciesProps> = ({ dependencies }) => {
   const [elements, setElements] = useState([]);
+  let height = screen.height - screen.height * 0.2;
 
   useEffect(() => {
     const dagreGraph = new dagre.graphlib.Graph();
@@ -106,9 +107,15 @@ const DisplayDependencies: FC<ExtensionItemProps> = ({ dependencies }) => {
     setElements(getLayoutedElements(dagreGraph, initialElements));
   }, [dependencies]);
 
+  const style = {
+    height: `${height}px`,
+  };
+
   return (
     <ReactFlowProvider>
-      <ReactFlow className="react-flow" elements={elements} connectionLineType="smoothstep" />
+      <div>
+        <ReactFlow style={style} className="react-flow" elements={elements} connectionLineType="smoothstep" />
+      </div>
     </ReactFlowProvider>
   );
 };

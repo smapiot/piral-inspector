@@ -1,9 +1,25 @@
-import { FC, ChangeEvent, useState } from 'react';
+import { FC, ChangeEvent, useState, useEffect } from 'react';
 import { CustomInput, InputGroup, InputGroupAddon, Button, Progress, UncontrolledAlert } from 'reactstrap';
 import { jsx } from '@emotion/core';
 import { injectPiletsFromUrl } from './utils';
 
 export interface UploadPiletsProps { }
+
+const SucceededAlert = ({ piletName }) => {
+  const [open, setOpen] = useState(true);
+
+  useEffect(() => {
+    setOpen(true);
+    const timeoutId = setTimeout(() => setOpen(false), 5000);
+    return () => clearTimeout(timeoutId);
+  }, [piletName]);
+
+  return (
+    <UncontrolledAlert color="success" isOpen={open} style={{ marginTop: 10 }}>
+      The pilet '{piletName}' was added successfully!
+    </UncontrolledAlert>
+  );
+};
 
 export const UploadPilets: FC<UploadPiletsProps> = () => {
   const [file, setFile] = useState({
@@ -11,11 +27,11 @@ export const UploadPilets: FC<UploadPiletsProps> = () => {
     key: 0,
   });
 
-  const [progress, setProgress] = useState(0);
-  const [failedUpload, setFailedUpload] = useState(false);
-  const [piletName, setPiletName] = useState();
-  const [succeededUpload, setSucceededUpload] = useState(false);
-  const [err, setErr] = useState();
+  const [uploadData, setUploadData] = useState({
+    progress: 0,
+    piletName: undefined,
+    errMessage: undefined,
+  });
 
   const uploadPilet = (e: ChangeEvent<HTMLInputElement>) =>
     setFile({
@@ -25,7 +41,10 @@ export const UploadPilets: FC<UploadPiletsProps> = () => {
 
   const upload = () => {
     if (file) {
-      setProgress(50);
+      setUploadData({
+        ...uploadData,
+        progress: 50,
+      });
       const url = 'https://feed.piral.cloud/api/v1/pilet/temp';
       const form = new FormData();
       form.append('file', file.value);
@@ -39,23 +58,29 @@ export const UploadPilets: FC<UploadPiletsProps> = () => {
       })
         .then(res => {
           if (res.status === 400) {
-            setProgress(0);
-            setFailedUpload(true);
+            setUploadData({
+              ...uploadData,
+              progress: 0,
+            });
             throw res;
           }
           return res.json();
         })
         .then(res => {
           res.success && injectPiletsFromUrl(`${url}?id=${res.name}`);
-          setPiletName(res.name);
-          setProgress(0);
-          setSucceededUpload(true);
-          setInterval(() => setSucceededUpload(false), 5000);
+          setUploadData({
+            ...uploadData,
+            progress: 0,
+            piletName: res.name,
+          });
         })
         .catch(err => {
           err.text().then(errorMassage => {
             const formatedError = JSON.parse(errorMassage);
-            setErr(formatedError.message);
+            setUploadData({
+              ...uploadData,
+              errMessage: formatedError.message,
+            });
           });
         });
     }
@@ -74,22 +99,16 @@ export const UploadPilets: FC<UploadPiletsProps> = () => {
         </InputGroupAddon>
       </InputGroup>
 
-      {progress > 0 && <Progress animated color="success" value={progress} style={{ marginTop: 10 }} />}
-      {failedUpload && (
-        <UncontrolledAlert
-          color="danger"
-          isOpen={failedUpload}
-          style={{ marginTop: 10 }}
-          toggle={() => setFailedUpload(false)}>
-          Failed to upload a local pilet, {err}
+      {uploadData.progress > 0 && (
+        <Progress animated color="success" value={uploadData.progress} style={{ marginTop: 10 }} />
+      )}
+      {uploadData.errMessage && (
+        <UncontrolledAlert color="danger" style={{ marginTop: 10 }}>
+          Failed to upload a local pilet, {uploadData.errMessage}
         </UncontrolledAlert>
       )}
 
-      {piletName && (
-        <UncontrolledAlert color="success" isOpen={succeededUpload} style={{ marginTop: 10 }}>
-          The pilet {piletName} was added successfully!
-        </UncontrolledAlert>
-      )}
+      {uploadData?.piletName && <SucceededAlert piletName={uploadData?.piletName} />}
     </div>
   );
 };

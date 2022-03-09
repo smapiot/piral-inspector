@@ -80,7 +80,6 @@ export const globalViewLight = css`
   .react-flow {
     flex-grow: 1;
     position: relative;
-    height: 75vh;
     color: #ffffff;
   }
 
@@ -220,7 +219,6 @@ export const globalViewDark = css`
 
   .react-flow {
     flex: 1;
-    height: 75vh;
     position: relative;
     color: #ffffff;
   }

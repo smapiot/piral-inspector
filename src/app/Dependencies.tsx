@@ -1,6 +1,6 @@
 import * as dagre from 'dagre';
 import ReactFlow, { ReactFlowProvider, isNode, Node, Connection, Edge } from 'react-flow-renderer';
-import { useState, useEffect, FC, useRef } from 'react';
+import { useState, useEffect, FC } from 'react';
 import { jsx } from '@emotion/core';
 import { getDependencyMap } from './commands';
 import { DependencyMap, DependencyRelation, useStore } from './store';
@@ -45,7 +45,6 @@ function getLayoutedElements(dagreGraph: dagre.graphlib.Graph<{}>, elements: Arr
 
 const DisplayDependencies: FC<DisplayDependenciesProps> = ({ dependencies }) => {
   const [elements, setElements] = useState([]);
-  let height = screen.height - screen.height * 0.2;
 
   useEffect(() => {
     const dagreGraph = new dagre.graphlib.Graph();
@@ -106,10 +105,6 @@ const DisplayDependencies: FC<DisplayDependenciesProps> = ({ dependencies }) => 
     dagreGraph.setDefaultEdgeLabel(() => ({}));
     setElements(getLayoutedElements(dagreGraph, initialElements));
   }, [dependencies]);
-
-  const style = {
-    height: `${height}px`,
-  };
 
   return (
     <ReactFlowProvider>

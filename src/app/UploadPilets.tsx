@@ -41,10 +41,10 @@ export const UploadPilets: FC<UploadPiletsProps> = () => {
 
   const upload = () => {
     if (file) {
-      setUploadData({
-        ...uploadData,
+      setUploadData(data => ({
+        ...data,
         progress: 50,
-      });
+      }));
       const url = 'https://feed.piral.cloud/api/v1/pilet/temp';
       const form = new FormData();
       form.append('file', file.value);
@@ -58,29 +58,28 @@ export const UploadPilets: FC<UploadPiletsProps> = () => {
       })
         .then(res => {
           if (res.status === 400) {
-            setUploadData({
-              ...uploadData,
+            setUploadData(data => ({
+              ...data,
               progress: 0,
-            });
+            }));
             throw res;
           }
           return res.json();
         })
         .then(res => {
           res.success && injectPiletsFromUrl(`${url}?id=${res.name}`);
-          setUploadData({
-            ...uploadData,
-            progress: 0,
+          setUploadData(data => ({
+            ...data,
+            progress: 50,
             piletName: res.name,
-          });
-        })
-        .catch(err => {
+          }));
+        }, err => {
           err.text().then(errorMassage => {
             const formatedError = JSON.parse(errorMassage);
-            setUploadData({
-              ...uploadData,
+            setUploadData(data => ({
+              ...data,
               errMessage: formatedError.message,
-            });
+            }));
           });
         });
     }

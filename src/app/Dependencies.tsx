@@ -113,9 +113,7 @@ const DisplayDependencies: FC<DisplayDependenciesProps> = ({ dependencies }) => 
 
   return (
     <ReactFlowProvider>
-      <div>
-        <ReactFlow style={style} className="react-flow" elements={elements} connectionLineType="smoothstep" />
-      </div>
+      <ReactFlow className="react-flow" elements={elements} connectionLineType="smoothstep" />
     </ReactFlowProvider>
   );
 };

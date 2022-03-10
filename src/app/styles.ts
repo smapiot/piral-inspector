@@ -67,6 +67,29 @@ export const globalViewLight = css`
     width: 100%;
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .css-1wwuptt {
+    height: 100%;
+  }
+
+  .tab-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+
+  .tab-content > .active {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+
+  .css-68xmne-Content:last-child {
+    flex: 1;
   }
 
   a > svg {
@@ -80,7 +103,6 @@ export const globalViewLight = css`
   .react-flow {
     flex-grow: 1;
     position: relative;
-    height: 75vh;
     color: #ffffff;
   }
 
@@ -122,12 +144,33 @@ export const globalViewDark = css`
   html,
   body,
   #app {
-    height: 100%;
-    width: 100%;
     margin: 0;
     padding: 0;
     background-color: #2a2f3a;
     color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .css-1wwuptt {
+    height: 100%;
+  }
+
+  .tab-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+
+  .tab-content > .active {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+
+  .css-68xmne-Content:last-child {
+    flex: 1;
   }
 
   .btn-primary {
@@ -222,6 +265,10 @@ export const globalViewDark = css`
     flex: 1;
     position: relative;
     color: #ffffff;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
   }
 
   .react-flow__node-default {

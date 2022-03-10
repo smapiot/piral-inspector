@@ -9,7 +9,7 @@ interface PiletDependencyRelation extends DependencyRelation {
   pilet: string;
 }
 
-interface ExtensionItemProps {
+interface DisplayDependenciesProps {
   dependencies: DependencyMap;
 }
 
@@ -43,7 +43,7 @@ function getLayoutedElements(dagreGraph: dagre.graphlib.Graph<{}>, elements: Arr
   });
 }
 
-const DisplayDependencies: FC<ExtensionItemProps> = ({ dependencies }) => {
+const DisplayDependencies: FC<DisplayDependenciesProps> = ({ dependencies }) => {
   const [elements, setElements] = useState([]);
 
   useEffect(() => {

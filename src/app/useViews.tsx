@@ -24,8 +24,6 @@ const PiletsTab = {
         <h3>Available Pilets</h3>
         <p>The following pilets are currently running in your Piral instance.</p>
         <AvailablePilets />
-      </div>
-      <div css={appSectionView}>
         <h3>Add Pilets</h3>
         <p>You can add a feed address or an address referring to a pilet root module.</p>
         <LinkPilets />
@@ -89,6 +87,8 @@ const DependenciesTab = {
   title: 'Dependencies',
   Content: (props: TabProps) => (
     <div css={appSectionView}>
+      <h3>Dependency Map</h3>
+      <p>This map shows the pilets incl. their demanded and resolved dependencies.</p>
       <Dependencies active={props.active} />
     </div>
   ),

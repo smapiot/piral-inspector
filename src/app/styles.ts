@@ -2,8 +2,9 @@ import { css } from '@emotion/core';
 
 export const connectedView = css`
   display: flex;
-  margin: 1em;
   flex-direction: column;
+  flex: 1;
+  padding: 1em;
 `;
 
 export const notConnectedView = css`
@@ -27,6 +28,12 @@ export const notConnectedView = css`
   }
 `;
 
+export const footer = css`
+  padding-top: 1em;
+  font-size: 0.8rem;
+  text-align: right;
+`;
+
 export const tabLink = css`
   > a:not(.active) {
     cursor: pointer;
@@ -34,10 +41,17 @@ export const tabLink = css`
 `;
 
 export const appSectionView = css`
-  margin-top: 1.5em;
+  margin-top: 1.5rem;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
 
   > p {
-    margin-top: 1em;
+    margin-top: 1rem;
+  }
+
+  > * + h3 {
+    margin-top: 1.5rem;
   }
 `;
 
@@ -59,6 +73,11 @@ export const miniInfo = css`
   font-size: 0.8em;
 `;
 
+export const reactFlowContainer = css`
+  flex: 1;
+  display: flex;
+`;
+
 export const globalViewLight = css`
   html,
   body,
@@ -69,11 +88,6 @@ export const globalViewLight = css`
     padding: 0;
     display: flex;
     flex-direction: column;
-    height: 100%;
-  }
-
-  .css-1wwuptt {
-    height: 100%;
   }
 
   .tab-content {
@@ -101,9 +115,13 @@ export const globalViewLight = css`
   }
 
   .react-flow {
-    flex-grow: 1;
+    flex: 1;
     position: relative;
     color: #ffffff;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
   }
 
   .react-flow .controls {
@@ -117,6 +135,11 @@ export const globalViewLight = css`
     background: #ff6060;
     color: #ffff;
     font-size: 20px;
+    width: 240px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .react-flow__node-input {
@@ -124,6 +147,11 @@ export const globalViewLight = css`
     color: #ffff;
     font-size: 20px;
     border-color: #637c93;
+    width: 240px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .react-flow__node-output {
@@ -131,6 +159,11 @@ export const globalViewLight = css`
     color: #ffff;
     font-size: 20px;
     border-color: #4b11cb;
+    width: 240px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .react-flow__edge-path {
@@ -275,6 +308,11 @@ export const globalViewDark = css`
     background: #ff6060;
     color: #ffff;
     font-size: 20px;
+    width: 240px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .react-flow__node-input {
@@ -282,6 +320,11 @@ export const globalViewDark = css`
     color: #ffff;
     font-size: 20px;
     border-color: #637c93;
+    width: 240px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .react-flow__node-output {
@@ -289,6 +332,11 @@ export const globalViewDark = css`
     color: #ffff;
     font-size: 20px;
     border-color: #4b11cb;
+    width: 240px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .react-flow__edge-path {

@@ -2,7 +2,8 @@
 
 ## 0.9.0
 
-- (tbd)
+- Added dependency map to show resolutions (#18)
+- Improved the temporary pilet upload (#19)
 
 ## 0.8.1
 

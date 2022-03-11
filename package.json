@@ -1,6 +1,6 @@
 {
   "name": "piral-inspector",
-  "version": "0.8.1",
+  "version": "0.9.0",
   "description": "A DevTools extension for Piral instances and their pilets.",
   "keywords": [
     "piral",
@@ -27,16 +27,19 @@
   ],
   "scripts": {
     "start": "npm run watch:firefox",
-    "build:all": "npm run build:firefox && npm run build:opera && npm run build:chrome",
+    "build:all": "npm run build:firefox && npm run build:opera && npm run build:chrome && npm run build:edge",
     "watch:firefox": "concurrently --kill-others \"npm run watch:parcel -- --out-dir dist/firefox\" \"npm run watch:web-ext -- -s dist/firefox -t firefox-desktop\"",
     "build:firefox": "npm run build:parcel -- --out-dir dist/firefox && npm run build:web-ext -- -s dist/firefox -a web-ext-artifacts/firefox",
     "deploy:firefox": "rm -rf dist/firefox && npm run build:firefox && shipit firefox dist/firefox",
-    "watch:chrome": "concurrently --kill-others \"npm run watch:parcel -- --out-dir dist/chrome\" \"npm run watch:web-ext -- -s dist/chrome -t chromium --chromium-profile \"$CHROME_PROFILE_PATH\"\"",
+    "watch:chrome": "concurrently --kill-others \"npm run watch:parcel -- --out-dir dist/chrome\" \"npm run watch:web-ext -- -s dist/chrome -t chromium\"",
     "build:chrome": "npm run build:parcel -- --out-dir dist/chrome && npm run build:web-ext -- -s dist/chrome -a web-ext-artifacts/chrome",
     "deploy:chrome": "rm -rf dist/chrome && npm run build:chrome && shipit chrome dist/chrome",
     "watch:opera": "concurrently --kill-others \"npm run watch:parcel -- --out-dir dist/opera\" \"npm run watch:web-ext -- -s dist/opera -t chromium\"",
     "build:opera": "npm run build:parcel -- --out-dir dist/opera && npm run build:web-ext -- -s dist/opera -a web-ext-artifacts/opera",
     "deploy:opera": "rm -rf dist/opera && npm run build:opera && shipit opera dist/opera",
+    "watch:edge": "concurrently --kill-others \"npm run watch:parcel -- --out-dir dist/edge\" \"npm run watch:web-ext -- -s dist/edge -t chromium\"",
+    "build:edge": "npm run build:parcel -- --out-dir dist/edge && npm run build:web-ext -- -s dist/edge -a web-ext-artifacts/edge",
+    "deploy:edge": "rm -rf dist/edge && npm run build:edge && shipit edge dist/edge",
     "watch:parcel": "parcel watch --no-hmr src/devtools.html",
     "build:parcel": "parcel build src/devtools.html --no-source-maps",
     "watch:web-ext": "wait-on -d 6000 package.json && web-ext run",
@@ -44,6 +47,7 @@
     "prettify": "prettier --config prettier.config.js --write \"src/**/*.{ts,tsx}\""
   },
   "devDependencies": {
+    "@types/dagre": "^0.7.47",
     "@types/react": "^16.14.15",
     "@types/react-dom": "^16.9.14",
     "@types/reactstrap": "^8.7.2",
@@ -59,9 +63,13 @@
   "dependencies": {
     "@emotion/core": "^10.1.1",
     "bootstrap": "^4.6.0",
-    "react": "^16.14.0",
-    "react-dom": "^16.14.0",
+    "dagre": "^0.8.5",
+    "react": "^17.0.2",
+    "react-d3-tree": "^3.2.1",
+    "react-dom": "^17.0.2",
+    "react-flow-renderer": "^9.7.4",
     "reactstrap": "^8.10.0",
+    "uuidv4": "^6.2.12",
     "webextension-polyfill-ts": "0.26.0",
     "zustand": "^2.2.4"
   }

@@ -2,8 +2,9 @@ import { css } from '@emotion/core';
 
 export const connectedView = css`
   display: flex;
-  margin: 1em;
   flex-direction: column;
+  flex: 1;
+  padding: 1em;
 `;
 
 export const notConnectedView = css`
@@ -27,6 +28,12 @@ export const notConnectedView = css`
   }
 `;
 
+export const footer = css`
+  padding-top: 1em;
+  font-size: 0.8rem;
+  text-align: right;
+`;
+
 export const tabLink = css`
   > a:not(.active) {
     cursor: pointer;
@@ -34,10 +41,17 @@ export const tabLink = css`
 `;
 
 export const appSectionView = css`
-  margin-top: 1.5em;
+  margin-top: 1.5rem;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
 
   > p {
-    margin-top: 1em;
+    margin-top: 1rem;
+  }
+
+  > * + h3 {
+    margin-top: 1.5rem;
   }
 `;
 
@@ -59,6 +73,11 @@ export const miniInfo = css`
   font-size: 0.8em;
 `;
 
+export const reactFlowContainer = css`
+  flex: 1;
+  display: flex;
+`;
+
 export const globalViewLight = css`
   html,
   body,
@@ -67,6 +86,24 @@ export const globalViewLight = css`
     width: 100%;
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tab-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+
+  .tab-content > .active {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+
+  .css-68xmne-Content:last-child {
+    flex: 1;
   }
 
   a > svg {
@@ -76,18 +113,97 @@ export const globalViewLight = css`
   a:hover > svg {
     fill: #007bff;
   }
+
+  .react-flow {
+    flex: 1;
+    position: relative;
+    color: #ffffff;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+  }
+
+  .react-flow .controls {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 10;
+  }
+
+  .react-flow__node-default {
+    background: #ff6060;
+    color: #ffff;
+    font-size: 20px;
+    width: 240px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .react-flow__node-input {
+    background: #637c93;
+    color: #ffff;
+    font-size: 20px;
+    border-color: #637c93;
+    width: 240px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .react-flow__node-output {
+    background: #4b11cb;
+    color: #ffff;
+    font-size: 20px;
+    border-color: #4b11cb;
+    width: 240px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .react-flow__edge-path {
+    fill: none;
+    stroke: #a79797;
+    stroke-width: 2;
+  }
 `;
 
 export const globalViewDark = css`
   html,
   body,
   #app {
-    height: 100%;
-    width: 100%;
     margin: 0;
     padding: 0;
-    background-color: #292a2b;
-    color: #afafaf;
+    background-color: #2a2f3a;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .css-1wwuptt {
+    height: 100%;
+  }
+
+  .tab-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+
+  .tab-content > .active {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+
+  .css-68xmne-Content:last-child {
+    flex: 1;
   }
 
   .btn-primary {
@@ -118,7 +234,7 @@ export const globalViewDark = css`
   }
 
   a > svg {
-    fill: #777;
+    fill: #ffffff;
   }
 
   a:hover > svg {
@@ -126,32 +242,38 @@ export const globalViewDark = css`
   }
 
   .list-group-item {
-    background: hsl(0, 0%, 14%);
-    color: #afafaf;
+    background: rgb(60, 68, 79);
+    color: #ffffff;
+  }
+
+  .list-group-item:hover {
+    background: rgb(60, 68, 79);
+    color: #ffffff;
   }
 
   .close {
-    color: #afafaf;
+    color: #ffffff;
   }
 
   .form-control {
-    background: hsl(0, 0%, 14%);
-    border: 1px solid hsl(0, 0%, 14%);
-    color: #afafaf;
+    background: rgb(60, 68, 79);
+    border: 1px solid rgb(60, 68, 79);
+    color: #ffffff;
   }
 
   .form-control:focus {
-    background: hsl(0, 0%, 14%);
-    border: 1px solid hsl(0, 0%, 14%);
-    color: #afafaf;
+    background: rgb(60, 68, 79);
+    border: 1px solid rgb(60, 68, 79);
+    color: #ffffff;
   }
 
   .custom-file-label {
-    background: hsl(0, 0%, 14%);
+    background: rgb(60, 68, 79);
+    color: #ffffff;
   }
 
   .custom-file-label::placeholder {
-    color: #6c757d;
+    color: #ffffff;
   }
 
   .custom-control-input:checked ~ .custom-control-label::before {
@@ -160,16 +282,67 @@ export const globalViewDark = css`
   }
 
   .modal-content {
-    background-color: #292a2b;
-    color: #afafaf;
+    background-color: rgb(60, 68, 79);
+    color: #ffffff;
   }
 
   .list-group-item-heading {
-    color: #afafaf;
+    color: #ffffff;
   }
 
   .list-group-item-heading:hover {
-    color: #afafaf;
+    color: #ffffff;
+  }
+
+  .react-flow {
+    flex: 1;
+    position: relative;
+    color: #ffffff;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+  }
+
+  .react-flow__node-default {
+    background: #ff6060;
+    color: #ffff;
+    font-size: 20px;
+    width: 240px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .react-flow__node-input {
+    background: #637c93;
+    color: #ffff;
+    font-size: 20px;
+    border-color: #637c93;
+    width: 240px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .react-flow__node-output {
+    background: #4b11cb;
+    color: #ffff;
+    font-size: 20px;
+    border-color: #4b11cb;
+    width: 240px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .react-flow__edge-path {
+    fill: none;
+    stroke: #ffffff;
+    stroke-width: 2;
   }
 `;
 

@@ -1,9 +1,15 @@
 # Piral Inspector Changelog
 
+## 0.9.0
+
+- Added dependency map to show resolutions (#18)
+- Improved the temporary pilet upload (#19)
+
 ## 0.8.1
 
 - Fixed issue on Chrome when navigating (#15)
 - Improved dark mode support (#17)
+- First release for Microsoft Edge
 
 ## 0.8.0
 

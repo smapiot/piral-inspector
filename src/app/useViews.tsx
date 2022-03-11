@@ -7,20 +7,23 @@ import { AvailablePilets } from './AvailablePilets';
 import { RegisteredRoutes } from './RegisteredRoutes';
 import { StateContainer } from './StateContainer';
 import { ExtensionCatalogue } from './ExtensionCatalogue';
+import { Dependencies } from './Dependencies';
 import { appSectionView } from './styles';
 import { PiralDebugCapabilities } from '../types';
+
+interface TabProps {
+  active: boolean;
+}
 
 const PiletsTab = {
   id: 'pilets',
   title: 'Pilets',
-  content: (
+  Content: (props: TabProps) => (
     <Fragment>
       <div css={appSectionView}>
         <h3>Available Pilets</h3>
         <p>The following pilets are currently running in your Piral instance.</p>
         <AvailablePilets />
-      </div>
-      <div css={appSectionView}>
         <h3>Add Pilets</h3>
         <p>You can add a feed address or an address referring to a pilet root module.</p>
         <LinkPilets />
@@ -34,7 +37,7 @@ const PiletsTab = {
 const RoutesTab = {
   id: 'routes',
   title: 'Pages',
-  content: (
+  Content: (props: TabProps) => (
     <div css={appSectionView}>
       <h3>Registered Routes</h3>
       <p>The following routes are currently registered.</p>
@@ -46,7 +49,7 @@ const RoutesTab = {
 const EventsTab = {
   id: 'events',
   title: 'Events',
-  content: (
+  Content: (props: TabProps) => (
     <div css={appSectionView}>
       <h3>Events</h3>
       <p>These events from the Piral instance have been recorded so far.</p>
@@ -58,7 +61,7 @@ const EventsTab = {
 const ExtensionsTab = {
   id: 'extensions',
   title: 'Extensions',
-  content: (
+  Content: (props: TabProps) => (
     <div css={appSectionView}>
       <h3>Extension Catalogue</h3>
       <p>The registered extension components.</p>
@@ -70,11 +73,23 @@ const ExtensionsTab = {
 const StateTab = {
   id: 'state',
   title: 'App State',
-  content: (
+  Content: (props: TabProps) => (
     <div css={appSectionView}>
       <h3>State Container</h3>
       <p>The currently available global state.</p>
       <StateContainer />
+    </div>
+  ),
+};
+
+const DependenciesTab = {
+  id: 'dependencies',
+  title: 'Dependencies',
+  Content: (props: TabProps) => (
+    <div css={appSectionView}>
+      <h3>Dependency Map</h3>
+      <p>This map shows the pilets incl. their demanded and resolved dependencies.</p>
+      <Dependencies active={props.active} />
     </div>
   ),
 };
@@ -88,6 +103,7 @@ export function useViews(capabilities: PiralDebugCapabilities) {
         capabilities.extensions && ExtensionsTab,
         capabilities.events && EventsTab,
         capabilities.container && StateTab,
+        capabilities['dependency-map'] && DependenciesTab,
       ].filter(Boolean),
     [capabilities],
   );

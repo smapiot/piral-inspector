@@ -29,6 +29,12 @@ export function togglePilet(name: string) {
   });
 }
 
+export function getDependencyMap() {
+  window.sendCommand({
+    type: 'get-dependency-map',
+  });
+}
+
 export function updateSettings(settings: Record<string, any>) {
   window.sendCommand({
     type: 'update-settings',

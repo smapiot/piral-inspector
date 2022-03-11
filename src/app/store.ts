@@ -2,6 +2,12 @@ import create, { SetState } from 'zustand';
 import { getTheme } from './utils';
 import { PiralDebugCapabilities, PiralDebugSettings, PiralEvent, PiralWorkerInitialState } from '../types';
 
+export type DependencyRelation = { demanded: string; resolved: string };
+
+export type Dependencies = Array<DependencyRelation>;
+
+export type DependencyMap = Record<string, Array<string | DependencyRelation>>;
+
 export interface StoreState {
   connected: boolean;
   theme: string;
@@ -17,6 +23,7 @@ export interface StoreState {
   extensions?: Array<string>;
   events?: Array<PiralEvent>;
   container?: any;
+  dependencyMap?: DependencyMap;
   settings?: PiralDebugSettings;
   capabilities?: PiralDebugCapabilities;
 }
@@ -36,6 +43,8 @@ export interface StoreActions {
   updateSettings(settings: PiralDebugSettings): void;
   updateEvents(events: Array<PiralEvent>): void;
   updateContainer(container: any): void;
+  updateInfo(name: string, version: string, kind: string, capabilities: Array<string>): void;
+  updateDependencyMap(dependencyMap: Record<string, Array<string>>): void;
   updateExtensions(extensions: Array<string>): void;
 }
 
@@ -54,6 +63,45 @@ function dispatch(set: SetState<Store>, update: (state: StoreState) => Partial<S
   }));
 }
 
+function compareDependencyMap(oldMap: DependencyMap, newMap: DependencyMap) {
+  const oldKeys = Object.keys(oldMap);
+  const newKeys = Object.keys(newMap);
+
+  if (oldKeys.length === newKeys.length) {
+    for (const key of oldKeys) {
+      if (!newKeys.includes(key)) {
+        return newMap;
+      }
+
+      const oldPiletDeps = oldMap[key];
+      const newPiletDeps = newMap[key];
+
+      if (oldPiletDeps.length !== newPiletDeps.length) {
+        return newMap;
+      }
+
+      for (let i = 0; i < oldPiletDeps.length; i++) {
+        const oldDep = oldPiletDeps[i];
+        const newDep = newPiletDeps[i];
+
+        if (typeof oldDep !== typeof newDep) {
+          return newMap;
+        } else if (typeof oldDep === 'string' || typeof newDep === 'string') {
+          if (oldDep !== newDep) {
+            return newMap;
+          }
+        } else if (oldDep.resolved !== newDep.resolved || oldDep.demanded !== newDep.demanded) {
+          return newMap;
+        }
+      }
+    }
+
+    return oldMap;
+  }
+
+  return newMap;
+}
+
 export const store = create<Store>(set => ({
   state: {
     connected: false,
@@ -68,6 +116,7 @@ export const store = create<Store>(set => ({
         extensions: [],
         container: {},
         settings: {},
+        dependencyMap: {},
         ...state,
         connected: true,
         name,
@@ -80,12 +129,36 @@ export const store = create<Store>(set => ({
           routes: capabilities.includes('routes'),
           settings: capabilities.includes('settings'),
           extensions: capabilities.includes('extensions'),
+          dependencies: capabilities.includes('dependencies'),
+          'dependency-map': capabilities.includes('dependency-map'),
         },
       }));
     },
     disconnect() {
       dispatch(set, () => ({
         connected: false,
+      }));
+    },
+    updateInfo(name, version, kind, capabilities) {
+      dispatch(set, () => ({
+        name,
+        version,
+        kind,
+        capabilities: {
+          container: capabilities.includes('container'),
+          events: capabilities.includes('events'),
+          pilets: capabilities.includes('pilets'),
+          routes: capabilities.includes('routes'),
+          settings: capabilities.includes('settings'),
+          extensions: capabilities.includes('extensions'),
+          dependencies: capabilities.includes('dependencies'),
+          'dependency-map': capabilities.includes('dependency-map'),
+        },
+      }));
+    },
+    updateDependencyMap(dependencyMap) {
+      dispatch(set, (state) => ({
+        dependencyMap: compareDependencyMap(state.dependencyMap, dependencyMap),
       }));
     },
     toggleTheme() {

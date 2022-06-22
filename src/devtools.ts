@@ -1,5 +1,5 @@
 import { browser } from 'webextension-polyfill-ts';
-import { store } from './app/store';
+import { useStore } from './app/store';
 import { PiWorkerMessage, PiHostMessage } from './types';
 
 function initPanel() {
@@ -19,12 +19,11 @@ function connectPanel(panel: any) {
 
   panel.onShown.addListener((panelWindow: Window) => {
     panelWindow.sendCommand = sendMessage;
-    panelWindow.dispatchEvent(new CustomEvent('pi-store', { detail: store }));
+    panelWindow.dispatchEvent(new CustomEvent('pi-store', { detail: useStore }));
   });
 
   port.onMessage.addListener((message: PiWorkerMessage) => {
-    const [_, api] = store;
-    const { actions } = api.getState();
+    const { actions } = useStore.getState();
 
     switch (message.type) {
       case 'available':
@@ -57,6 +56,4 @@ function logError(err: Error) {
   console.error('An unexpected error occured while setting up the panels.', err);
 }
 
-initPanel()
-  .then(connectPanel)
-  .catch(logError);
+initPanel().then(connectPanel).catch(logError);

@@ -3,17 +3,15 @@ import { Button } from 'reactstrap';
 import { jsx } from '@emotion/core';
 import { ConnectedView } from './ConnectedView';
 import { notConnectedView } from './styles';
-import { store, useStore } from './store';
+import { useStore } from './store';
 
 export interface ViewProps {}
 
 export const View: FC<ViewProps> = () => {
-  const { connected, capabilities } = useStore(m => m.state);
+  const { connected, capabilities } = useStore((m) => m.state);
+  const actions = useStore((m) => m.actions);
 
-  const [_, api] = store;
-  const { actions } = api.getState();
-
-  const currentTheme = useStore(m => m.state.theme);
+  const currentTheme = useStore((m) => m.state.theme);
   const otherTheme = currentTheme === 'dark' ? 'light' : 'dark';
 
   if (connected) {

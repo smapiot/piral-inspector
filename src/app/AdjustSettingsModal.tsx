@@ -2,7 +2,7 @@ import { FC, useState, useCallback, useEffect } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, CustomInput, FormGroup, Input, Label } from 'reactstrap';
 import { jsx } from '@emotion/core';
 import { updateSettings } from './commands';
-import { store, useStore } from './store';
+import { useStore } from './store';
 import { miniInfo } from './styles';
 import { PiralDebugSettings } from '../types';
 
@@ -22,9 +22,7 @@ export const AdjustSettingsModal: FC<AdjustSettingsModalProps> = ({ settings, is
 
   useEffect(() => setValues(initialValues), [initialValues]);
 
-  const [_, api] = store;
-  const { actions } = api.getState();
-
+  const actions = useStore(m => m.actions);
   const currentTheme = useStore(m => m.state.theme);
   const otherTheme = currentTheme === 'dark' ? 'light' : 'dark';
 

@@ -1,5 +1,10 @@
 # Piral Inspector Changelog
 
+## 0.9.1
+
+- Fixed reversed horizontal and vertical representation of dependencies
+- Updated dependencies
+
 ## 0.9.0
 
 - Added dependency map to show resolutions (#18)

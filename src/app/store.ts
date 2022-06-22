@@ -102,7 +102,7 @@ function compareDependencyMap(oldMap: DependencyMap, newMap: DependencyMap) {
   return newMap;
 }
 
-export const store = create<Store>(set => ({
+export const useStore = create<Store>(set => ({
   state: {
     connected: false,
     theme: getTheme(),
@@ -203,5 +203,3 @@ export const store = create<Store>(set => ({
     },
   },
 }));
-
-export const useStore = store[0];

@@ -1,32 +1,46 @@
 import { FC, Fragment, useEffect } from 'react';
 import { jsx, Global } from '@emotion/core';
-import { StoreApi } from 'zustand';
 import { View } from './View';
 import { globalViewLight, globalViewDark } from './styles';
-import { Store, store, useStore } from './store';
+import { useStore } from './store';
 
-function useSyncedStore(localApi: StoreApi<Store>) {
+function useSyncedStore() {
   useEffect(() => {
     let dispose = () => window.removeEventListener('pi-store', handler);
-    const handler = (e: CustomEvent<typeof store>) => {
-      const [_, remoteApi] = e.detail;
-      localApi.setState(remoteApi.getState);
+    const handler = (e: CustomEvent<typeof useStore>) => {
+      const useRemoteStore = e.detail;
+      const syncState = useRemoteStore.getState();
+      useStore.setState(syncState);
       dispose();
-      dispose = remoteApi.subscribe<Store>(state => localApi.setState(state));
+      dispose = useRemoteStore.subscribe((state) => {
+        console.log('Setting new state', state);
+        useStore.setState(state);
+      });
     };
     window.addEventListener('pi-store', handler);
     return () => dispose();
   }, []);
 }
 
+function useIsDark() {
+  const theme = useStore((m) => m.state.theme);
+  return theme === 'dark';
+}
+
+function useStyles() {
+  const dark = useIsDark();
+  return dark ? globalViewDark : globalViewLight;
+}
+
 export interface AppProps {}
 
 export const App: FC<AppProps> = () => {
-  useSyncedStore(store[1]);
+  useSyncedStore();
+  const styles = useStyles();
 
   return (
     <Fragment>
-      <Global styles={useStore(m => m.state.theme) == 'dark' ? globalViewDark : globalViewLight} />
+      <Global styles={styles} />
       <View />
     </Fragment>
   );

@@ -3,6 +3,8 @@
 ## 0.9.1
 
 - Fixed reversed horizontal and vertical representation of dependencies
+- Fixed issue when adding URLs of individual pilets
+- Added error message when pilets cannot be added due to network issues
 - Updated dependencies
 
 ## 0.9.0

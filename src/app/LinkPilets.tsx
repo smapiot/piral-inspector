@@ -1,5 +1,5 @@
 import { FC, useState, SyntheticEvent } from 'react';
-import { Button, Form, Input, InputGroup, InputGroupAddon } from 'reactstrap';
+import { Button, Form, Input, InputGroup, InputGroupAddon, Progress, UncontrolledAlert } from 'reactstrap';
 import { jsx } from '@emotion/core';
 import { injectPiletsFromUrl } from './utils';
 
@@ -7,10 +7,20 @@ export interface LinkPiletsProps {}
 
 export const LinkPilets: FC<LinkPiletsProps> = () => {
   const [url, setUrl] = useState('');
+  const [errMessage, setErrMessage] = useState('');
+  const [injecting, setInjecting] = useState(false);
 
   const submit = (e: SyntheticEvent) => {
     if (url) {
-      injectPiletsFromUrl(url);
+      setInjecting(true);
+      injectPiletsFromUrl(url)
+        .catch((err) =>
+          setErrMessage(
+            `${err.message} Please check if the target server is reachable and CORS is properly configured.`,
+          ),
+        )
+        .finally(() => setInjecting(false));
+        
       setUrl('');
     }
 
@@ -20,13 +30,21 @@ export const LinkPilets: FC<LinkPiletsProps> = () => {
   return (
     <Form onSubmit={submit}>
       <InputGroup>
-        <Input type="text" value={url} onChange={e => setUrl(e.currentTarget.value)} />
+        <Input type="text" value={url} onChange={(e) => setUrl(e.currentTarget.value)} />
         <InputGroupAddon addonType="append">
           <Button color="primary" disabled={url === ''}>
             Add
           </Button>
         </InputGroupAddon>
       </InputGroup>
+
+      {injecting && <Progress animated color="success" value={50} style={{ marginTop: 10 }} />}
+
+      {errMessage && (
+        <UncontrolledAlert color="danger" style={{ marginTop: 10 }}>
+          Failed to add pilets: {errMessage}
+        </UncontrolledAlert>
+      )}
     </Form>
   );
 };

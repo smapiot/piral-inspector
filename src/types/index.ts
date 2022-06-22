@@ -122,6 +122,7 @@ export interface PiletMetadata {
   name: string;
   version: string;
   link?: string;
+  spec?: string;
   content?: string;
   custom?: any;
   hash?: string;

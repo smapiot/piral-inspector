@@ -3,7 +3,7 @@ import { CustomInput, InputGroup, InputGroupAddon, Button, Progress, Uncontrolle
 import { jsx } from '@emotion/core';
 import { injectPiletsFromUrl } from './utils';
 
-export interface UploadPiletsProps { }
+export interface UploadPiletsProps {}
 
 const SucceededAlert = ({ piletName }) => {
   const [open, setOpen] = useState(true);
@@ -41,7 +41,7 @@ export const UploadPilets: FC<UploadPiletsProps> = () => {
 
   const upload = () => {
     if (file) {
-      setUploadData(data => ({
+      setUploadData((data) => ({
         ...data,
         progress: 50,
       }));
@@ -56,9 +56,9 @@ export const UploadPilets: FC<UploadPiletsProps> = () => {
           authorization: `Basic ac6c202085f07099da1729a20e5750e651ef093ef4a5856c70997a6cc71dcab2`,
         },
       })
-        .then(res => {
+        .then((res) => {
           if (res.status === 400) {
-            setUploadData(data => ({
+            setUploadData((data) => ({
               ...data,
               progress: 0,
             }));
@@ -66,22 +66,25 @@ export const UploadPilets: FC<UploadPiletsProps> = () => {
           }
           return res.json();
         })
-        .then(res => {
-          res.success && injectPiletsFromUrl(`${url}?id=${res.name}`);
-          setUploadData(data => ({
-            ...data,
-            progress: 50,
-            piletName: res.name,
-          }));
-        }, err => {
-          err.text().then(errorMassage => {
-            const formatedError = JSON.parse(errorMassage);
-            setUploadData(data => ({
+        .then(
+          (res) => {
+            res.success && injectPiletsFromUrl(`${url}?id=${res.name}`);
+            setUploadData((data) => ({
               ...data,
-              errMessage: formatedError.message,
+              progress: 50,
+              piletName: res.name,
             }));
-          });
-        });
+          },
+          (err) => {
+            err.text().then((errorMassage) => {
+              const formatedError = JSON.parse(errorMassage);
+              setUploadData((data) => ({
+                ...data,
+                errMessage: formatedError.message,
+              }));
+            });
+          },
+        );
     }
 
     setFile({ value: undefined, key: file.key + 1 });
@@ -101,6 +104,7 @@ export const UploadPilets: FC<UploadPiletsProps> = () => {
       {uploadData.progress > 0 && (
         <Progress animated color="success" value={uploadData.progress} style={{ marginTop: 10 }} />
       )}
+
       {uploadData.errMessage && (
         <UncontrolledAlert color="danger" style={{ marginTop: 10 }}>
           Failed to upload a local pilet, {uploadData.errMessage}

@@ -1,5 +1,10 @@
 # Piral Inspector Changelog
 
+## 0.10.0
+
+- Changed dev tooling to esbuild
+- Updated dependencies
+
 ## 0.9.1
 
 - Fixed reversed horizontal and vertical representation of dependencies

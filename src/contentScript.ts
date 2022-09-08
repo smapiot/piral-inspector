@@ -1,6 +1,6 @@
 import { browser } from 'webextension-polyfill-ts';
-import { handleLegacyMessage } from './legacy/worker';
-import { PiralDebugApiMessage, PiralInspectorMessage } from '../types';
+import { handleLegacyMessage } from './scripts/legacy-worker';
+import type { PiralDebugApiMessage, PiralInspectorMessage } from './types';
 
 /**
  * Disconnects the Piral Inspector.

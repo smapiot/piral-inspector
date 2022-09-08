@@ -1,5 +1,5 @@
 import { browser, Runtime } from 'webextension-polyfill-ts';
-import { setIconAndPopup } from './icons';
+import { setIconAndPopup } from './scripts/icons';
 
 // Stores the connections from devtools.js
 const tabPorts: Record<number, Runtime.Port> = {};

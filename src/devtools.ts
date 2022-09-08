@@ -1,9 +1,9 @@
 import { browser } from 'webextension-polyfill-ts';
 import { useStore } from './app/store';
-import { PiWorkerMessage, PiHostMessage } from './types';
+import type { PiWorkerMessage, PiHostMessage } from './types';
 
 function initPanel() {
-  return browser.devtools.panels.create('Piral', '/assets/logo.png', './app/index.html');
+  return browser.devtools.panels.create('Piral', '/assets/logo.png', './panel.html');
 }
 
 function connectPanel(panel: any) {

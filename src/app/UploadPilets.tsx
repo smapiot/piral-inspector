@@ -71,7 +71,7 @@ export const UploadPilets: FC<UploadPiletsProps> = () => {
             res.success && injectPiletsFromUrl(`${url}?id=${res.name}`);
             setUploadData((data) => ({
               ...data,
-              progress: 50,
+              progress: 0,
               piletName: res.name,
             }));
           },

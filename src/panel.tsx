@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { render } from 'react-dom';
 import { jsx } from '@emotion/core';
-import { App } from './App';
+import { App } from './app';
 
 if (/Chrome/.test(navigator.userAgent)) {
   document.body.classList.add('is-chrome');

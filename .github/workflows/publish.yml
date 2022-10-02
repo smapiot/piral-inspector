@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [14.x]
 
     steps:
     - uses: actions/checkout@v2
@@ -21,19 +21,20 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm install
-    - run: npm run deploy:firefox
-      env:
-        WEXT_SHIPIT_FIREFOX_JWT_ISSUER: ${{ secrets.FIREFOX_ISSUER }}
-        WEXT_SHIPIT_FIREFOX_JWT_SECRET: ${{ secrets.FIREFOX_SECRET }}
-    - run: npm run deploy:chrome
-      env:
-        WEXT_SHIPIT_CHROME_EXTENSION_ID: ${{ secrets.CHROME_EXTENSIONID }}
-        WEXT_SHIPIT_CHROME_CLIENT_ID: ${{ secrets.CHROME_CLIENTID }}
-        WEXT_SHIPIT_CHROME_CLIENT_SECRET: ${{ secrets.CHROME_CLIENTSECRET }}
-        WEXT_SHIPIT_CHROME_REFRESH_TOKEN: ${{ secrets.CHROME_REFRESHTOKEN }}
-    - run: npm run deploy:opera
-      if: false
-      env:
-        WEXT_SHIPIT_OPERA_EMAIL: ${{ secrets.OPERA_EMAIL }}
-        WEXT_SHIPIT_OPERA_EXTENSION_ID: ${{ secrets.OPERA_EXTENSIONID }}
-        WEXT_SHIPIT_OPERA_PASSWORD: ${{ secrets.OPERA_PASSWORD }}
+    - run: npm run build:all
+    # - run: npm run deploy:firefox
+    #   env:
+    #     WEXT_SHIPIT_FIREFOX_JWT_ISSUER: ${{ secrets.FIREFOX_ISSUER }}
+    #     WEXT_SHIPIT_FIREFOX_JWT_SECRET: ${{ secrets.FIREFOX_SECRET }}
+    # - run: npm run deploy:chrome
+    #   env:
+    #     WEXT_SHIPIT_CHROME_EXTENSION_ID: ${{ secrets.CHROME_EXTENSIONID }}
+    #     WEXT_SHIPIT_CHROME_CLIENT_ID: ${{ secrets.CHROME_CLIENTID }}
+    #     WEXT_SHIPIT_CHROME_CLIENT_SECRET: ${{ secrets.CHROME_CLIENTSECRET }}
+    #     WEXT_SHIPIT_CHROME_REFRESH_TOKEN: ${{ secrets.CHROME_REFRESHTOKEN }}
+    # - run: npm run deploy:opera
+    #   if: false
+    #   env:
+    #     WEXT_SHIPIT_OPERA_EMAIL: ${{ secrets.OPERA_EMAIL }}
+    #     WEXT_SHIPIT_OPERA_EXTENSION_ID: ${{ secrets.OPERA_EXTENSIONID }}
+    #     WEXT_SHIPIT_OPERA_PASSWORD: ${{ secrets.OPERA_PASSWORD }}

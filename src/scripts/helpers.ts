@@ -1,4 +1,4 @@
-import { PiletMetadata } from '../../types';
+import type { PiletMetadata } from '../types';
 
 function injectScript(content: string) {
   const script = document.createElement('script');

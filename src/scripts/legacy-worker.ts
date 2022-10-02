@@ -1,4 +1,4 @@
-import { PiWorkerMessage, PiHostMessage, PiralEvent } from '../../types';
+import type { PiWorkerMessage, PiHostMessage, PiralEvent } from '../types';
 import {
   check,
   supervise,
@@ -56,7 +56,7 @@ function getEvents() {
 }
 
 function setupEvents() {
-  ['result', 'pilets', 'routes', 'settings', 'container'].forEach(type => {
+  ['result', 'pilets', 'routes', 'settings', 'container'].forEach((type) => {
     window.addEventListener(`piral-${type}`, (e: CustomEvent) => {
       sendMessage({
         ...e.detail,

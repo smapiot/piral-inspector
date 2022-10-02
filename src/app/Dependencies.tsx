@@ -138,7 +138,7 @@ export interface DependenciesProps {
 }
 
 function getCurrentLayout(): 'TB' | 'LR' {
-  return document.body.clientWidth < document.body.clientHeight ? 'TB' : 'LR';
+  return document.body.clientWidth >= document.body.clientHeight ? 'TB' : 'LR';
 }
 
 export const Dependencies: FC<DependenciesProps> = ({ active }) => {

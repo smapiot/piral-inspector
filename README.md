@@ -52,9 +52,12 @@ For building the solution the following steps should be followed.
    - `npm build:firefox` to build for Firefox
    - `npm build:opera` to build for Opera
    - `npm build:chrome` to build for Chrome
+   - `npm build:edge` to build for Edge
 4. If you want to develop run either
    - `npm watch:firefox` to watch for Firefox
+   - `npm watch:opera` to watch for Opera
    - `npm watch:chrome` to watch for Chrome
+   - `npm watch:edge` to watch for Edge
 5. Deploying requires having all the secrets in environment variables
 
 All source files are available in the `src` folder.

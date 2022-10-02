@@ -4,6 +4,7 @@ import { jsx } from '@emotion/core';
 import { BasicInfo } from './BasicInfo';
 import { connectedView, tabLink, footer } from './styles';
 import { useViews } from './useViews';
+import { version } from '../../package.json';
 import { PiralDebugCapabilities } from '../types';
 
 export interface ConnectedViewProps {
@@ -33,7 +34,7 @@ export const ConnectedView: FC<ConnectedViewProps> = ({ capabilities }) => {
         ))}
       </TabContent>
       <div css={footer}>
-        Piral Inspector v0.9.0
+        Piral Inspector v{version}
       </div>
     </div>
   );

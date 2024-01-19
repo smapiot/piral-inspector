@@ -1,6 +1,7 @@
-import { runtime, tabs, Runtime } from 'webextension-polyfill';
-import { setIconAndPopup } from './scripts/icons';
+import { runtime, webNavigation, storage, scripting, tabs, Runtime } from 'webextension-polyfill';
+import { setIconAndPopup } from '../scripts/icons';
 
+console.log('HELLO FROM THE SERVICE WORKER');
 // Stores the connections from devtools.js
 const tabPorts: Record<number, Runtime.Port> = {};
 
@@ -12,6 +13,8 @@ const isFirefox = navigator.userAgent.indexOf('Firefox') >= 0;
  *            s -------------------> o -------------------> t
  */
 runtime.onMessage.addListener((message, sender) => {
+  console.log('ON MESSAGE');
+
   const tabId = sender.tab?.id;
 
   if (tabId) {
@@ -37,6 +40,7 @@ runtime.onMessage.addListener((message, sender) => {
  *            s -------------------> o -------------------> t
  */
 runtime.onConnect.addListener((port: Runtime.Port) => {
+  console.log('ON CONNECT');
   // Only care about if the host was connected
   if (port.name === 'piral-inspector-host') {
     let tabId: number;

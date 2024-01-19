@@ -1,50 +1,22 @@
-import { browser } from 'webextension-polyfill-ts';
-import { handleLegacyMessage } from './scripts/legacy-worker';
-import type { PiralDebugApiMessage, PiralInspectorMessage } from './types';
-
-/**
- * Disconnects the Piral Inspector.
- */
-window.addEventListener('unload', () => {
-  browser.runtime.sendMessage({
-    type: 'unavailable',
-  });
-});
-
-/**
- * Receives messages from the piral-debug-utils.js
- */
-window.addEventListener('message', event => {
-  if (event.source === window) {
-    const message: PiralDebugApiMessage = event.data;
-
-    if (typeof message === 'object' && message?.source === 'piral-debug-api') {
-      const { content } = message;
-      browser.runtime.sendMessage(content);
-
-      if (content.type === 'available') {
-        console.info(`Piral Inspector (${content.kind}) connected!`);
-      }
-    }
-  }
-});
+import { runtime } from 'webextension-polyfill';
+import { PiralInspectorMessage } from './types';
 
 /**
  * Receives messages from the background.js
  */
-browser.runtime.onMessage.addListener(content => {
+runtime.onMessage.addListener((content) => {
+  console.log('ON MESSAGE CONTENT SCRIPT', content);
   const message: PiralInspectorMessage = {
     content,
     source: 'piral-inspector',
     version: 'v1',
   };
   window.postMessage(message, '*');
-  handleLegacyMessage(content);
 });
 
 /**
  * Tries to connect the instance to the dev tools.
  */
-browser.runtime.sendMessage({
+runtime.sendMessage({
   type: 'cs-connect',
 });

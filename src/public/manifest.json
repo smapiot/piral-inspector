@@ -1,5 +1,5 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "browser_specific_settings": {
     "gecko": {
       "id": "{9d4683ff-8d9c-40ad-adb4-9fa895a3a0d7}",
@@ -35,15 +35,22 @@
     "ids": ["*"],
     "matches": ["*://localhost/*"]
   },
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "content_scripts": [
     {
       "matches": ["*://localhost/*"],
-      "js": ["./contentScript.js"]
+      "js": ["./contentScript.js"],
+      "run_at": "document_start"
     }
   ],
+  "host_permissions": ["*://localhost/*"],
   "background": {
-    "scripts": ["./background.js"]
+    "service_worker": "serviceWorker.js",
+    "type": "module"
   },
+  "permissions": [
+    "offscreen",
+    "storage",
+    "scripting"
+  ],
   "devtools_page": "./devtools.html"
 }

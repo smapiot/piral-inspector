@@ -1,4 +1,4 @@
-import { browser, Runtime } from 'webextension-polyfill-ts';
+import { runtime, tabs, Runtime } from 'webextension-polyfill';
 import { setIconAndPopup } from './scripts/icons';
 
 // Stores the connections from devtools.js
@@ -11,7 +11,7 @@ const isFirefox = navigator.userAgent.indexOf('Firefox') >= 0;
  * From contentScript.js to background.js (and maybe to devtools.js)
  *            s -------------------> o -------------------> t
  */
-browser.runtime.onMessage.addListener((message, sender) => {
+runtime.onMessage.addListener((message, sender) => {
   const tabId = sender.tab?.id;
 
   if (tabId) {
@@ -22,7 +22,7 @@ browser.runtime.onMessage.addListener((message, sender) => {
       const type = message.mode === 'production' ? 'production' : 'development';
       setIconAndPopup(type, tabId);
     } else if (message.type === 'cs-connect') {
-      browser.tabs.sendMessage(tabId, { type: 'init' });
+      tabs.sendMessage(tabId, { type: 'init' });
     }
 
     // Only send back to devtools.js if connection still available
@@ -36,7 +36,7 @@ browser.runtime.onMessage.addListener((message, sender) => {
  * From devtools.js to background.js (and maybe to contentScript.js)
  *            s -------------------> o -------------------> t
  */
-browser.runtime.onConnect.addListener((port: Runtime.Port) => {
+runtime.onConnect.addListener((port: Runtime.Port) => {
   // Only care about if the host was connected
   if (port.name === 'piral-inspector-host') {
     let tabId: number;
@@ -54,7 +54,7 @@ browser.runtime.onConnect.addListener((port: Runtime.Port) => {
 
       if (tabId) {
         // forward message to the contentScript.js
-        browser.tabs.sendMessage(tabId, message);
+        tabs.sendMessage(tabId, message);
       }
     };
 

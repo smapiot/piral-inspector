@@ -1,4 +1,4 @@
-import { browser } from 'webextension-polyfill-ts';
+import * as browser from 'webextension-polyfill';
 import { useStore } from './app/store';
 import type { PiWorkerMessage, PiHostMessage } from './types';
 

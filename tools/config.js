@@ -22,6 +22,7 @@ exports.config = {
   entryPoints: [
     resolve(src, 'devtools.ts'),
     resolve(src, 'background.ts'),
+    resolve(src, 'serviceWorker.ts'),
     resolve(src, 'contentScript.ts'),
     resolve(src, 'panel.tsx'),
   ],

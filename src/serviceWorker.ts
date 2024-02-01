@@ -3,8 +3,6 @@ import { Runtime, runtime, scripting, storage, tabs } from 'webextension-polyfil
 const tabPorts: Record<number, Runtime.Port> = {};
 
 runtime.onMessage.addListener(async function (message, sender) {
-  console.log(sender.tab ? 'from a content script:' + sender.tab.url : 'from the extension');
-
   const tabId = sender.tab?.id;
 
   if (!tabId) return;
@@ -23,7 +21,6 @@ runtime.onMessage.addListener(async function (message, sender) {
   // Only send back to devtools.js if connection still available
   if (port && typeof port?.postMessage === 'function') {
     port.postMessage(message);
-    console.log('HELL YEAH2', message);
   }
 });
 

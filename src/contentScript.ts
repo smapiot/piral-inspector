@@ -38,7 +38,6 @@ runtime.onMessage.addListener((content) => {
     version: 'v1',
   };
   window.postMessage(message, '*');
-  console.log('CONTENT SCRIPT ON MESSAGE', content);
 });
 
 /**

@@ -53,7 +53,8 @@
     "offscreen",
     "storage",
     "scripting",
-    "devtools_page"
+    "devtools_page",
+    "browser_action"
   ],
   "devtools_page": "./devtools.html"
 }

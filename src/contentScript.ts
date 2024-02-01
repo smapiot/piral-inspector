@@ -1,6 +1,17 @@
 import { runtime } from 'webextension-polyfill';
 import { PiralDebugApiMessage, PiralInspectorMessage } from './types';
+import { handleLegacyMessage } from './scripts/legacy-worker';
 
+const handleMessage = (message: PiralDebugApiMessage) => {
+  if (typeof message === 'object' && message?.source === 'piral-debug-api') {
+    const { content } = message;
+    runtime.sendMessage(content);
+
+    if (content.type === 'available') {
+      console.info(`Piral Inspector (${content.kind}) connected!`);
+    }
+  }
+};
 /**
  * Disconnects the Piral Inspector.
  */
@@ -16,15 +27,7 @@ window.addEventListener('unload', () => {
 window.addEventListener('message', (event) => {
   if (event.source === window) {
     const message: PiralDebugApiMessage = event.data;
-
-    if (typeof message === 'object' && message?.source === 'piral-debug-api') {
-      const { content } = message;
-      runtime.sendMessage(content);
-
-      if (content.type === 'available') {
-        console.info(`Piral Inspector (${content.kind}) connected!`);
-      }
-    }
+    handleMessage(message);
   }
 });
 
@@ -38,6 +41,7 @@ runtime.onMessage.addListener((content) => {
     version: 'v1',
   };
   window.postMessage(message, '*');
+  //handleLegacyMessage(content)
 });
 
 /**

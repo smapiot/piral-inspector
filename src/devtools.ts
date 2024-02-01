@@ -18,15 +18,12 @@ async function initDevTools() {
     //@ts-ignore-next-line
     devtools.panels.create('Piral', '/assets/logo.png', './panel.html', (panel: DevtoolsPanels.ExtensionPanel) => {
       panel.onShown.addListener((panelWindow: Window) => {
-        sendMessage('ON SHOWN EVENT LISTENER ' as any);
 
         panelWindow.sendCommand = sendMessage;
         panelWindow.dispatchEvent(new CustomEvent('pi-store', { detail: useStore }));
       });
 
       port.onMessage.addListener((message: PiWorkerMessage) => {
-        sendMessage(('DEVTOOLS MESSAGE RECEIVED ' + message.type) as any);
-
         const { actions } = useStore.getState();
 
         switch (message.type) {

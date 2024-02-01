@@ -1,4 +1,4 @@
-import { Runtime, runtime, scripting, storage, tabs } from 'webextension-polyfill';
+import { Runtime, runtime, action, storage, tabs } from 'webextension-polyfill';
 import { setIconAndPopup } from './scripts/icons';
 
 const tabPorts: Record<number, Runtime.Port> = {};
@@ -10,6 +10,8 @@ runtime.onMessage.addListener(async function (message, sender) {
 
   if (message.type === 'available') {
     const type = message.mode === 'production' ? 'production' : 'development';
+
+    console.log('BEFORE WE GO', action);
     setIconAndPopup(type, tabId);
   }
 

@@ -1,4 +1,5 @@
 import { Runtime, runtime, scripting, storage, tabs } from 'webextension-polyfill';
+import { setIconAndPopup } from './scripts/icons';
 
 const tabPorts: Record<number, Runtime.Port> = {};
 
@@ -9,7 +10,7 @@ runtime.onMessage.addListener(async function (message, sender) {
 
   if (message.type === 'available') {
     const type = message.mode === 'production' ? 'production' : 'development';
-    //setIconAndPopup(type, tabId);
+    setIconAndPopup(type, tabId);
   }
 
   if (message.type === 'cs-connect') {

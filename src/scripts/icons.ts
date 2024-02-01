@@ -1,8 +1,6 @@
 import { browserAction } from 'webextension-polyfill';
 
-// todo fix setIcon
 export function setIconAndPopup(type: 'disabled' | 'production' | 'development', tabId: number) {
-  return;
   browserAction.setIcon({
     tabId,
     path: {

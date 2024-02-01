@@ -1,17 +1,31 @@
 import { runtime } from 'webextension-polyfill';
-import { PiralInspectorMessage } from './types';
+import { PiralDebugApiMessage } from './types';
 
 /**
- * Receives messages from the service worker.js
+ * Disconnects the Piral Inspector.
  */
-runtime.onMessage.addListener((content) => {
-  const message: PiralInspectorMessage = {
-    content,
-    source: 'piral-inspector',
-    version: 'v1',
-  };
-  window.postMessage(message, '*');
-  console.log('CONTENT SCRIPT ON MESSAGE', content)
+window.addEventListener('unload', () => {
+  runtime.sendMessage({
+    type: 'unavailable',
+  });
+});
+
+/**
+ * Receives messages from the piral-debug-utils.js and forwards it to service worker
+ */
+window.addEventListener('message', (event) => {
+  if (event.source === window) {
+    const message: PiralDebugApiMessage = event.data;
+
+    if (typeof message === 'object' && message?.source === 'piral-debug-api') {
+      const { content } = message;
+      runtime.sendMessage(content);
+
+      if (content.type === 'available') {
+        console.info(`Piral Inspector (${content.kind}) connected!`);
+      }
+    }
+  }
 });
 
 /**

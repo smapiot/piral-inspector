@@ -14,8 +14,6 @@ export const View: FC<ViewProps> = () => {
   const currentTheme = useStore((m) => m.state.theme);
   const otherTheme = currentTheme === 'dark' ? 'light' : 'dark';
 
-  return <div>ICH BIN HIER</div>;
-
   if (connected) {
     return <ConnectedView capabilities={capabilities} />;
   } else {

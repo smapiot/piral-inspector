@@ -40,7 +40,6 @@ runtime.onMessage.addListener((message, sender) => {
  *            s -------------------> o -------------------> t
  */
 runtime.onConnect.addListener((port: Runtime.Port) => {
-  console.log('ON CONNECT');
   // Only care about if the host was connected
   if (port.name === 'piral-inspector-host') {
     let tabId: number;

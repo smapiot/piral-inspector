@@ -2,16 +2,16 @@ import { runtime } from 'webextension-polyfill';
 import { PiralInspectorMessage } from './types';
 
 /**
- * Receives messages from the background.js
+ * Receives messages from the service worker.js
  */
 runtime.onMessage.addListener((content) => {
-  console.log('ON MESSAGE CONTENT SCRIPT', content);
   const message: PiralInspectorMessage = {
     content,
     source: 'piral-inspector',
     version: 'v1',
   };
   window.postMessage(message, '*');
+  console.log('CONTENT SCRIPT ON MESSAGE', content)
 });
 
 /**

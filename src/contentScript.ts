@@ -1,5 +1,5 @@
 import { runtime } from 'webextension-polyfill';
-import { PiralDebugApiMessage } from './types';
+import { PiralDebugApiMessage, PiralInspectorMessage } from './types';
 
 /**
  * Disconnects the Piral Inspector.
@@ -26,6 +26,19 @@ window.addEventListener('message', (event) => {
       }
     }
   }
+});
+
+/**
+ * Receives messages from the service worker.js
+ */
+runtime.onMessage.addListener((content) => {
+  const message: PiralInspectorMessage = {
+    content,
+    source: 'piral-inspector',
+    version: 'v1',
+  };
+  window.postMessage(message, '*');
+  console.log('CONTENT SCRIPT ON MESSAGE', content);
 });
 
 /**

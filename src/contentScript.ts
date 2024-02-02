@@ -1,6 +1,12 @@
-import { runtime, scripting } from 'webextension-polyfill';
-import { PiWorkerMessage, PiralDebugApiMessage, PiralInspectorMessage } from './types';
-import { handleLegacyMessage } from './scripts/legacy-worker';
+import { runtime } from 'webextension-polyfill';
+import { PiralDebugApiMessage, PiralInspectorMessage } from './types';
+
+/**
+ * window is marked as @deprecated in v3 but is still the official way to access external applications
+ * https://developer.chrome.com/docs/extensions/develop/concepts/content-scripts?hl=en#host-page-communication
+ */
+
+
 
 const handleMessage = (message: PiralDebugApiMessage) => {
   if (typeof message === 'object' && message?.source === 'piral-debug-api') {

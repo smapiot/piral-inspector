@@ -5,9 +5,6 @@ import { PiralDebugApiMessage, PiralInspectorMessage } from './types';
  * window is marked as @deprecated in v3 but is still the official way to access external applications
  * https://developer.chrome.com/docs/extensions/develop/concepts/content-scripts?hl=en#host-page-communication
  */
-
-
-
 const handleMessage = (message: PiralDebugApiMessage) => {
   if (typeof message === 'object' && message?.source === 'piral-debug-api') {
     const { content } = message;
@@ -47,9 +44,6 @@ runtime.onMessage.addListener((content, sender) => {
     version: 'v1',
   };
   window.postMessage(message, '*');
-
-  //@todo check if somehow inline script can work in v3
-  //handleLegacyMessage(content);
 });
 
 /**

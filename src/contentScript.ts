@@ -1,5 +1,5 @@
-import { runtime } from 'webextension-polyfill';
-import { PiralDebugApiMessage, PiralInspectorMessage } from './types';
+import { runtime, scripting } from 'webextension-polyfill';
+import { PiWorkerMessage, PiralDebugApiMessage, PiralInspectorMessage } from './types';
 import { handleLegacyMessage } from './scripts/legacy-worker';
 
 const handleMessage = (message: PiralDebugApiMessage) => {
@@ -34,14 +34,16 @@ window.addEventListener('message', (event) => {
 /**
  * Receives messages from the service worker.js
  */
-runtime.onMessage.addListener((content) => {
+runtime.onMessage.addListener((content, sender) => {
   const message: PiralInspectorMessage = {
     content,
     source: 'piral-inspector',
     version: 'v1',
   };
   window.postMessage(message, '*');
-  //handleLegacyMessage(content)
+  
+  //@todo check if somehow inline script can work in v3
+  //handleLegacyMessage(content);
 });
 
 /**

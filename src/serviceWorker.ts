@@ -1,5 +1,6 @@
-import { Runtime, runtime, action, storage, tabs } from 'webextension-polyfill';
+import { Runtime, runtime, scripting, action, storage, tabs } from 'webextension-polyfill';
 import { setIconAndPopup } from './scripts/icons';
+
 
 const tabPorts: Record<number, Runtime.Port> = {};
 /**
@@ -18,6 +19,12 @@ runtime.onMessage.addListener(async function (message, sender) {
 
   if (message.type === 'cs-connect') {
     tabs.sendMessage(sender.tab?.id, { type: 'init' });
+    
+
+    scripting.executeScript({
+      files: ['./scripts/helpers.js', './scripts/legacy-worker.js'],
+      target: {tabId: sender.tab?.id}
+    })
   }
 
   const port = tabPorts[sender.tab.id];

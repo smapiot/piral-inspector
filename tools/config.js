@@ -14,6 +14,7 @@ switch (browser) {
 }
 
 const src = resolve(__dirname, '../src');
+const scripts = resolve(__dirname, '../src/scripts');
 const dst = resolve(__dirname, `../dist/${browser}`);
 
 exports.target = dst;
@@ -24,6 +25,8 @@ exports.config = {
     resolve(src, 'devtools.ts'),
     resolve(src, 'contentScript.ts'),
     resolve(src, 'serviceWorker.ts'),
+    resolve(scripts, 'helpers.ts'),
+    resolve(scripts, 'legacy-worker.ts'),
   ],
   minify: true,
   bundle: true,

@@ -32,7 +32,7 @@
     "default_popup": "popups/disabled.html"
   },
   "content_security_policy": {
-    "extension_pages": "script-src 'self'  'wasm-unsafe-eval'; object-src 'self';"
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
   },
   "externally_connectable": {
     "ids": ["*"],
@@ -41,7 +41,7 @@
   "content_scripts": [
     {
       "matches": ["*://localhost/*"],
-      "js": ["./contentScript.js"]
+      "js": ["./contentScript.js", "./scripts/helpers.js"]
     }
   ],
   "host_permissions": ["*://localhost/*"],

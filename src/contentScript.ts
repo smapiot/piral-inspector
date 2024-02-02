@@ -41,7 +41,7 @@ runtime.onMessage.addListener((content, sender) => {
     version: 'v1',
   };
   window.postMessage(message, '*');
-  
+
   //@todo check if somehow inline script can work in v3
   //handleLegacyMessage(content);
 });

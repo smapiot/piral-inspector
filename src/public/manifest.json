@@ -41,7 +41,7 @@
   "content_scripts": [
     {
       "matches": ["*://localhost/*"],
-      "js": ["./contentScript.js", "./scripts/helpers.js"]
+      "js": ["./contentScript.js", "./scripts/helpers.js", "./scripts/legacy-worker.js"]
     }
   ],
   "host_permissions": ["*://localhost/*"],

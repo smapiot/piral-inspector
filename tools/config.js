@@ -25,8 +25,6 @@ exports.config = {
     resolve(src, 'devtools.ts'),
     resolve(src, 'contentScript.ts'),
     resolve(src, 'serviceWorker.ts'),
-    resolve(scripts, 'helpers.ts'),
-    resolve(scripts, 'legacy-worker.ts'),
   ],
   minify: true,
   bundle: true,

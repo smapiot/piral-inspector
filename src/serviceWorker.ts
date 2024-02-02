@@ -2,7 +2,10 @@ import { Runtime, runtime, action, storage, tabs } from 'webextension-polyfill';
 import { setIconAndPopup } from './scripts/icons';
 
 const tabPorts: Record<number, Runtime.Port> = {};
-
+/**
+ * Core message routing
+ * answers messages to contentscripts and dev tools
+ */
 runtime.onMessage.addListener(async function (message, sender) {
   const tabId = sender.tab?.id;
 
@@ -25,6 +28,10 @@ runtime.onMessage.addListener(async function (message, sender) {
   }
 });
 
+/**
+ * handles the connection to the devtools and initializes event handlers
+ * sends messages from devtools to the content scripts
+ */
 runtime.onConnect.addListener(function (devToolsConnection) {
   if (devToolsConnection.name !== 'piral-inspector-host') {
     return;

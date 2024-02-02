@@ -3,6 +3,15 @@ import { useStore } from './app/store';
 import { PiHostMessage, PiWorkerMessage } from './types';
 import { DevtoolsPanels } from 'webextension-polyfill/namespaces/devtools_panels';
 
+type PanelCreate = (
+  title: string,
+  iconPath: string,
+  pagePath: string,
+  panelCreatedCallback: 
+  (panel: DevtoolsPanels.ExtensionPanel) => void
+  ) => void
+
+  
 async function initDevTools() {
   try {
     const port = runtime.connect(undefined, { name: 'piral-inspector-host' });
@@ -15,8 +24,16 @@ async function initDevTools() {
       });
     };
 
-    //@ts-ignore-next-line
-    devtools.panels.create('Piral', '/assets/logo.png', './panel.html', (panel: DevtoolsPanels.ExtensionPanel) => {
+    /**
+     * Cast needed because webextension polyfill does not support the right interfacing for v3
+     * official documentation: https://developer.chrome.com/docs/extensions/reference/api/devtools/panels?hl=en#example
+     */
+    const panelCreate = devtools.panels.create as unknown as PanelCreate
+
+    /**
+     * Call is asynchronus but doesnt provide promise anymore, needs to be done with callback
+     */
+    panelCreate('Piral', '/assets/logo.png', './panel.html', (panel: DevtoolsPanels.ExtensionPanel) => {
       panel.onShown.addListener((panelWindow: Window) => {
 
         panelWindow.sendCommand = sendMessage;

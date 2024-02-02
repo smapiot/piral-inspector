@@ -14,16 +14,17 @@ switch (browser) {
 }
 
 const src = resolve(__dirname, '../src');
+const scripts = resolve(__dirname, '../src/scripts');
 const dst = resolve(__dirname, `../dist/${browser}`);
 
 exports.target = dst;
 
 exports.config = {
   entryPoints: [
-    resolve(src, 'devtools.ts'),
-    resolve(src, 'background.ts'),
-    resolve(src, 'contentScript.ts'),
     resolve(src, 'panel.tsx'),
+    resolve(src, 'devtools.ts'),
+    resolve(src, 'contentScript.ts'),
+    resolve(src, 'serviceWorker.ts'),
   ],
   minify: true,
   bundle: true,

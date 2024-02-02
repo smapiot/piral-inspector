@@ -1,5 +1,5 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "browser_specific_settings": {
     "gecko": {
       "id": "{9d4683ff-8d9c-40ad-adb4-9fa895a3a0d7}",
@@ -20,7 +20,7 @@
     "96": "assets/logo_96.png",
     "128": "assets/logo_128.png"
   },
-  "browser_action": {
+  "action": {
     "default_icon": {
       "16": "assets/disabled_16.png",
       "32": "assets/disabled_32.png",
@@ -31,19 +31,30 @@
     },
     "default_popup": "popups/disabled.html"
   },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+  },
   "externally_connectable": {
     "ids": ["*"],
     "matches": ["*://localhost/*"]
   },
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "content_scripts": [
     {
       "matches": ["*://localhost/*"],
-      "js": ["./contentScript.js"]
+      "js": ["./contentScript.js", "./scripts/helpers.js", "./scripts/legacy-worker.js"]
     }
   ],
+  "host_permissions": ["*://localhost/*"],
   "background": {
-    "scripts": ["./background.js"]
+    "service_worker": "serviceWorker.js",
+    "type": "module"
   },
+  "permissions": [
+    "offscreen",
+    "storage",
+    "scripting",
+    "devtools_page",
+    "browser_action"
+  ],
   "devtools_page": "./devtools.html"
 }

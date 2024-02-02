@@ -1,50 +1,54 @@
-import { browser } from 'webextension-polyfill-ts';
-import { handleLegacyMessage } from './scripts/legacy-worker';
-import type { PiralDebugApiMessage, PiralInspectorMessage } from './types';
+import { runtime } from 'webextension-polyfill';
+import { PiralDebugApiMessage, PiralInspectorMessage } from './types';
 
+/**
+ * window is marked as @deprecated in v3 but is still the official way to access external applications
+ * https://developer.chrome.com/docs/extensions/develop/concepts/content-scripts?hl=en#host-page-communication
+ */
+const handleMessage = (message: PiralDebugApiMessage) => {
+  if (typeof message === 'object' && message?.source === 'piral-debug-api') {
+    const { content } = message;
+    runtime.sendMessage(content);
+
+    if (content.type === 'available') {
+      console.info(`Piral Inspector (${content.kind}) connected!`);
+    }
+  }
+};
 /**
  * Disconnects the Piral Inspector.
  */
 window.addEventListener('unload', () => {
-  browser.runtime.sendMessage({
+  runtime.sendMessage({
     type: 'unavailable',
   });
 });
 
 /**
- * Receives messages from the piral-debug-utils.js
+ * Receives messages from the piral-debug-utils.js and forwards it to service worker
  */
-window.addEventListener('message', event => {
+window.addEventListener('message', (event) => {
   if (event.source === window) {
     const message: PiralDebugApiMessage = event.data;
-
-    if (typeof message === 'object' && message?.source === 'piral-debug-api') {
-      const { content } = message;
-      browser.runtime.sendMessage(content);
-
-      if (content.type === 'available') {
-        console.info(`Piral Inspector (${content.kind}) connected!`);
-      }
-    }
+    handleMessage(message);
   }
 });
 
 /**
- * Receives messages from the background.js
+ * Receives messages from the service worker.js
  */
-browser.runtime.onMessage.addListener(content => {
+runtime.onMessage.addListener((content, sender) => {
   const message: PiralInspectorMessage = {
     content,
     source: 'piral-inspector',
     version: 'v1',
   };
   window.postMessage(message, '*');
-  handleLegacyMessage(content);
 });
 
 /**
  * Tries to connect the instance to the dev tools.
  */
-browser.runtime.sendMessage({
+runtime.sendMessage({
   type: 'cs-connect',
 });

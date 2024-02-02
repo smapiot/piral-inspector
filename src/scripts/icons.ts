@@ -1,7 +1,7 @@
-import { browser } from 'webextension-polyfill-ts';
+import { action } from 'webextension-polyfill';
 
 export function setIconAndPopup(type: 'disabled' | 'production' | 'development', tabId: number) {
-  browser.browserAction.setIcon({
+  action.setIcon({
     tabId,
     path: {
       '16': `assets/${type}_16.png`,
@@ -13,7 +13,7 @@ export function setIconAndPopup(type: 'disabled' | 'production' | 'development',
     },
   });
 
-  browser.browserAction.setPopup({
+  action.setPopup({
     tabId,
     popup: `popups/${type}.html`,
   });

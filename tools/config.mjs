@@ -1,5 +1,6 @@
 import copyStaticFiles from 'esbuild-copy-static-files';
 import { resolve } from 'path';
+import { readFile, writeFile } from 'fs/promises';
 
 const browser = process.argv.pop();
 
@@ -18,7 +19,41 @@ const cwd = process.cwd();
 const src = resolve(cwd, 'src');
 const dst = resolve(cwd, `dist/${browser}`);
 
-export const target = dst;
+async function normalizeManifest(target) {
+  const cwd = process.cwd();
+  const packageJsonPath = resolve(cwd, 'package.json');
+  const packageJsonContent = await readFile(packageJsonPath, 'utf8');
+  const { version } = JSON.parse(packageJsonContent);
+  const manifestPath = `${target}/manifest.json`;
+  const manifestContent = await readFile(manifestPath, 'utf8');
+  const manifest = JSON.parse(manifestContent);
+
+  if (manifest.version !== version) {
+    manifest.version = version;
+  }
+
+  if (browser === 'firefox') {
+    manifest.background = {
+      scripts: [manifest.background.service_worker],
+      persistent: false,
+      type: 'module',
+    };
+  }
+  
+  const newContent = JSON.stringify(manifest, undefined, 2);
+  await writeFile(manifestPath, newContent, 'utf8');
+}
+
+function modifyManifest(dir) {
+  return {
+    name: 'modify-manifest',
+    setup(build) {
+      build.onEnd(result => {
+        return normalizeManifest(dir);
+      });
+    },
+  };
+}
 
 export const config = {
   entryPoints: [
@@ -37,5 +72,6 @@ export const config = {
       src: resolve(src, 'public'),
       dest: dst,
     }),
+    modifyManifest(dst),
   ],
 };

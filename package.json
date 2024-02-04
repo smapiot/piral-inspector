@@ -1,6 +1,6 @@
 {
   "name": "piral-inspector",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "description": "A DevTools extension for Piral instances and their pilets.",
   "keywords": [
     "piral",
@@ -17,6 +17,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/smapiot/piral-inspector.git"
+  },
+  "engines": {
+    "node": ">=16"
   },
   "bugs": {
     "url": "https://github.com/smapiot/piral-inspector/issues"

@@ -1,5 +1,13 @@
 # Piral Inspector Changelog
 
+## 0.11.0
+
+- Migrated to manifest v3 (#26) @flouwrian
+- Updated background to service worker (#31) @flouwrian
+- Updated UI with responsive tabs (#28) @flouwrian
+- Updated dependencies
+- Removed legacy worker (#27) @flouwrian
+
 ## 0.10.0
 
 - Changed dev tooling to esbuild

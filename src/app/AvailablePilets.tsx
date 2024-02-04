@@ -1,6 +1,6 @@
-import { FC, Fragment } from 'react';
-import { ListGroup, ListGroupItem, Button, CustomInput } from 'reactstrap';
 import { jsx } from '@emotion/core';
+import { FC, Fragment } from 'react';
+import { ListGroup, ListGroupItem, Button, Input } from 'reactstrap';
 import { removePilet, togglePilet } from './commands';
 import { useStore } from './store';
 import { customSwitchStyle } from './styles';
@@ -16,7 +16,7 @@ export const AvailablePilets: FC<AvailablePiletsProps> = () => {
         {pilets.map(pilet => (
           <ListGroupItem key={pilet.name}>
             <Button onClick={() => removePilet(pilet.name)} close />
-            <CustomInput
+            <Input
               css={customSwitchStyle}
               type="switch"
               id={`toggle-${pilet.name}`}

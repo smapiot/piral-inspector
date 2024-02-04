@@ -2,6 +2,7 @@ import { appendPilet } from './commands';
 
 const checkV1 = /^\/\/\s*@pilet\s+v:1\s*\(([A-Za-z0-9\_\:\-]+)\)/;
 const checkV2 = /^\/\/\s*@pilet\s+v:2\s*(?:\(([A-Za-z0-9\_\:\-]+),\s*(.*)\))?/;
+const checkV3 = /^\/\/\s*@pilet\s+v:3\s*(?:\(([A-Za-z0-9\_\:\-]+),\s*(.*)\))?/;
 const isUrl = /^https?:\/\//;
 
 function sha(alg: 1 | 256, str: string) {
@@ -76,6 +77,14 @@ async function getPiletSpecMeta(content: string, basePath: string) {
     const [, requireRef, plainDependencies] = checkV2.exec(content);
     return {
       spec: 'v2',
+      requireRef,
+      dependencies: getDependencies(plainDependencies, basePath),
+    };
+  } else if (checkV3.test(content)) {
+    // uses two arguments; requireRef and dependencies as JSON (required)
+    const [, requireRef, plainDependencies] = checkV3.exec(content);
+    return {
+      spec: 'v3',
       requireRef,
       dependencies: getDependencies(plainDependencies, basePath),
     };

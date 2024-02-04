@@ -1,4 +1,4 @@
-import create, { SetState } from 'zustand';
+import { create } from 'zustand';
 import { getTheme } from './utils';
 import { PiralDebugCapabilities, PiralDebugSettings, PiralEvent, PiralWorkerInitialState } from '../types';
 
@@ -53,8 +53,8 @@ export interface Store {
   actions: StoreActions;
 }
 
-function dispatch(set: SetState<Store>, update: (state: StoreState) => Partial<StoreState>) {
-  set(store => ({
+function dispatch(set: (update: (state: Store) => Store) => void, update: (state: StoreState) => Partial<StoreState>) {
+  set((store) => ({
     ...store,
     state: {
       ...store.state,
@@ -102,7 +102,7 @@ function compareDependencyMap(oldMap: DependencyMap, newMap: DependencyMap) {
   return newMap;
 }
 
-export const useStore = create<Store>(set => ({
+export const useStore = create<Store>((set) => ({
   state: {
     connected: false,
     theme: getTheme(),
@@ -162,7 +162,7 @@ export const useStore = create<Store>(set => ({
       }));
     },
     toggleTheme() {
-      dispatch(set, state => {
+      dispatch(set, (state) => {
         const theme = state.theme === 'dark' ? 'light' : 'dark';
         localStorage.setItem('theme', theme);
         return {

@@ -1,6 +1,6 @@
+import { jsx } from '@emotion/core';
 import { FC } from 'react';
 import { Button } from 'reactstrap';
-import { jsx } from '@emotion/core';
 import { ConnectedView } from './ConnectedView';
 import { notConnectedView } from './styles';
 import { useStore } from './store';
@@ -21,7 +21,7 @@ export const View: FC<ViewProps> = () => {
       <div css={notConnectedView}>
         <h2>Not connected</h2>
         <p>You are currently not running a Piral instance in debug mode.</p>
-        <p>Note that you need to run Piral v0.10 or later on localhost for Piral Inspector to work.</p>
+        <p>Note that you need to run Piral 0.13.6 or later on localhost for Piral Inspector to work.</p>
         <Button color="primary" onClick={actions.toggleTheme}>
           Switch to {otherTheme}
         </Button>

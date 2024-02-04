@@ -1,6 +1,6 @@
+import { jsx } from '@emotion/core';
 import { FC, useState } from 'react';
 import { ListGroup, ListGroupItem, ListGroupItemHeading, ListGroupItemText } from 'reactstrap';
-import { jsx } from '@emotion/core';
 import { EmitEventModal } from './EmitEventModal';
 import { useStore } from './store';
 

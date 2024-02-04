@@ -1,6 +1,6 @@
+import { jsx } from '@emotion/core';
 import { FC } from 'react';
 import { Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap';
-import { jsx } from '@emotion/core';
 import { BasicInfo } from './BasicInfo';
 import { connectedView, tabLink, footer } from './styles';
 import { useViews } from './useViews';

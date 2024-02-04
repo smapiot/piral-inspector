@@ -1,5 +1,5 @@
-const copyStaticFiles = require('esbuild-copy-static-files');
-const { resolve } = require('path');
+import copyStaticFiles from 'esbuild-copy-static-files';
+import { resolve } from 'path';
 
 const browser = process.argv.pop();
 
@@ -8,18 +8,19 @@ switch (browser) {
   case 'firefox':
   case 'edge':
   case 'opera':
+  case 'safari':
     break;
   default:
     throw new Error('Invalid browser provided. Select a valid one.');
 }
 
-const src = resolve(__dirname, '../src');
-const scripts = resolve(__dirname, '../src/scripts');
-const dst = resolve(__dirname, `../dist/${browser}`);
+const cwd = process.cwd();
+const src = resolve(cwd, 'src');
+const dst = resolve(cwd, `dist/${browser}`);
 
-exports.target = dst;
+export const target = dst;
 
-exports.config = {
+export const config = {
   entryPoints: [
     resolve(src, 'panel.tsx'),
     resolve(src, 'devtools.ts'),

@@ -1,6 +1,6 @@
+import { jsx } from '@emotion/core';
 import { FC, useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, Input } from 'reactstrap';
-import { jsx } from '@emotion/core';
 import { goToRoute } from './commands';
 
 export interface ConfigureRouteModalProps {

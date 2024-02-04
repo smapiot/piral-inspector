@@ -1,6 +1,6 @@
+import { jsx } from '@emotion/core';
 import { FC, useState, useMemo } from 'react';
 import { ListGroupItem } from 'reactstrap';
-import { jsx } from '@emotion/core';
 import { ConfigureRouteModal } from './ConfigureRouteModal';
 import { goToRoute } from './commands';
 

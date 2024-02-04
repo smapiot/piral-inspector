@@ -1,5 +1,5 @@
-import { FC, Fragment, useEffect } from 'react';
 import { jsx, Global } from '@emotion/core';
+import { FC, Fragment, useEffect } from 'react';
 import { View } from './View';
 import { globalViewLight, globalViewDark } from './styles';
 import { useStore } from './store';

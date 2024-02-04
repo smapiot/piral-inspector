@@ -1,3 +1,4 @@
+import { jsx } from '@emotion/core';
 import { ChangeEvent, FC, SyntheticEvent, useState } from 'react';
 import {
   Alert,
@@ -10,7 +11,6 @@ import {
   ListGroupItemHeading,
   ListGroupItemText,
 } from 'reactstrap';
-import { jsx } from '@emotion/core';
 import { goToRoute } from './commands';
 import { useStore } from './store';
 import { checkJson } from './utils';
@@ -55,6 +55,7 @@ const ExtensionItem: FC<ExtensionItemProps> = ({ name }) => {
               invalid={disabled}
               type="textarea"
               value={params}
+              style={{ fontFamily: 'monospace' }}
               name="args"
               onChange={setValue}
             />

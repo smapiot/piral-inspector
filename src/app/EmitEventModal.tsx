@@ -1,6 +1,6 @@
+import { jsx } from '@emotion/core';
 import { FC, useState, ChangeEvent } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Label, Input } from 'reactstrap';
-import { jsx } from '@emotion/core';
 import { emitEvent } from './commands';
 import { checkJson } from './utils';
 

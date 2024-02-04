@@ -1,6 +1,6 @@
-import { FC, useState, SyntheticEvent } from 'react';
-import { Button, Form, Input, InputGroup, InputGroupAddon, Progress, UncontrolledAlert } from 'reactstrap';
 import { jsx } from '@emotion/core';
+import { FC, useState, SyntheticEvent } from 'react';
+import { Button, Form, Input, InputGroup, Progress, UncontrolledAlert } from 'reactstrap';
 import { injectPiletsFromUrl } from './utils';
 
 export interface LinkPiletsProps {}
@@ -20,7 +20,7 @@ export const LinkPilets: FC<LinkPiletsProps> = () => {
           ),
         )
         .finally(() => setInjecting(false));
-        
+
       setUrl('');
     }
 
@@ -31,11 +31,9 @@ export const LinkPilets: FC<LinkPiletsProps> = () => {
     <Form onSubmit={submit}>
       <InputGroup>
         <Input type="text" value={url} onChange={(e) => setUrl(e.currentTarget.value)} />
-        <InputGroupAddon addonType="append">
-          <Button color="primary" disabled={url === ''}>
-            Add
-          </Button>
-        </InputGroupAddon>
+        <Button color="primary" disabled={url === ''}>
+          Add
+        </Button>
       </InputGroup>
 
       {injecting && <Progress animated color="success" value={50} style={{ marginTop: 10 }} />}

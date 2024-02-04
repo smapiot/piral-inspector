@@ -1,5 +1,6 @@
-import { FC, SyntheticEvent, useState, Fragment, useMemo, useCallback } from 'react';
 import { jsx } from '@emotion/core';
+import { FC, SyntheticEvent, useState, Fragment, useMemo, useCallback } from 'react';
+import { UncontrolledTooltip } from 'reactstrap';
 import { AdjustSettingsModal } from './AdjustSettingsModal';
 import { useStore } from './store';
 import { visualizeAll } from './commands';
@@ -23,14 +24,14 @@ function useClick(cb: () => void) {
 
 export const BasicInfo: FC<BasicInfoProps> = ({ showSettings }) => {
   const [isOpen, setOpen] = useState(false);
-  const { settings, name, version } = useStore(m => m.state);
-  const toggle = useCallback(() => setOpen(s => !s), []);
+  const { settings, name, version } = useStore((m) => m.state);
+  const toggle = useCallback(() => setOpen((s) => !s), []);
   const visualize = useClick(visualizeAll);
   const toggleSettings = useClick(toggle);
   const values = useMemo(() => {
     const obj: Record<string, any> = {};
 
-    Object.keys(settings).forEach(s => {
+    Object.keys(settings).forEach((s) => {
       obj[s] = settings[s].value;
     });
 
@@ -46,13 +47,19 @@ export const BasicInfo: FC<BasicInfoProps> = ({ showSettings }) => {
         {showSettings && (
           <Fragment>
             {values.viewOrigins && (
-              <a href="#" title="Visualize" onClick={visualize}>
+              <a href="#" onClick={visualize} id="visualize-btn">
                 <VisualizeIcon />
               </a>
             )}
-            <a href="#" title="Settings" onClick={toggleSettings}>
+            <a href="#" onClick={toggleSettings} id="settings-btn">
               <SettingsIcon />
             </a>
+            <UncontrolledTooltip placement="top" target="visualize-btn">
+              Visualize
+            </UncontrolledTooltip>
+            <UncontrolledTooltip placement="top" target="settings-btn">
+              Settings
+            </UncontrolledTooltip>
           </Fragment>
         )}
       </div>

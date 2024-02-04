@@ -44,7 +44,7 @@ export interface PiralWorkerInitialState {
 export interface BaseWorkerDetails {
   name: string;
   version: string;
-  kind: 'v0' | 'v1';
+  kind: 'v1';
   mode: 'production' | 'development';
   capabilities: Array<keyof PiralDebugCapabilities>;
 }
@@ -115,6 +115,7 @@ export interface PiralDebugSettings {
     value: any;
     label: string;
     type: 'boolean' | 'string' | 'number';
+    group?: 'general' | 'inspector' | 'extensions' | 'other';
   };
 }
 

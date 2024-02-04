@@ -1,6 +1,6 @@
-import { FC, ChangeEvent, useState, useEffect } from 'react';
-import { CustomInput, InputGroup, InputGroupAddon, Button, Progress, UncontrolledAlert } from 'reactstrap';
 import { jsx } from '@emotion/core';
+import { FC, ChangeEvent, useState, useEffect } from 'react';
+import { Input, InputGroup, Button, Progress, UncontrolledAlert } from 'reactstrap';
 import { injectPiletsFromUrl } from './utils';
 
 export interface UploadPiletsProps {}
@@ -93,12 +93,10 @@ export const UploadPilets: FC<UploadPiletsProps> = () => {
   return (
     <div>
       <InputGroup>
-        <CustomInput key={file.key} type="file" id="upload-pilet" label="Select a local pilet" onChange={uploadPilet} />
-        <InputGroupAddon addonType="append">
-          <Button color="primary" disabled={!file.value} onClick={upload}>
-            Upload
-          </Button>
-        </InputGroupAddon>
+        <Input key={file.key} type="file" id="upload-pilet" label="Select a local pilet" onChange={uploadPilet} />
+        <Button color="primary" disabled={!file.value} onClick={upload}>
+          Upload
+        </Button>
       </InputGroup>
 
       {uploadData.progress > 0 && (

@@ -1,7 +1,7 @@
 import * as dagre from 'dagre';
-import ReactFlow, { ReactFlowProvider, isNode, Node, Connection, Edge, OnLoadParams } from 'react-flow-renderer';
-import { useState, useEffect, FC } from 'react';
 import { jsx } from '@emotion/core';
+import ReactFlow, { ReactFlowProvider, isNode, Node, Connection, Edge, ReactFlowInstance } from 'react-flow-renderer';
+import { useState, useEffect, FC } from 'react';
 import { getDependencyMap } from './commands';
 import { DependencyMap, DependencyRelation, useStore } from './store';
 import { reactFlowContainer } from './styles';
@@ -54,7 +54,7 @@ function getLayoutedElements(
 
 const DisplayDependencies: FC<DisplayDependenciesProps> = ({ appName, dependencies, layout }) => {
   const [elements, setElements] = useState<Array<Node | Connection | Edge>>([]);
-  const [flowInstance, setFlowInstance] = useState<OnLoadParams>(undefined);
+  const [flowInstance, setFlowInstance] = useState<ReactFlowInstance>(undefined);
 
   useEffect(() => {
     const dagreGraph = new dagre.graphlib.Graph();
@@ -123,7 +123,7 @@ const DisplayDependencies: FC<DisplayDependenciesProps> = ({ appName, dependenci
   return (
     <ReactFlowProvider>
       <ReactFlow
-        onLoad={setFlowInstance}
+        onInit={setFlowInstance}
         className="react-flow"
         elements={elements}
         connectionLineType="smoothstep"

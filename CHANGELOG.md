@@ -6,7 +6,10 @@
 - Updated background to service worker (#31) @flouwrian
 - Updated UI with responsive tabs (#28) @flouwrian
 - Updated dependencies
+- Updated to use monospaced font in params (#25)
 - Removed legacy worker (#27) @flouwrian
+- Added tooltips to toolbar buttons (#25)
+- Added titles to settings menu (#25)
 
 ## 0.10.0
 

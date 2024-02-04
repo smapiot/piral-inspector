@@ -1,8 +1,8 @@
 import { Runtime, runtime, tabs } from 'webextension-polyfill';
-import { setIconAndPopup } from './scripts/icons';
-
+import { setIconAndPopup } from './icons';
 
 const tabPorts: Record<number, Runtime.Port> = {};
+
 /**
  * Core message routing
  * answers messages to contentscripts and dev tools

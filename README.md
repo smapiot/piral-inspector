@@ -39,9 +39,9 @@ Right now the Piral Inspector comes with the following set of functionality:
 
 You'll need the following tools:
 
-1. Node.js (at least version 10)
-2. NPM (usually comes with Node.js)
-3. Git
+1. Node.js (at least version 18)
+2. npm (usually comes with Node.js)
+3. git
 4. A command line interpreter
 
 For building the solution the following steps should be followed.
@@ -68,11 +68,11 @@ The extension follows the general guidelines for building browser extensions tha
 
 ![Architecture](./docs/architecture.png)
 
-The singleton [background script](./src/scripts/background.ts) is the exchange driver between a website and the dev tools panel. The website (restricted to `localhost`, i.e., Piral instances in development) can be accessed through the [content script](./src/scripts/contentScript.ts), which knows how to talk to the Piral Debug API.
+The singleton [background script](./src/serviceWorker.ts) is the exchange driver between a website and the dev tools panel. The website (restricted to `localhost`, i.e., Piral instances in development, as well as pilets) can be accessed through the [content script](./src/contentScript.ts), which knows how to talk to the Piral Debug API.
 
-The Piral Debug API comes from the [piral-debug-utils](https://www.npmjs.com/package/piral-debug-utils) npm package. Right now its quite flexible and fully message based. However, in the past this has been achieved from the Piral Inspector itself. In order to still support such older Piral instances the [legacy API](./src/scripts/legacy/worker.ts) is still part of the Piral Inspector.
+The Piral Debug API comes from the [piral-debug-utils](https://www.npmjs.com/package/piral-debug-utils) npm package. Right now its quite flexible and fully message based. However, in the past this has been achieved from the Piral Inspector itself. ~~In order to still support such older Piral instances the [legacy API](./src/scripts/legacy/worker.ts) is still part of the Piral Inspector~~ (the support for this was removed in Piral Inspector 0.11).
 
-The dev tools panel is a small [web app](./src/app/index.html). Mainly, it is driven by [message exchange with the background script](./src/devtools.ts). As such when a panel opens it sends a message to the website (via the background script) to get the initial state.
+The dev tools panel is a small [web app](./src/public/devtools.html). Mainly, it is driven by [message exchange with the background script](./src/devtools.ts). As such when a panel opens it sends a message to the website (via the background script) to get the initial state.
 
 ## License
 

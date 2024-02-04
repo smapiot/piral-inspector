@@ -4,10 +4,10 @@ import { setIconAndPopup } from './icons';
 const tabPorts: Record<number, Runtime.Port> = {};
 
 /**
- * Core message routing
- * answers messages to contentscripts and dev tools
+ * From contentScript.js to background.js (and maybe to devtools.js)
+ *            s -------------------> o -------------------> t
  */
-runtime.onMessage.addListener(async function (message, sender) {
+runtime.onMessage.addListener((message, sender) => {
   const tabId = sender.tab?.id;
 
   if (!tabId) return;
@@ -30,11 +30,11 @@ runtime.onMessage.addListener(async function (message, sender) {
 });
 
 /**
- * handles the connection to the devtools and initializes event handlers
- * sends messages from devtools to the content scripts
+ * From devtools.js to background.js (and maybe to contentScript.js)
+ *            s -------------------> o -------------------> t
  */
-runtime.onConnect.addListener(function (devToolsConnection) {
-  if (devToolsConnection.name !== 'piral-inspector-host') {
+runtime.onConnect.addListener((port) => {
+  if (port.name !== 'piral-inspector-host') {
     return;
   }
 
@@ -42,6 +42,7 @@ runtime.onConnect.addListener(function (devToolsConnection) {
 
   const handler = async (ev: any) => {
     const message = ev.message;
+
     if (!message) {
       return;
     }
@@ -50,8 +51,7 @@ runtime.onConnect.addListener(function (devToolsConnection) {
       // handle initialize message to connect contentScript.js with devtools.js
       if (tabId === undefined) {
         tabId = ev.tabId;
-
-        tabPorts[tabId] = devToolsConnection;
+        tabPorts[tabId] = port;
       }
     }
 
@@ -61,10 +61,10 @@ runtime.onConnect.addListener(function (devToolsConnection) {
     }
   };
 
-  devToolsConnection.onMessage.addListener(handler);
+  port.onMessage.addListener(handler);
 
-  devToolsConnection.onDisconnect.addListener(() => {
-    devToolsConnection.onMessage.removeListener(handler);
+  port.onDisconnect.addListener(() => {
+    port.onMessage.removeListener(handler);
     delete tabPorts[tabId];
   });
 });

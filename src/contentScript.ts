@@ -15,6 +15,7 @@ const handleMessage = (message: PiralDebugApiMessage) => {
     }
   }
 };
+
 /**
  * Disconnects the Piral Inspector.
  */
@@ -37,7 +38,7 @@ window.addEventListener('message', (event) => {
 /**
  * Receives messages from the service worker.js
  */
-runtime.onMessage.addListener((content, sender) => {
+runtime.onMessage.addListener((content) => {
   const message: PiralInspectorMessage = {
     content,
     source: 'piral-inspector',

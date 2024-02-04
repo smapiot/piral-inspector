@@ -35,8 +35,6 @@ async function normalizeManifest(target) {
   if (browser === 'firefox') {
     manifest.background = {
       scripts: [manifest.background.service_worker],
-      persistent: false,
-      type: 'module',
     };
   }
   

@@ -3,7 +3,7 @@ import { FC, useState, useCallback, useEffect } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, FormGroup, Label } from 'reactstrap';
 import { updateSettings } from './commands';
 import { useStore } from './store';
-import { miniInfo } from './styles';
+import { miniInfo, settingsTitle } from './styles';
 import { PiralDebugSettings } from '../types';
 
 const defaultGeneralNames = ['viewState', 'loadPilets', 'hardRefresh', 'clearConsole'];
@@ -68,7 +68,7 @@ function useSettings(settings: PiralDebugSettings) {
     });
   }
 
-  return groupedSettings;
+  return groupedSettings.filter((group) => group.items.length > 0);
 }
 
 export interface AdjustSettingsModalProps {
@@ -95,18 +95,19 @@ export const AdjustSettingsModal: FC<AdjustSettingsModalProps> = ({ settings, is
       <ModalBody>
         {allSettings.map((settings) => (
           <FormGroup key={settings.id}>
-            <h3>{settings.id}</h3>
+            <h4 css={settingsTitle}>{settings.id}</h4>
             <div>
               {settings.items.map((item) => {
                 switch (item.type) {
                   case 'number':
+                    const nval = item.value ?? values[item.name];
                     return (
                       <FormGroup key={item.name}>
                         <Label for={`number-${item.name}`}>{item.label}</Label>
                         <Input
                           type="number"
                           id={`number-${item.name}`}
-                          value={item.value ?? values[item.name]}
+                          value={nval}
                           onChange={
                             item.change ?? ((e) => setValues({ ...values, [item.name]: e.target.valueAsNumber }))
                           }
@@ -114,27 +115,31 @@ export const AdjustSettingsModal: FC<AdjustSettingsModalProps> = ({ settings, is
                       </FormGroup>
                     );
                   case 'string':
+                    const sval = item.value ?? values[item.name];
                     return (
                       <FormGroup key={item.name}>
                         <Label for={`text-${item.name}`}>{item.label}</Label>
                         <Input
                           type="text"
                           id={`text-${item.name}`}
-                          value={item.value ?? values[item.name]}
+                          value={sval}
                           onChange={item.change ?? ((e) => setValues({ ...values, [item.name]: e.target.value }))}
                         />
                       </FormGroup>
                     );
                   case 'boolean':
+                    const bval = item.value ?? values[item.name];
                     return (
-                      <Input
-                        type="switch"
-                        key={item.name}
-                        label={item.label}
-                        id={`switch-${name}`}
-                        checked={item.value ?? values[item.name]}
-                        onChange={item.change ?? ((e) => setValues({ ...values, [item.name]: e.target.checked }))}
-                      />
+                      <FormGroup key={item.name} switch>
+                        <Input
+                          type="switch"
+                          key={item.name}
+                          id={`switch-${item.name}`}
+                          checked={bval}
+                          onClick={item.change ?? ((e) => setValues({ ...values, [item.name]: !bval }))}
+                        />
+                        <Label check>{item.label}</Label>
+                      </FormGroup>
                     );
                   default:
                     return null;

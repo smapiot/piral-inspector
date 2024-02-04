@@ -73,6 +73,16 @@ export const miniInfo = css`
   font-size: 0.8em;
 `;
 
+export const settingsTitle = css`
+  text-transform: capitalize;
+`;
+
+export const actionItem = css`
+  cursor: pointer;
+  color: var(--bs-primary);
+  font-size: 1rem;
+`;
+
 export const reactFlowContainer = css`
   flex: 1;
   display: flex;

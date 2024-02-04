@@ -4,6 +4,7 @@ import {
   Alert,
   Button,
   FormGroup,
+  FormText,
   Input,
   Label,
   ListGroup,
@@ -14,6 +15,7 @@ import {
 import { goToRoute } from './commands';
 import { useStore } from './store';
 import { checkJson } from './utils';
+import { actionItem } from './styles';
 
 interface ExtensionItemProps {
   name: string;
@@ -42,13 +44,15 @@ const ExtensionItem: FC<ExtensionItemProps> = ({ name }) => {
 
   return (
     <ListGroupItem>
-      <ListGroupItemHeading tag="a" href="#" onClick={toggle}>
+      <ListGroupItemHeading onClick={toggle} css={actionItem}>
         {name}
       </ListGroupItemHeading>
       {isOpen && (
         <ListGroupItemText>
           <FormGroup>
-            <Label for="ext-params">Params (as JSON)</Label>
+            <Label for="ext-params">
+              Parameters represented via <code>params</code>:
+            </Label>
             <Input
               id="ext-params"
               valid={!disabled}
@@ -59,6 +63,7 @@ const ExtensionItem: FC<ExtensionItemProps> = ({ name }) => {
               name="args"
               onChange={setValue}
             />
+            <FormText>Enter the values using valid JSON.</FormText>
           </FormGroup>
           <Button color="primary" onClick={send} disabled={disabled}>
             Render
@@ -72,12 +77,12 @@ const ExtensionItem: FC<ExtensionItemProps> = ({ name }) => {
 export interface ExtensionCatalogueProps {}
 
 export const ExtensionCatalogue: FC<ExtensionCatalogueProps> = () => {
-  const extensions = useStore(m => m.state.extensions);
+  const extensions = useStore((m) => m.state.extensions);
 
   return (
     <ListGroup>
       {extensions.length > 0 ? (
-        extensions.map(name => <ExtensionItem name={name} key={name} />)
+        extensions.map((name) => <ExtensionItem name={name} key={name} />)
       ) : (
         <Alert color="warning">No extensions available.</Alert>
       )}

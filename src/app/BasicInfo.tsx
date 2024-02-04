@@ -5,6 +5,7 @@ import { AdjustSettingsModal } from './AdjustSettingsModal';
 import { useStore } from './store';
 import { visualizeAll } from './commands';
 import { basicInfoView } from './styles';
+
 import VisualizeIcon from './VisualizeIcon';
 import SettingsIcon from './SettingsIcon';
 
@@ -21,6 +22,8 @@ function useClick(cb: () => void) {
     [cb],
   );
 }
+
+const notitle = {};
 
 export const BasicInfo: FC<BasicInfoProps> = ({ showSettings }) => {
   const [isOpen, setOpen] = useState(false);
@@ -47,16 +50,18 @@ export const BasicInfo: FC<BasicInfoProps> = ({ showSettings }) => {
         {showSettings && (
           <Fragment>
             {values.viewOrigins && (
-              <a href="#" onClick={visualize} id="visualize-btn">
-                <VisualizeIcon />
-              </a>
+              <Fragment>
+                <a href="#" onClick={visualize} id="visualize-btn" {...notitle}>
+                  <VisualizeIcon />
+                </a>
+                <UncontrolledTooltip placement="top" target="visualize-btn">
+                  Visualize
+                </UncontrolledTooltip>
+              </Fragment>
             )}
-            <a href="#" onClick={toggleSettings} id="settings-btn">
+            <a href="#" onClick={toggleSettings} id="settings-btn" {...notitle}>
               <SettingsIcon />
             </a>
-            <UncontrolledTooltip placement="top" target="visualize-btn">
-              Visualize
-            </UncontrolledTooltip>
             <UncontrolledTooltip placement="top" target="settings-btn">
               Settings
             </UncontrolledTooltip>

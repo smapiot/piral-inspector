@@ -4,6 +4,16 @@ import { setIconAndPopup } from './icons';
 const tabPorts: Record<number, Runtime.Port> = {};
 
 /**
+ * Keep alive ping to counteract v3 30 seconds inactivity for service worker
+ */
+const keepAlive = () => setInterval(runtime.getPlatformInfo, 10000);
+runtime.onStartup.addListener(keepAlive);
+keepAlive();
+
+runtime.onSuspend.removeListener(keepAlive)
+
+
+/**
  * From contentScript.js to background.js (and maybe to devtools.js)
  *            s -------------------> o -------------------> t
  */

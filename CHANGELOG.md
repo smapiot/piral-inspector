@@ -1,5 +1,9 @@
 # Piral Inspector Changelog
 
+## 0.11.1
+
+- Fixed issue of extension port being disconnected
+
 ## 0.11.0
 
 - Migrated to manifest v3 (#26) @flouwrian

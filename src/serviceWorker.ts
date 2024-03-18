@@ -4,6 +4,12 @@ import { setIconAndPopup } from './icons';
 const tabPorts: Record<number, Runtime.Port> = {};
 
 /**
+ * Keep alive ping to counteract v3 30 seconds inactivity for service worker
+ */
+
+let intervalId 
+
+/**
  * From contentScript.js to background.js (and maybe to devtools.js)
  *            s -------------------> o -------------------> t
  */
@@ -37,6 +43,8 @@ runtime.onConnect.addListener((port) => {
   if (port.name !== 'piral-inspector-host') {
     return;
   }
+  
+  intervalId = setInterval(runtime.getPlatformInfo, 10000);
 
   let tabId: number;
 
@@ -64,6 +72,7 @@ runtime.onConnect.addListener((port) => {
   port.onMessage.addListener(handler);
 
   port.onDisconnect.addListener(() => {
+    clearInterval(intervalId)
     port.onMessage.removeListener(handler);
     delete tabPorts[tabId];
   });

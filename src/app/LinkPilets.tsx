@@ -40,7 +40,7 @@ export const LinkPilets: FC<LinkPiletsProps> = () => {
 
       {errMessage && (
         <UncontrolledAlert color="danger" style={{ marginTop: 10 }}>
-          Failed to add pilets: {errMessage}
+          Failed to add micro frontends: {errMessage}
         </UncontrolledAlert>
       )}
     </Form>

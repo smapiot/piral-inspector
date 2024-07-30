@@ -21,13 +21,15 @@ const PiletsTab = {
   Content: (props: TabProps) => (
     <Fragment>
       <div css={appSectionView}>
-        <h3>Available Pilets</h3>
-        <p>The following pilets are currently running in your Piral instance.</p>
+        <h3>Available Micro Frontends</h3>
+        <p>The following micro frontends are currently running in this website.</p>
         <AvailablePilets />
-        <h3>Add Pilets</h3>
-        <p>You can add a feed address or an address referring to a pilet root module.</p>
+        <h3>Add Micro Frontends</h3>
+        <p>
+          You can add a micro frontend discovery service address or an address referring to a micro frontend directly.
+        </p>
         <LinkPilets />
-        <p>Alternatively, you can also bundle a local pilet and upload it here, too.</p>
+        <p>Alternatively, you can also package a local micro frontend and upload it here, too.</p>
         <UploadPilets />
       </div>
     </Fragment>
@@ -52,7 +54,7 @@ const EventsTab = {
   Content: (props: TabProps) => (
     <div css={appSectionView}>
       <h3>Events</h3>
-      <p>These events from the Piral instance have been recorded so far.</p>
+      <p>These events related to micro frontends have been recorded so far.</p>
       <RecordedEvents />
     </div>
   ),
@@ -60,11 +62,11 @@ const EventsTab = {
 
 const ExtensionsTab = {
   id: 'extensions',
-  title: 'Extensions',
+  title: 'Fragments',
   Content: (props: TabProps) => (
     <div css={appSectionView}>
-      <h3>Extension Catalogue</h3>
-      <p>The registered extension components.</p>
+      <h3>Fragment Catalogue</h3>
+      <p>The registered micro frontend components.</p>
       <ExtensionCatalogue />
     </div>
   ),
@@ -88,7 +90,7 @@ const DependenciesTab = {
   Content: (props: TabProps) => (
     <div css={appSectionView}>
       <h3>Dependency Map</h3>
-      <p>This map shows the pilets incl. their demanded and resolved dependencies.</p>
+      <p>This map shows the micro frontends incl. their demanded and resolved dependencies.</p>
       <Dependencies active={props.active} />
     </div>
   ),

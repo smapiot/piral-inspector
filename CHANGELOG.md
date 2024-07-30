@@ -1,5 +1,10 @@
 # Piral Inspector Changelog
 
+## 0.12.0
+
+- Improved wording in application
+- Updated protocol to allow micro frontends of other types
+
 ## 0.11.1
 
 - Fixed issue of extension port being disconnected

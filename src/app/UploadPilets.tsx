@@ -16,7 +16,7 @@ const SucceededAlert = ({ piletName }) => {
 
   return (
     <UncontrolledAlert color="success" isOpen={open} style={{ marginTop: 10 }}>
-      The pilet '{piletName}' was added successfully!
+      The micro frontend '{piletName}' was added successfully!
     </UncontrolledAlert>
   );
 };
@@ -93,7 +93,7 @@ export const UploadPilets: FC<UploadPiletsProps> = () => {
   return (
     <div>
       <InputGroup>
-        <Input key={file.key} type="file" id="upload-pilet" label="Select a local pilet" onChange={uploadPilet} />
+        <Input key={file.key} type="file" id="upload-pilet" label="Select a local micro frontend" onChange={uploadPilet} />
         <Button color="primary" disabled={!file.value} onClick={upload}>
           Upload
         </Button>
@@ -105,7 +105,7 @@ export const UploadPilets: FC<UploadPiletsProps> = () => {
 
       {uploadData.errMessage && (
         <UncontrolledAlert color="danger" style={{ marginTop: 10 }}>
-          Failed to upload a local pilet, {uploadData.errMessage}
+          Failed to upload a local micro frontend, {uploadData.errMessage}
         </UncontrolledAlert>
       )}
 

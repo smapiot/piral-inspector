@@ -1,11 +1,12 @@
 {
   "name": "piral-inspector",
-  "version": "0.11.1",
-  "description": "A DevTools extension for Piral instances and their pilets.",
+  "version": "0.12.0",
+  "description": "A DevTools extension for micro frontends - in particular Piral instances and their pilets.",
   "keywords": [
     "piral",
     "pilet",
     "devtools",
+    "microfrontends",
     "browser",
     "chrome",
     "firefox",

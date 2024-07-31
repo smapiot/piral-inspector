@@ -1,6 +1,6 @@
 import { jsx } from '@emotion/core';
 import { FC, Fragment } from 'react';
-import { ListGroup, ListGroupItem, Button, Input, FormGroup, Label } from 'reactstrap';
+import { ListGroup, ListGroupItem, Button, Input, FormGroup, Label, Badge } from 'reactstrap';
 import { removePilet, togglePilet } from './commands';
 import { useStore } from './store';
 import { customSwitchStyle } from './styles';
@@ -24,7 +24,9 @@ export const AvailablePilets: FC<AvailablePiletsProps> = () => {
                 checked={!pilet.disabled}
                 onClick={() => togglePilet(pilet.name)}
               />
-              <Label check>{pilet.name}</Label>
+              <Label check>
+                {pilet.name} <Badge>{pilet.type || 'pilet'}</Badge>
+              </Label>
             </FormGroup>
           </ListGroupItem>
         ))}

@@ -17,6 +17,7 @@ export interface StoreState {
   pilets?: Array<{
     name: string;
     version: string;
+    type?: string;
     disabled?: boolean;
   }>;
   routes?: Array<string>;
